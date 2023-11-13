@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../styles/style.js"
+import styles from "../../styles/style.js";
+import {Link} from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ const Login = () => {
     <div className="min-h-screen bg-gray-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Login to your account
+          Log In
         </h2>
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -70,8 +71,48 @@ const Login = () => {
                 )}
               </div>
             </div>
-                  {/* button */}
-                  <div className={`${styles.normalFlex}`}></div>
+            {/* Middle bar field */}
+            <div className={`${styles.normalFlex} justify-between`}>
+              <div className={`${styles.normalFlex}`}>
+                <input
+                  type="checkbox"
+                  name="remember-me"
+                  id="remember-me"
+                  className="h-4 w-4 text-blue-600 foucs:ring-blue-500 broder-gray-300 rounded"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2-block text-sm text-gray-900"
+                  >
+                  Remeber me
+                </label>
+              </div>
+              <div className="text-sm">
+                <a
+                  href=".forgot-password"
+                  className="font-medium text-blue-600 hover:text-blue-500"
+                >
+                  Forgot your password?
+                </a>
+              </div>
+            </div>
+              {/* button */}
+            <div>
+              <button
+                type="submit"
+                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              >
+                Submit
+              </button>
+            </div>
+            <div className={`${styles.normalFlex} w-full`}>
+              <h4>Not have any account?
+
+              <Link to="/sign-up" className="text-blue-600 pl-2 ml-5 hover:decoration-blue-900 hover:text-xl">
+                Sign Up
+              </Link>
+              </h4>
+            </div>
           </form>
         </div>
       </div>
