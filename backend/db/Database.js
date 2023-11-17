@@ -7,7 +7,7 @@ const connectDatabase = () => {
         "mongodb+srv://mohamed:mohamed@cluster0.maiv9qs.mongodb.net/?retryWrites=true&w=majority"
     )
     .then((data) => {
-      console.log(`connected with database in host: ${data.connection.host}`);
+      console.log(`connected with database `);
     })
     .catch((error) => {
       console.log(error.message);

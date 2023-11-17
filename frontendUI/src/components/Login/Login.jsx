@@ -1,13 +1,33 @@
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/style.js";
-import {Link} from "react-router-dom"
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { server } from "../../backendServer.js";
+import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
+  const navigate = useNavigate();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${server}/user/login-user`, { email, password })
+      .then((res) => {
+        toast.success("User logged in successfully");
+        setEmail("");
+        setPassword("");
+        navigate(`${server}/user/profile`);
+      })
+      .catch((err) => {
+        toast.error(`failed to login!! invalid email or password`);
+        setEmail("");
+        setPassword("");
+      });
+  };
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -17,7 +37,7 @@ const Login = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={submitHandler}>
             {/* email field */}
             <div>
               <label
@@ -83,7 +103,7 @@ const Login = () => {
                 <label
                   htmlFor="remember-me"
                   className="ml-2-block text-sm text-gray-900"
-                  >
+                >
                   Remeber me
                 </label>
               </div>
@@ -96,7 +116,7 @@ const Login = () => {
                 </a>
               </div>
             </div>
-              {/* button */}
+            {/* button */}
             <div>
               <button
                 type="submit"
@@ -106,11 +126,14 @@ const Login = () => {
               </button>
             </div>
             <div className={`${styles.normalFlex} w-full`}>
-              <h4>Not have any account?
-
-              <Link to="/sign-up" className="text-blue-600 pl-2 ml-5 hover:decoration-blue-900 hover:text-xl">
-                Sign Up
-              </Link>
+              <h4>
+                Not have any account?
+                <Link
+                  to="/sign-up"
+                  className="text-blue-600 pl-2 ml-5 hover:decoration-blue-900 hover:text-xl"
+                >
+                  Sign Up
+                </Link>
               </h4>
             </div>
           </form>
