@@ -15,7 +15,11 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post(`${server}/user/login-user`, { email, password })
+      .post(
+        `${server}/user/login-user`,
+        { email, password },
+        { withCredentials: true } // ===>>  that important to add it to the browser
+      )
       .then((res) => {
         toast.success("User logged in successfully");
         setEmail("");

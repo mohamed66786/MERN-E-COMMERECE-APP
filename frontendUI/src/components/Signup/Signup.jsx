@@ -29,9 +29,13 @@ const Singup = () => {
     e.preventDefault();
 
     axios
-      .post(`${server}/user/create-user`, { name, email, password })
+      .post(
+        `${server}/user/create-user`,
+        { name, email, password },
+        { withCredentials: true } // ===>>  that important to add it to the browser
+      )
       .then((res) => {
-        toast.success("DONE!");
+        toast.success("User Created Succefully !");
         setName("");
         setEmail("");
         setPassword("");
@@ -174,7 +178,10 @@ const Singup = () => {
             </div>
             <div className={`${styles.normalFlex} w-full`}>
               <h4>Already have an account?</h4>
-              <Link to="/login" className="text-blue-600 pl-2 hover:text-red-500">
+              <Link
+                to="/login"
+                className="text-blue-600 pl-2 hover:text-red-500"
+              >
                 Sign In
               </Link>
             </div>
