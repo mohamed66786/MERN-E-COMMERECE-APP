@@ -5,7 +5,7 @@ export const navItems = [
       url: "/",
     },
     {
-      title: "Best Selling",
+      title: "BestSelling",
       url: "/best-selling",
     },
     {
@@ -320,7 +320,7 @@ export const navItems = [
       rating: 5,
       total_sell: 80,
       stock: 10,
-      category:"Mobile & Tablets"
+      category1:"Mobile & Tablets"
     },
     {
       id: 1,
@@ -351,7 +351,7 @@ export const navItems = [
       rating: 4,
       total_sell: 75,
       stock: 10,
-      category:"Computers & Laptop"
+      category2:"Computers & Laptop"
     },
     {
       id: 4,
@@ -413,7 +413,7 @@ export const navItems = [
       rating: 5,
       total_sell: 49,
       stock: 10,
-      category:"Shoes"
+      category3:"Shoes"
     },
     {
       id: 1,
