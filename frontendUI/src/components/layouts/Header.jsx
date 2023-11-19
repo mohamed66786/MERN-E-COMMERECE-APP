@@ -90,7 +90,7 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
           {/* button */}
-          <div className={`${styles.button} hover:bg-gray-700`}>
+          <div className={`${styles.button} hover:bg-red-900 bg-[#c4302b]`}>
             <Link to="/seller">
               <h1 className="text-[#fff] flex items-center">
                 Become Seller
@@ -104,7 +104,7 @@ const Header = ({ activeHeading }) => {
       <div
         className={`${
           active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-        } transition hidden 800px:flex items-center justify-between w-full bg-[#3321c8] h-[70px] `}
+        } transition hidden 800px:flex items-center justify-between w-full bg-[#1877F2] h-[70px] `}
       >
         <div
           className={`${styles.section} relative ${styles.normalFlex} justify-between`}
