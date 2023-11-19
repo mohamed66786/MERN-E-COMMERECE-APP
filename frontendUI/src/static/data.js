@@ -271,7 +271,7 @@ export const navItems = [
       image_Url: [
         {
           public_id: "test",
-          url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
+          url: "https://www.abramillar.com/wp-content/uploads/2018/01/apple-1842297_1920-1024x683.jpg",
         },
         {
           public_id: "test",
@@ -331,7 +331,7 @@ export const navItems = [
       image_Url: [
         {
           public_id: "test",
-          url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
+          url: "https://www.abramillar.com/wp-content/uploads/2018/01/apple-1842297_1920-1024x683.jpg",
         },
         {
           public_id: "test",

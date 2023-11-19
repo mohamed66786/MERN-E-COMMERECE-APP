@@ -11,13 +11,13 @@ const DropDown = ({ categoriesData, setDropDown }) => {
   };
 
   return (
-    <div className="pb-4 w-[270px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm">
+    <div className="pb-4 w-[270px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm ">
       {categoriesData &&
         categoriesData.map((item, index) => {
           return (
             <div
               key={index}
-              className={styles.normalFlex}
+              className={`${styles.normalFlex} hover:bg-slate-300`}
               onClick={() => submitHandle(item)}
             >
               <img
