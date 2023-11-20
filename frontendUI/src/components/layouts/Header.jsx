@@ -7,13 +7,15 @@ import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowDown, IoIosLogIn } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
 import { CgProfile } from "react-icons/cg";
+// import { useSelector } from "react-redux";
 
 const Header = ({ activeHeading }) => {
+  // const [isAuthenticated, user] = useSelector((state) => state.user);
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
@@ -60,7 +62,10 @@ const Header = ({ activeHeading }) => {
               value={searchValue}
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-gray-400 border-[2px] rounded-md"
-              onBlur={() => setFocus(false)}
+              onBlur={() => {
+                setFocus(false);
+                setSearchValue("");
+              }}
               onFocus={() => setFocus(true)}
             />
             <AiOutlineSearch
@@ -74,8 +79,11 @@ const Header = ({ activeHeading }) => {
                 {searchData &&
                   searchData.map((item, index) => {
                     return (
-                      <Link to={`/product/${item._id}`} className="bg-gray-400">
-                        <div className="w-full flex items-start-py-3">
+                      <Link
+                        to={`/product/${item._id}`}
+                        className="bg-gray-400 "
+                      >
+                        <div className="w-full flex items-start-py-3 hover:bg-blue-500">
                           <img
                             src={`${item.image_Url[0]?.url}`}
                             alt=""
@@ -90,7 +98,7 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
           {/* button */}
-          <div className={`${styles.button} hover:bg-red-900 bg-[#c4302b]`}>
+          <div className={`${styles.button}`}>
             <Link to="/seller">
               <h1 className="text-[#fff] flex items-center">
                 Become Seller
@@ -110,11 +118,18 @@ const Header = ({ activeHeading }) => {
           className={`${styles.section} relative ${styles.normalFlex} justify-between`}
         >
           {/* categories */}
-          <div onClick={()=>setDropDown(!dropDown)} className="relative h-[60px] mt-[10px]  w-[270px] hidden 1000px:block">
-            <BiMenuAltLeft size={30} className="absolute top-3 left-2 cursor-pointer" />
+          <div
+            onClick={() => setDropDown(!dropDown)}
+            className="relative h-[60px] mt-[10px]  w-[270px] hidden 1000px:block"
+          >
+            <BiMenuAltLeft
+              size={30}
+              className="absolute top-3 left-2 cursor-pointer"
+            />
 
             <button
-              className={`h-[100%] w-full flex justify-between items-center pl-10 bg-white font-sans text-lg font-[500] select-none rounded-t-md`}
+              className={`h-[100%] w-full flex justify-between items-center pl-10 bg-white 
+              font-sans text-lg font-[500] select-none rounded-t-md`}
             >
               All Categories
             </button>
@@ -122,7 +137,6 @@ const Header = ({ activeHeading }) => {
             <IoIosArrowDown
               size={20}
               className="absolute right-2 top-4 cursor-pointer "
-              onClick={() => setDropDown(!dropDown)}
             />
             {dropDown ? (
               <DropDown
@@ -139,7 +153,7 @@ const Header = ({ activeHeading }) => {
 
           <div className="flex">
             {/* Heart */}
-            <div className={`${styles.normalFlex}`}>
+            <div className={`${styles.normalFlex}`} title="wishList">
               <div
                 className="relative cursor-pointer mr-[15px]"
                 // onClick={() => setOpenWishlist(true)}
@@ -156,7 +170,7 @@ const Header = ({ activeHeading }) => {
 
             {/* shoping cart */}
 
-            <div className={`${styles.noramlFlex}`}>
+            <div className={`${styles.normalFlex}`} title="shoping cart">
               <div
                 className="relative cursor-pointer mr-[15px]"
                 // onClick={() => setOpenCart(true)}
@@ -172,15 +186,22 @@ const Header = ({ activeHeading }) => {
             </div>
 
             {/* profile */}
-            <div className={`${styles.normalFlex}`}>
+            <div className={`${styles.normalFlex}`} title="profile">
               <div className="relative cursor-pointer mr-[15px]">
                 <Link to="/login">
                   <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
                 </Link>
               </div>
             </div>
- 
-            {/* cart popup */}
+
+            {/* SIgn up */}
+            <div className={`${styles.normalFlex} `} title="Sign up">
+              <div className="relative cursor-pointer mr-[15px] ml-4">
+                <Link to="/sign-up">
+                  <IoIosLogIn size={30} color="rgb(255 255 255 / 83%)" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
