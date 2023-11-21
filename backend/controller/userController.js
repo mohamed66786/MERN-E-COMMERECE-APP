@@ -1,6 +1,8 @@
 const User = require("../model/userModel");
 const generateToken = require("../utils/generateToken");
 const asyncHandler = require("express-async-handler");
+const ErrorHandler = require("../utils/ErrorHandler");
+const catchAsyncErrors = require("../middlewars/catchAsyncErrors");
 
 // register user
 const createUser = asyncHandler(async (req, res, next) => {
@@ -13,43 +15,20 @@ const createUser = asyncHandler(async (req, res, next) => {
   if (userEmail) {
     return res.status(400).json({ message: "User already exist" });
   }
-
-  //start sending email for activation
-
-  // const activationToken=createActivationToken(user);
-  // const activationUrl=`https://localhost:3000/activate/${activationToken}`
-  // try {
-  //   await sendEmail({
-  //     email:user.email,
-  //     subject: 'Activation your account',
-  //     message:`Hello ${user.name} please activate your account: ${activationUrl}`
-  //   })
-  //   res.status(201).json({
-  //     success: true,
-  //     message:`please  activate your account : ${process.env.SMPT_HOST}`
-  //   })
-  // } catch (err) {
-  //   res.status(500).json({ message:"Invalid activation token"});
-  //     next(err.message);
-  // }
-
   // add user to database
   const user = {
     name: name,
     email: email,
     password: password,
   };
-  const newUser = await User.create(user);
-  if (newUser) {
-    generateToken(res, newUser._id);
-    return res.status(201).json({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
-    });
-  } else {
-    return res.status(400).json({ message: "Invalid User Data" });
-  }
+  await User.create(user);
+  const newUser = await User.findOne({ email: user.email });
+  generateToken(newUser, 201, res);
+  return res.status(201).json({
+    _id: newUser._id,
+    name: newUser.name,
+    email: newUser.email,
+  });
 });
 
 // login user
@@ -60,7 +39,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
   const user = await User.findOne({ email });
   if (user.email === email && (await user.comparePassword(password))) {
-    generateToken(res, user._id);
+    generateToken(user, 201, res);
     res.status(200).json({ message: "User was successfully connected" });
   } else {
     res.status(400).json({
@@ -72,27 +51,64 @@ const loginUser = asyncHandler(async (req, res, next) => {
 });
 
 //get user
-const getUsers = asyncHandler(async (req, res, next) => {
-  const user = await User.find(req.user.id);
+const getUsers = catchAsyncErrors(async (req, res, next) => {
+  const id = req.user.id;
+  const user = await User.findById(id);
   try {
+    const user = await User.findById(req.user.id);
+
     if (!user) {
-      res.status(400).json({ message: "User does not exist" });
+      res.status(400).json({ message: "User not found" });
+      return next(new ErrorHandler("User doesn't exists", 400));
     }
+
     res.status(200).json({
       success: true,
       user,
     });
-  } catch (err) {
-    res.status(500).json({ message: "Not authorized" });
-    throw new Error();
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+
+// logout the user
+const logoutUser = asyncHandler(async (req, res) => {
+  try {
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    // res.clearCookie("token");
+
+    res.status(201).json({
+      success: true,
+      message: "Log out successful!",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "can't log out the user" });
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
 // delete all users
 const deleteAllUsers = asyncHandler(async (req, res) => {
-  await User.deleteMany().then(() => {
-    return res.status(200).json({ message: "All users deleted successfully" });
-  });
+  await User.deleteMany()
+    .then(() => {
+      return res
+        .status(200)
+        .json({ message: "All users deleted successfully" });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Server error" });
+      throw new Error();
+    });
 });
 
-module.exports = { createUser, loginUser, getUsers, deleteAllUsers };
+module.exports = {
+  createUser,
+  loginUser,
+  getUsers,
+  deleteAllUsers,
+  logoutUser,
+};

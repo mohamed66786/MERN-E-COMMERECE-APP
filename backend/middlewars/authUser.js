@@ -1,28 +1,27 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../model/userModel");
+const ErrorHandler = require("../utils/ErrorHandler");
+const catchAsyncErrors = require("./catchAsyncErrors");
 
-const isAuthenticated = asyncHandler(async (req, res, next) => {
-  let token;
-  token = req.cookies.token;
-  if (token) {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET_KEY || "some secret"
-    );
-    const id = decoded._id;
-    const user = await User.find({ id });
-    if (user) {
-      req.user = user;
-      next();
-    } else {
-      res.status(401).json({ message: "Not authorized, invalid token" });
-      throw new Error();
-    }
-  } else {
-    res.status(401).json({ message: "Not authorized, no token" });
-    throw new Error();
+exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    res.status(401).json({ message: "Please login to continue" });
+
+    return next(new ErrorHandler("Please login to continue", 401));
   }
-});
 
-module.exports = isAuthenticated;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+  const user = await User.findById(decoded.id);
+  if (user) {
+    res.status(200).json({ message:"Uer is Authorized"})
+    req.user = user;
+  } else {
+    res.status(401).json({ message: "Invalid Token" });
+  }
+
+  next();
+});

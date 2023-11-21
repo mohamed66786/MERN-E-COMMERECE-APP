@@ -1,26 +1,37 @@
 import React, { useState } from "react";
 import styles from "./../../styles/style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { productData, categoriesData } from "../../static/data";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { IoIosArrowForward, IoIosArrowDown, IoIosLogIn } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
 import { CgProfile } from "react-icons/cg";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { IoLogOut } from "react-icons/io5";
+import axios from "axios";
+import { server } from "../../backendServer.js";
+import { toast } from "react-toastify";
+import { FaDoorOpen } from "react-icons/fa6";
+import Cart from "../Cart/Cart.jsx"
+
 
 const Header = ({ activeHeading }) => {
-  // const [isAuthenticated, user] = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [focus, setFocus] = useState(true);
+  const [openCart, setOpenCart] = useState(false);
+  // const [openWishlist, setOpenWishlist] = useState(false);
+
+  const navigate = useNavigate();
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchValue(value);
@@ -30,6 +41,19 @@ const Header = ({ activeHeading }) => {
         return product.name.toLowerCase().includes(value.toLowerCase());
       });
     setSearchData(filteredProducts);
+  };
+
+  const logoutHandler = () => {
+    axios
+      .get(`${server}/user/logout`, { withCredentials: true })
+      .then(() => {
+        toast.success(`User logged out successfully`);
+        navigate("/");
+        window.location.reload();
+      })
+      .catch(() => {
+        toast.error(`User logout failed`);
+      });
   };
 
   window.addEventListener("scroll", () => {
@@ -173,7 +197,7 @@ const Header = ({ activeHeading }) => {
             <div className={`${styles.normalFlex}`} title="shoping cart">
               <div
                 className="relative cursor-pointer mr-[15px]"
-                // onClick={() => setOpenCart(true)}
+                onClick={() => setOpenCart(true)}
               >
                 <AiOutlineShoppingCart
                   size={30}
@@ -188,9 +212,19 @@ const Header = ({ activeHeading }) => {
             {/* profile */}
             <div className={`${styles.normalFlex}`} title="profile">
               <div className="relative cursor-pointer mr-[15px]">
-                <Link to="/login">
-                  <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
-                </Link>
+                {isAuthenticated ? (
+                  <Link to="/profile">
+                    <img
+                      src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+                      alt=""
+                      className="w-[40px] h-[40px] rounded-full border-[3px] border-[blue]"
+                    />
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -198,10 +232,30 @@ const Header = ({ activeHeading }) => {
             <div className={`${styles.normalFlex} `} title="Sign up">
               <div className="relative cursor-pointer mr-[15px] ml-4">
                 <Link to="/sign-up">
-                  <IoIosLogIn size={30} color="rgb(255 255 255 / 83%)" />
+                  <FaDoorOpen size={30} color="rgb(255 255 255 / 83%)" />
                 </Link>
               </div>
             </div>
+            {/* log out */}
+            {isAuthenticated ? (
+              <div
+                className={`${styles.normalFlex} `}
+                title="Log out"
+                onClick={() => {
+                  logoutHandler()
+                }}
+              >
+                <div className="relative cursor-pointer mr-[15px] ml-4">
+                  <IoLogOut size={30} color="rgb(255 255 255 / 83%)" />
+                </div>
+              </div>
+            ) : null}
+
+            {/* cart popup */}
+
+            {openCart?(
+              <Cart  setOpenCart={setOpenCart}/>
+            ):null}
           </div>
         </div>
       </div>

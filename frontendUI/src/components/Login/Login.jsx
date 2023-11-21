@@ -24,7 +24,9 @@ const Login = () => {
         toast.success("User logged in successfully");
         setEmail("");
         setPassword("");
-        navigate(`${server}/user/profile`);
+        // navigate(`${server}/user/profile`);
+        navigate("/");
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(`failed to login!! invalid email or password`);

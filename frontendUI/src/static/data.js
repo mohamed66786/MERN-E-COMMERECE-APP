@@ -229,7 +229,7 @@ export const navItems = [
       title: "Gifts",
       subTitle: "",
       image_Url:
-        "https://securecdn.pymnts.com/wp-content/uploads/2014/11/Gifts-Photo-700x489.jpg",
+        "https://qlaw.co.uk/wp-content/uploads/2022/07/lpa-gifts.jpg",
     },
     {
       id: 7,
