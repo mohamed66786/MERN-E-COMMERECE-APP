@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/style";
-import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import { Link } from "react-router-dom";
-const Cart = ({ setOpenCart }) => {
+import { BsCartPlus } from 'react-icons/bs';
+const Wishlist = ({ setOpenWishlist }) => {
   const cartData = [
     {
       name: "Iphone 14 pro max 256 gb  and ssd",
@@ -30,10 +29,10 @@ const Cart = ({ setOpenCart }) => {
             <RxCross1
               size={25}
               className="cursor-pointer hover:text-[red] "
-              onClick={() => setOpenCart(false)}
+              onClick={() => setOpenWishlist(false)}
             />
           </div>
-          <h1 className="flex w-full justify-center pt-4 pr-4 font-bold text-[red] text-[22px]">The Cart</h1>
+            <h1 className="flex w-full justify-center pt-4 pr-4 font-bold text-[red] text-[22px]">WishList</h1>
           <div className={`${styles.normalFlex} p-4`}>
             <IoBagHandleOutline size={25} />
             <h5 className="pl-2 text-[20px] font-[500]">
@@ -66,27 +65,11 @@ const Cart = ({ setOpenCart }) => {
 };
 
 const CartSingle = ({ data }) => {
-  const [value, setValue] = useState(1);
-  // const totalPrice = value * data.price;
+//   const totalPrice = value * data.price;
   return (
     <div className="border-b p-4">
       <div className="w-full flex item-center">
-        <div>
-          <div
-            className={`bg-red-500 hover:bg-[red] rounded-full w-[25px] h-[25px] ${styles.normalFlex}
-                    justify-center cursor-pointer `}
-            onClick={() => setValue(value + 1)}
-          >
-            <HiPlus size={18} color="#fff" />
-          </div>
-          <span className="ml-2 font-bold">{value}</span>
-          <div
-            className="bg-[#a7abb14f] rounded-full hover:bg-gray-400 w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
-            onClick={() => setValue(value === 1 ? 1 : value - 1)}
-          >
-            <HiOutlineMinus size={16} color="#7d879c" />
-          </div>
-        </div>
+          <RxCross1 className="cursor-pointer hover:text-[red]" />
         <img
           src="https://uploads-ssl.webflow.com/621f43c49dec9b0ca2794276/624abe7649d54e4013606cda_E-commerce-Photo-Editing-Services-5.jpg"
           alt=""
@@ -94,16 +77,13 @@ const CartSingle = ({ data }) => {
         />
         <div className="pl-[5px]">
           <h1>{data.name} .</h1>
-          <h4 className="font-[400] text-[15px] text-[#4b4b4b]">
-            {+data.price}*{+value}$
-          </h4>
-          <h2 className="font-bold">
-            Total: <span className="text-[red]">{value * data.price}$</span>
-          </h2>
+          <span className="font-[400] text-[15px]  text-[red]">
+            {+data.price}$
+          </span>
+      <BsCartPlus size={25} className="cursor-pointer ml-[30%] text-[blue] hover:text-black " title="Add to cart"/>
         </div>
-        <RxCross1 className="cursor-pointer hover:text-[red]" />
       </div>
     </div>
   );
 };
-export default Cart;
+export default Wishlist;

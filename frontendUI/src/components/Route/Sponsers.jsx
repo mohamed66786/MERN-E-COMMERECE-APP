@@ -4,17 +4,22 @@ import { Link } from "react-router-dom";
 
 const Sponsers = () => {
   return (
+    <>
+    <div className={`${styles.heading} ml-[5%]`}>
+          <h1>Sponsers</h1>
+        </div>
     <div
       className={`${styles.section} hidden sm:block bg-white py-10 px-5 mb-12 cursor-pointer rounded-xl`}
     >
       <div className="flex justify-between w-full">
+        
         <div className="flex items-start">
           <Link to="https://www.sony.com/en/" target="_blank">
             <img
               src="https://logos-world.net/wp-content/uploads/2020/04/Sony-Logo.png"
               alt=""
               style={{ width: "150px", objectFit: "contain" }}
-            />
+              />
           </Link>
         </div>
         <div className="flex items-start">
@@ -23,7 +28,7 @@ const Sponsers = () => {
               src="https://logos-world.net/wp-content/uploads/2020/08/Dell-Logo-1989-2016.png"
               style={{ width: "150px", objectFit: "contain" }}
               alt=""
-            />
+              />
           </Link>
         </div>
         <div className="flex items-start">
@@ -41,7 +46,7 @@ const Sponsers = () => {
               src="https://www.vectorlogo.zone/logos/apple/apple-ar21.png"
               style={{ width: "150px", objectFit: "contain" }}
               alt=""
-            />
+              />
           </Link>
         </div>
         <div className="flex items-start">
@@ -55,6 +60,7 @@ const Sponsers = () => {
         </div>
       </div>
     </div>
+              </>
   );
 };
 

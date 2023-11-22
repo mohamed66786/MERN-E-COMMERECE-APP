@@ -305,7 +305,7 @@ export const navItems = [
         },
         {
           public_id: "test",
-          url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
+          url: "https://www.apple.com/newsroom/images/product/iphone/standard/Apple-iPhone-14-iPhone-14-Plus-2up-purple-220907_inline.jpg.large.jpg",
         },
       ],
       shop: {
@@ -331,11 +331,11 @@ export const navItems = [
       image_Url: [
         {
           public_id: "test",
-          url: "https://www.abramillar.com/wp-content/uploads/2018/01/apple-1842297_1920-1024x683.jpg",
+          url: "https://imageio.forbes.com/blogs-images/jasonevangelho/files/2019/05/laptop-1200x720.png?format=png&height=900&width=1600&fit=bounds",
         },
         {
           public_id: "test",
-          url: "https://www.istorebangladesh.com/images/thumbs/0000286_macbook-pro-m1_550.png",
+          url: "https://www.abramillar.com/wp-content/uploads/2018/01/apple-1842297_1920-1024x683.jpg",
         },
       ],
       shop: {

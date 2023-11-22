@@ -18,8 +18,8 @@ import axios from "axios";
 import { server } from "../../backendServer.js";
 import { toast } from "react-toastify";
 import { FaDoorOpen } from "react-icons/fa6";
-import Cart from "../Cart/Cart.jsx"
-
+import Cart from "../Cart/Cart.jsx";
+import Wishlist from "../Wishlist/Wishlist.jsx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -29,7 +29,7 @@ const Header = ({ activeHeading }) => {
   const [dropDown, setDropDown] = useState(false);
   const [focus, setFocus] = useState(true);
   const [openCart, setOpenCart] = useState(false);
-  // const [openWishlist, setOpenWishlist] = useState(false);
+  const [openWishlist, setOpenWishlist] = useState(false);
 
   const navigate = useNavigate();
   const handleSearchChange = (e) => {
@@ -49,7 +49,9 @@ const Header = ({ activeHeading }) => {
       .then(() => {
         toast.success(`User logged out successfully`);
         navigate("/");
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
       })
       .catch(() => {
         toast.error(`User logout failed`);
@@ -180,7 +182,7 @@ const Header = ({ activeHeading }) => {
             <div className={`${styles.normalFlex}`} title="wishList">
               <div
                 className="relative cursor-pointer mr-[15px]"
-                // onClick={() => setOpenWishlist(true)}
+                onClick={() => setOpenWishlist(true)}
               >
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span
@@ -215,9 +217,10 @@ const Header = ({ activeHeading }) => {
                 {isAuthenticated ? (
                   <Link to="/profile">
                     <img
+                    // this image should be dynamically loaded from backend
                       src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
                       alt=""
-                      className="w-[40px] h-[40px] rounded-full border-[3px] border-[blue]"
+                      className="w-[35px] h-[35px] rounded-full "
                     />
                   </Link>
                 ) : (
@@ -242,7 +245,7 @@ const Header = ({ activeHeading }) => {
                 className={`${styles.normalFlex} `}
                 title="Log out"
                 onClick={() => {
-                  logoutHandler()
+                  logoutHandler();
                 }}
               >
                 <div className="relative cursor-pointer mr-[15px] ml-4">
@@ -253,9 +256,9 @@ const Header = ({ activeHeading }) => {
 
             {/* cart popup */}
 
-            {openCart?(
-              <Cart  setOpenCart={setOpenCart}/>
-            ):null}
+            {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+            {/* wishlist popup */}
+            {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
           </div>
         </div>
       </div>
