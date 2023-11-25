@@ -70,7 +70,10 @@ const Header = ({ activeHeading }) => {
     <>
       {/* first part */}
       <div className={`${styles.section} py-1 mt-1 `}>
-        <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
+        <div
+          className="hidden 800px:h-[30px] 800px:my-[20px] 800px:flex items-center
+         justify-between"
+        >
           <div>
             <Link to="/">
               <img
@@ -89,8 +92,10 @@ const Header = ({ activeHeading }) => {
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-gray-400 border-[2px] rounded-md"
               onBlur={() => {
-                setFocus(false);
-                setSearchValue("");
+                setTimeout(() => {
+                  setFocus(false);
+                  setSearchValue("");
+                }, 100);
               }}
               onFocus={() => setFocus(true)}
             />
@@ -101,7 +106,7 @@ const Header = ({ activeHeading }) => {
 
             {/* after write what searchin for */}
             {searchData && searchData.length !== 0 && searchValue && focus ? (
-              <div className="absolute min-h-[30vh]  shadow-sm-2 z-[9] p-4 bg-blue-300">
+              <div className="absolute min-h-[30vh]  shadow-sm-2 z-[9] p-4 bg-white">
                 {searchData &&
                   searchData.map((item, index) => {
                     return (
@@ -109,7 +114,7 @@ const Header = ({ activeHeading }) => {
                         to={`/product/${item._id}`}
                         className="bg-gray-400 "
                       >
-                        <div className="w-full flex items-start-py-3 hover:bg-blue-500">
+                        <div className="w-full flex mb-2 p-1 items-start-py-3 hover:bg-gray-300 ">
                           <img
                             src={`${item.image_Url[0]?.url}`}
                             alt=""
@@ -178,7 +183,7 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className="flex">
-            {/* Heart */}
+            {/* wishlist */}
             <div className={`${styles.normalFlex}`} title="wishList">
               <div
                 className="relative cursor-pointer mr-[15px]"
@@ -196,7 +201,7 @@ const Header = ({ activeHeading }) => {
 
             {/* shoping cart */}
 
-            <div className={`${styles.normalFlex}`} title="shoping cart">
+            <div className={`${styles.normalFlex} `} title="shoping cart">
               <div
                 className="relative cursor-pointer mr-[15px]"
                 onClick={() => setOpenCart(true)}
@@ -217,7 +222,7 @@ const Header = ({ activeHeading }) => {
                 {isAuthenticated ? (
                   <Link to="/profile">
                     <img
-                    // this image should be dynamically loaded from backend
+                      // this image should be dynamically loaded from backend
                       src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
                       alt=""
                       className="w-[35px] h-[35px] rounded-full "
@@ -258,7 +263,9 @@ const Header = ({ activeHeading }) => {
 
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
             {/* wishlist popup */}
-            {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
+            {openWishlist ? (
+              <Wishlist setOpenWishlist={setOpenWishlist} />
+            ) : null}
           </div>
         </div>
       </div>

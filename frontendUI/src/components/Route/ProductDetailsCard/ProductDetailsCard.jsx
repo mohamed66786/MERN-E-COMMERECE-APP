@@ -18,7 +18,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
     setCount(count + 1);
   };
   const decrementCount = () => {
-    setCount(count - 1);
+    count === 0 ? setCount(count) : setCount(count - 1);
   };
 
   const removeFromWishlistHandler = () => {
@@ -43,10 +43,10 @@ const ProductDetailsCard = ({ setOpen, data }) => {
             />
             <div className="block w-full 800px:flex">
               {/* Left side */}
-              <div className="w-full 800px:w-[50%] hover:w-[60%]">
+              <div className="w-full 800px:w-[50%] ">
                 <img
                   src={`${data.image_Url[0]?.url}`}
-                  className="mt-7"
+                  className="mt-7 "
                   alt=""
                 />
                 <div className="flex mt-4">
@@ -88,6 +88,9 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   <h3 className={`${styles.price}`}>
                     {data.price ? data.price + "$" : null}
                   </h3>
+                  <h2 className="ml-4 text-[blue] text-[18px] font-bold">
+                    Total Price: {data.discount_price * count}$
+                  </h2>
                 </div>
 
                 <div className="flex items-center mt-12 justify-between pr-3">

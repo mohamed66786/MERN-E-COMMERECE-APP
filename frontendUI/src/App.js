@@ -9,13 +9,15 @@ import {
   BestSellingPage,
   EventsPage,
   FAQPage,
-  ProductDetailsPage
+  ProductDetailsPage,
+  ProfilePage
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "./redux/store";
 import { loadUser } from "./redux/actions/userAction.js";
 import { useSelector } from "react-redux";
+import Scroll from './components/layouts/Scroll';
 const App = () => {
   // OOOOOOOOOOOOOOOOHHHHHHHHHHHHHHHHHHHHHHHH That errorr here not dispath the action efforts Me #################
   useEffect(() => {
@@ -24,15 +26,18 @@ const App = () => {
 
   const { loading } = useSelector((state) => state.user);
 
+
   return (
     <>
+    <div > 
       {loading ? null : (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<SignupPage />} />
-            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/products"  element={<ProductsPage />} />
             <Route path="/product/:name" element={<ProductDetailsPage />} />
             <Route path="/best-selling" element={<BestSellingPage />} />
             <Route path="/events" element={<EventsPage />} />
@@ -41,7 +46,9 @@ const App = () => {
           <ToastContainer />
         </BrowserRouter>
       )}
-    </>
+        <Scroll />
+    </div>
+      </>
   );
 };
 

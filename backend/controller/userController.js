@@ -40,7 +40,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email });
   if (user.email === email && (await user.comparePassword(password))) {
     generateToken(user, 201, res);
-    res.status(200).json({ message: "User was successfully connected" });
+    return res.status(200).json({ message: "User was successfully connected" });
   } else {
     res.status(400).json({
       message:
@@ -48,10 +48,10 @@ const loginUser = asyncHandler(async (req, res, next) => {
     });
     throw new Error();
   }
-});
-
+}); 
+ 
 //get user
-const getUsers = catchAsyncErrors(async (req, res, next) => {
+const getUsers = asyncHandler(async (req, res, next) => {
   const id = req.user.id;
   const user = await User.findById(id);
   try {
@@ -81,7 +81,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     });
     // res.clearCookie("token");
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Log out successful!",
     });
