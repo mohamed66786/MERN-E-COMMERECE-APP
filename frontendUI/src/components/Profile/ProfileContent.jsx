@@ -44,7 +44,7 @@ const ProfileContent = ({active}) => {
                   alt=""
                 />
                 <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center 
-                cursor-pointer absolute bottom-[5px] right-[5px]">
+                cursor-pointer hover:bg-gray-300 absolute bottom-[5px] right-[5px]">
                   <input
                     type="file"
                     id="image"
@@ -52,7 +52,7 @@ const ProfileContent = ({active}) => {
                     // onChange={handleImage}
                   />
                   <label htmlFor="image">
-                    <AiOutlineCamera />
+                    <AiOutlineCamera className='cursor-pointer' />
                   </label>
                 </div>
               </div>

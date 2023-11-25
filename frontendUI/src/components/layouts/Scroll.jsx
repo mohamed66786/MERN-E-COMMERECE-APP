@@ -7,9 +7,9 @@ const Scroll = () => {
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
     // console.log(scrolled)
-    if (scrolled > 600) {
+    if (scrolled > 400) {
       setVisible(true);
-    } else if (scrolled <= 30) {
+    } else if (scrolled <= 400) {
       setVisible(false);
     }
   };
@@ -18,8 +18,6 @@ const Scroll = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-      /* you can also use 'auto' behaviour 
-         in place of 'smooth' */
     });
   };
 

@@ -35,7 +35,7 @@ const createUser = asyncHandler(async (req, res, next) => {
 const loginUser = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.status(401).json({ message: "Please enter your email and password" });
+    return res.status(401).json({ message: "Please enter your email and password" });
   }
   const user = await User.findOne({ email });
   if (user.email === email && (await user.comparePassword(password))) {
@@ -62,7 +62,7 @@ const getUsers = asyncHandler(async (req, res, next) => {
       return next(new ErrorHandler("User doesn't exists", 400));
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       user,
     });
@@ -109,6 +109,6 @@ module.exports = {
   createUser,
   loginUser,
   getUsers,
-  deleteAllUsers,
   logoutUser,
+  deleteAllUsers,
 };

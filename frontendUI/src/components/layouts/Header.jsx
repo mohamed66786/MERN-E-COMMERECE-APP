@@ -183,6 +183,26 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className="flex">
+            {/* profile */}
+            <div className={`${styles.normalFlex}`} title="profile">
+              <div className="relative cursor-pointer mr-[15px]">
+                {isAuthenticated ? (
+                  <Link to="/profile">
+                    <img
+                      // this image should be dynamically loaded from backend
+                      src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+                      alt=""
+                      className="w-[35px] h-[35px] rounded-full "
+                    />
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                  </Link>
+                )}
+              </div>
+            </div>
+
             {/* wishlist */}
             <div className={`${styles.normalFlex}`} title="wishList">
               <div
@@ -213,26 +233,6 @@ const Header = ({ activeHeading }) => {
                 <span className="absolute right-0 top-0 rounded-full bg-[#ff3d3d] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
                   {/* {cart && cart.length} */}2
                 </span>
-              </div>
-            </div>
-
-            {/* profile */}
-            <div className={`${styles.normalFlex}`} title="profile">
-              <div className="relative cursor-pointer mr-[15px]">
-                {isAuthenticated ? (
-                  <Link to="/profile">
-                    <img
-                      // this image should be dynamically loaded from backend
-                      src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
-                      alt=""
-                      className="w-[35px] h-[35px] rounded-full "
-                    />
-                  </Link>
-                ) : (
-                  <Link to="/login">
-                    <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
-                  </Link>
-                )}
               </div>
             </div>
 
