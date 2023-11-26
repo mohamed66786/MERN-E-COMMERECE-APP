@@ -5,7 +5,7 @@ const Events = () => {
 
   return (
     <div>
-        <div className={`${styles.section}`}>
+        <div className={`${styles.section} mb-6`}>
           <div className={`${styles.heading}`}>
             <h1>Popular Events</h1>
           </div>

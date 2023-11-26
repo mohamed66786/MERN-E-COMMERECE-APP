@@ -25,6 +25,8 @@ if (process.env.NODE_ENV !== "production") {
 
 //routes
 const user = require("./routes/userRoutes");
+const shop = require("./routes/shopRoutes");
 app.use("/api/v2/user", user);
+app.use("/api/v2/shop", shop);
 
 module.exports = app;

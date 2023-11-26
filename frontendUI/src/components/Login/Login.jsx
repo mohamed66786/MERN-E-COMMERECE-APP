@@ -28,7 +28,7 @@ const Login = () => {
         navigate("/");
         setTimeout(()=>{
           window.location.reload();
-        },4000)
+        },2000)
       })
       .catch((err) => {
         toast.error(`failed to login!! invalid email or password`);
