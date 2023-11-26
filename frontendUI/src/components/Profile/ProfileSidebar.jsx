@@ -6,15 +6,35 @@ import { MdOutlineTrackChanges } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { RxPerson } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { server } from "../../backendServer";
+import { toast } from "react-toastify";
 
 const ProfileSidebar = ({ active, setActive }) => {
   const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    axios
+      .get(`${server}/user/logout`, { withCredentials: true })
+      .then(() => {
+        toast.success(`User logged out successfully`);
+        navigate("/login");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      })
+      .catch(() => {
+        toast.error(`User logout failed`);
+      });
+  };
+
   return (
     <div>
       <div className="w-full bg-white shadow-sm rounded-[10px] p-4 pt-8">
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(1)}
+          title="profile"
         >
           <RxPerson size={20} color={active === 1 ? "red" : ""} />
           <span
@@ -28,6 +48,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(2)}
+          title="orders"
         >
           <HiOutlineShoppingBag size={20} color={active === 2 ? "red" : ""} />
           <span
@@ -42,6 +63,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(3)}
+          title="refunds"
         >
           <HiOutlineReceiptRefund size={20} color={active === 3 ? "red" : ""} />
           <span
@@ -56,6 +78,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(4) || navigate("/inbox")}
+          title="inbox"
         >
           <AiOutlineMessage size={20} color={active === 4 ? "red" : ""} />
           <span
@@ -70,6 +93,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(5)}
+          title="track order"
         >
           <MdOutlineTrackChanges size={20} color={active === 5 ? "red" : ""} />
           <span
@@ -84,6 +108,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(6)}
+          title="change password"
         >
           <RiLockPasswordLine size={20} color={active === 6 ? "red" : ""} />
           <span
@@ -98,6 +123,7 @@ const ProfileSidebar = ({ active, setActive }) => {
         <div
           className="flex items-center cursor-pointer w-full mb-8"
           onClick={() => setActive(7)}
+          title="adress"
         >
           <TbAddressBook size={20} color={active === 7 ? "red" : ""} />
           <span
@@ -111,7 +137,11 @@ const ProfileSidebar = ({ active, setActive }) => {
 
         <div
           className="single_item flex items-center cursor-pointer w-full mb-8"
-          // onClick={logoutHandler}
+          onClick={() => {
+            setActive(8);
+            logoutHandler();
+          }}
+          title="log out"
         >
           <AiOutlineLogin size={20} color={active === 8 ? "red" : ""} />
           <span

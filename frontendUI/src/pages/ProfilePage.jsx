@@ -10,6 +10,7 @@ import ProfileContent from "../components/Profile/ProfileContent.jsx";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  // to call is the user auth or its loading from state management in redux
   const { isAuthenticated,loading } = useSelector((state) => state.user);
   const [active, setActive] = useState(1);
   useEffect(() => {

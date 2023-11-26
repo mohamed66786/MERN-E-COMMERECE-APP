@@ -37,7 +37,7 @@ const Footer = () => {
       </div>
       {/* down part */}
       <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center">
-        <ul className="px-5 text-center sm:text-start flex sm:block flex-col items-center">
+        <ul className="px-5 text-center sm:text-center flex sm:flex flex-col items-center">
           <img
             src="https://shopo.quomodothemes.website/assets/images/logo.svg"
             alt=""
@@ -62,7 +62,7 @@ const Footer = () => {
           </div>
         </ul>
 
-        <ul className="text-center sm:text-start">
+        <ul className="text-center sm:text-center">
           <h1 className="mb-1 font-semibold">Company</h1>
           {footerProductLinks.map((link,index) => (
             <li key={index}>
@@ -77,7 +77,7 @@ const Footer = () => {
           ))}
         </ul>
 
-        <ul className="text-center sm:text-start">
+        <ul className="text-center sm:text-center">
           <h1 className="mb-1 font-semibold">Shop</h1>
           {footercompanyLinks.map((link,index) => (
             <li key={index}>
@@ -92,7 +92,7 @@ const Footer = () => {
           ))}
         </ul>
 
-        <ul className="text-center sm:text-start">
+        <ul className="text-center sm:text-center">
           <h1 className="mb-1 font-semibold">Support</h1>
           {footerSupportLinks.map((link,index) => (
             <li key={index}>
