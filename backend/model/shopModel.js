@@ -14,8 +14,6 @@ const shopSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please enter your password"],
-    minLength: [2, "Password should be greater than 6 characters"],
-    select: false,
   },
   description: {
     type: String,
@@ -80,6 +78,7 @@ const shopSchema = new mongoose.Schema({
   resetPasswordTime: Date,
 });
 
+// use this hash as middleware
 // Hash password
 shopSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {

@@ -23,7 +23,7 @@ const createUser = asyncHandler(async (req, res, next) => {
   };
   await User.create(user);
   const newUser = await User.findOne({ email: user.email });
-  generateToken(newUser, 201, res);
+  generateToken(newUser, 201, res,"token");
   return res.status(201).json({
     _id: newUser._id,
     name: newUser.name,
@@ -39,7 +39,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
   const user = await User.findOne({ email });
   if (user.email === email && (await user.comparePassword(password))) {
-    generateToken(user, 201, res);
+    generateToken(user, 201, res,"token");
     return res.status(200).json({ message: "User was successfully connected" });
   } else {
     res.status(400).json({
@@ -55,20 +55,20 @@ const getUsers = asyncHandler(async (req, res, next) => {
   const id = req.user.id;
   const user = await User.findById(id);
   try {
-    const user = await User.findById(req.user.id);
+    const findUser = await User.findById(req.user.id);
 
-    if (!user) {
+    if (!findUser) {
       res.status(400).json({ message: "User not found" });
-      return next(new ErrorHandler("User doesn't exists", 400));
+      return next(new Error());
     }
 
-    return res.status(200).json({
+     res.status(200).json({
       success: true,
-      user,
+      findUser,
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
-    return next(new ErrorHandler(error.message, 500));
+    return next(new Error());
   }
 });
 
@@ -76,6 +76,10 @@ const getUsers = asyncHandler(async (req, res, next) => {
 const logoutUser = asyncHandler(async (req, res) => {
   try {
     res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    res.cookie("sellerToken", "", {
       httpOnly: true,
       expires: new Date(0),
     });
@@ -87,7 +91,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "can't log out the user" });
-    return next(new ErrorHandler(error.message, 500));
+    return next();
   }
 });
 

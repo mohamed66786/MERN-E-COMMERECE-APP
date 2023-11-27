@@ -1,4 +1,4 @@
-const generateToken = (user, statusCode, res) => {
+const generateToken = (user, statusCode, res,nameOfToken) => {
   const token = user.getJwtToken();
 
   // Options for cookies
@@ -9,7 +9,7 @@ const generateToken = (user, statusCode, res) => {
     secure: true,
   };
 
-  res.status(statusCode).cookie("token", token, options).json({
+  res.status(statusCode).cookie(nameOfToken, token, options).json({
     success: true,
     user,
     token,

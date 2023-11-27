@@ -1,10 +1,10 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../backendServer";
 import { toast } from "react-toastify";
-import { RxAvatar } from "react-icons/rx";
+// import { RxAvatar } from "react-icons/rx";
 import styles from "./../styles/style";
 import { useSelector } from "react-redux";
 
@@ -14,7 +14,7 @@ const ShopCreate = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState();
-  const [avatar, setAvatar] = useState();
+  // const [avatar, setAvatar] = useState();
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
@@ -31,41 +31,44 @@ const ShopCreate = () => {
     e.preventDefault();
 
     axios
-      .post(`${server}/shop/create-shop`, {
-        name,
-        email,
-        password,
-        avatar,
-        zipCode,
-        address,
-        phoneNumber,
-      })
+      .post(
+        `${server}/shop/create-shop`,
+        {
+          name,
+          phoneNumber,
+          email,
+          address,
+          zipCode,
+          password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
-        toast.success(res.data.message);
+        toast.success("Seller created successfully");
         setName("");
         setEmail("");
         setPassword("");
-        setAvatar();
-        setZipCode();
+        setZipCode("");
         setAddress("");
-        setPhoneNumber();
+        setPhoneNumber("");
       })
-      .catch((error) => {
-        toast.error(error.response.data.message);
+      .catch((err) => {
+        toast.error("falied to create a new seller");
+        console.log(err.message);
       });
   };
 
-  const handleFileInputChange = (e) => {
-    const reader = new FileReader();
+  // const handleFileInputChange = (e) => {
+  //   const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatar(reader.result);
-      }
-    };
+  //   reader.onload = () => {
+  //     if (reader.readyState === 2) {
+  //       setAvatar(reader.result);
+  //     }
+  //   };
 
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  //   reader.readAsDataURL(e.target.files[0]);
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -206,7 +209,7 @@ const ShopCreate = () => {
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <label
                 htmlFor="avatar"
                 className="block text-sm font-medium text-gray-700"
@@ -237,19 +240,21 @@ const ShopCreate = () => {
                   />
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <button
                 type="submit"
-                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                className="group relative w-full h-[40px]
+                flex justify-center py-2 px-4 border border-transparent 
+                text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
               >
                 Submit
               </button>
             </div>
             <div className={`${styles.normalFlex} w-full`}>
               <h4>Already have an account?</h4>
-              <Link to="/shop-login" className="text-blue-600 pl-2">
+              <Link to="/shop-login" className="text-blue-600 pl-2 ml-3 hover:text-[red]">
                 Sign in
               </Link>
             </div>

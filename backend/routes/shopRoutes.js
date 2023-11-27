@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {isAuthenticated} = require("../middlewars/authUser");
-const {createShop}=require("../controller/shopController")
+const {isSeller} = require("../middlewars/authUser");
+const {createShop, loginShop, getSeller}=require("../controller/shopController")
 
 router.post("/create-shop",createShop);
+router.post("/login-shop",loginShop);
+router.get("/getSeller",isSeller,getSeller);
 
 
 module.exports = router;
