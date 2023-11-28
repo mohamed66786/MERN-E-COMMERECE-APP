@@ -83,10 +83,10 @@ const ShopCreate = () => {
   return (
     <>
     <Header/>
-    <h1 className="text-[30px] mt-4 cursor-pointer w-fit rounded-md bg-[blue]
-     text-white p-2 ml-[10%] "
+    <h1 className="text-[30px] mt-4 cursor-pointer w-fit rounded-xl bg-[#1877F2]
+     text-white p-3 ml-[10%] hover:bg-[blue] "
      onClick={toDashboard}
-     >Seller Dashboard</h1>
+     >Go Dashboard</h1>
     <div className="min-h-screen bg-gray-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
