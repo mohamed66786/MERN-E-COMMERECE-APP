@@ -3,6 +3,7 @@ import Login from "../components/Login/Login.jsx";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 // import { loadUser } from './../redux/actions/userAction';
+import Header from './../components/layouts/Header';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const LoginPage = () => {
   });
   return (
     <div>
+      <Header/>
       <Login />
     </div>
   );

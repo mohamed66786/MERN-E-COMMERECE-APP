@@ -59,7 +59,7 @@ const getUsers = asyncHandler(async (req, res, next) => {
 
     if (!findUser) {
       res.status(400).json({ message: "User not found" });
-      return next(new Error());
+      throw new Error()
     }
 
      res.status(200).json({
@@ -68,7 +68,7 @@ const getUsers = asyncHandler(async (req, res, next) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
-    return next(new Error());
+    throw new Error()
   }
 });
 

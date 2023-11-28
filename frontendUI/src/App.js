@@ -12,12 +12,15 @@ import {
   ProductDetailsPage,
   ProfilePage,
   ShopCreatePage,
-  ShopLoginPage
+  ShopLoginPage,
+  ShopDashboardPage,
+  NotFoundPage,
+  ShopHomePage
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "./redux/store";
-import { loadSeller, loadUser } from "./redux/actions/userAction.js";
+import {  loadUser,loadSeller } from "./redux/actions/userAction.js";
 import { useSelector } from "react-redux";
 import Scroll from './components/layouts/Scroll';
 const App = () => {
@@ -47,6 +50,9 @@ const App = () => {
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/shop-create" element={<ShopCreatePage />} />
             <Route path="/shop-login" element={<ShopLoginPage />} />
+            <Route path="/dashboard" element={<ShopDashboardPage />} />
+            <Route path="/shop/:id" element={<ShopHomePage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <ToastContainer />
         </BrowserRouter>

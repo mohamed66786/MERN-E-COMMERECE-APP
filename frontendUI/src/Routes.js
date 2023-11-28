@@ -7,8 +7,11 @@ import EventsPage from "./pages/EventsPage.jsx";
 import FAQPage from "./pages/FAQPage.jsx";
 import ProductDetailsPage from "./pages/ProductDetailsPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import ShopCreatePage from "./pages/ShopCreatePage.jsx";
-import ShopLoginPage from "./pages/ShopLoginPage.jsx";
+import ShopCreatePage from "./pages/shop/ShopCreatePage.jsx";
+import ShopLoginPage from "./pages/shop/ShopLoginPage.jsx";
+import ShopDashboardPage from "./pages/shop/ShopDashboardPage.jsx";
+import ShopHomePage from "./pages/shop/ShopHomePage.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 export {
   LoginPage,
   SignupPage,
@@ -21,4 +24,7 @@ export {
   ProfilePage,
   ShopCreatePage,
   ShopLoginPage,
+  ShopDashboardPage,
+  ShopHomePage,
+  NotFoundPage,
 };

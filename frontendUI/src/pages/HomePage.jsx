@@ -6,10 +6,16 @@ import FeaturedProduct from "../components/Route/FeaturedProduct/FeaturedProduct
 import Events from "../components/Events/Events";
 import Sponsers from "../components/Route/Sponsers.jsx"
 import Footer from "../components/layouts/Footer.jsx"
+import { useSelector } from "react-redux";
+import Loader from "../components/Layout/Loader.jsx";
 
 
 const HomePage = () => {
-  return ( 
+  const {isLoading} =useSelector(state=>state.seller)
+  if(isLoading){
+      return <Loader/>
+  }else{
+      return ( 
     <div>
       <Header activeHeading={1}/>
       <Hero/>
@@ -21,6 +27,8 @@ const HomePage = () => {
       <Footer/>
     </div>
   );
+  }
+
 };
 
 export default HomePage;

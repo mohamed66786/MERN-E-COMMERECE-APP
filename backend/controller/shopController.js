@@ -42,20 +42,14 @@ const createShop = asyncHandler(async (req, res, next) => {
 const loginShop = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-     res.status(401).json({ message: "please enter your email and password" });
-    next();
-    }
+    res.status(401).json({ message: "please enter your email and password" });
+    throw new Error();
+  }
   const seller = await Shop.findOne({ email });
-  const isValidPassword =await seller.comparePassword(password)
-  if (
-    seller.email === email 
-    && isValidPassword
-  ) {
+  const isValidPassword = await seller.comparePassword(password);
+  if (seller.email === email && isValidPassword) {
     generateToken(seller, 201, res, "sellerToken");
-     res
-      .status(200)
-      .json({ message: "seller was connected successfully" });
-      next();
+    res.status(200).json({ message: "seller was connected successfully" });
   } else {
     res.status(400).json({
       message:
@@ -65,31 +59,48 @@ const loginShop = asyncHandler(async (req, res, next) => {
   }
 });
 
-
-// load seller 
+// load seller
 const getSeller = asyncHandler(async (req, res, next) => {
   const id = req.seller.id;
   const seller = await Shop.findById(id);
   try {
-    const findSeller = await Shop.findById(req.seller.id);
+    const seller = await Shop.findById(req.seller.id);
 
-    if (!findSeller) {
+    if (!seller) {
       res.status(400).json({ message: "User not found" });
       throw new Error();
     }
 
-    return res.status(200).json({
+     res.status(200).json({
       success: true,
-      findSeller,
+      seller,
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
     throw new Error();
-    }
+  }
 });
+
+// logout the seller
+const logoutSeller=asyncHandler(async(req,res,next)=>{
+  try {
+    res.cookie("sellerToken", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    return res.status(201).json({
+      success: true,
+      message: "Log out successful!",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "can't log out the user" });
+    return next();
+  }
+})
 
 module.exports = {
   createShop,
   loginShop,
-  getSeller
+  getSeller,
+  logoutSeller,
 };

@@ -27,11 +27,11 @@ const server = app.listen(process.env.PORT || 8000, () => {
 });
 
 //unhandled promis rejection
-process.on("unhandledRejection", (err) => {
-  console.log(`Sutting down server for ${err.message}`);
-  console.log(`Sutting down server for unhandled promise rejection`);
+// process.on("unhandledRejection", (err) => {
+//   console.log(`Sutting down server for ${err.message}`);
+//   console.log(`Sutting down server for unhandled promise rejection`);
 
-  server.close(() => {
-    process.exit(1);
-  });
-});
+//   server.close(() => {
+//     process.exit(1);
+//   });
+// });
