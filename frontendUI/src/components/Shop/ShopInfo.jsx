@@ -36,6 +36,9 @@ const ShopInfo = ({ isOwner }) => {
       .then(() => {
         toast.success("Seller logged out successfully");
         navigate("/")
+        setTimeout(()=>{
+          window.location.reload()
+        },2000)
       });
   };
 
@@ -53,7 +56,7 @@ const ShopInfo = ({ isOwner }) => {
         <Loader />
       ) : (
         <div>
-          <div className="w-full py-5">
+          <div className="w-full py-5 shadow-lg">
             <div className="w-full flex item-center justify-center">
               <img
                 src={`https://blog.ninjavan.co/en-ph/wp-content/uploads/sites/2/2021/11/Shopee-seller.png`}

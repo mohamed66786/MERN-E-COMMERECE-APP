@@ -6,6 +6,10 @@ import styles from "../../styles/style";
 // import ProductCard from "../Route/ProductCard/ProductCard";
 // import Ratings from "../Products/Ratings";
 // import { getAllEventsShop } from "../../redux/actions/event";
+import ProductCard from './../Route/ProductCard/ProductCard';
+import {productData} from "../../static/data"
+
+
 
 const ShopProfileData = ({ isOwner }) => {
   // const { products } = useSelector((state) => state.products);
@@ -59,10 +63,15 @@ const ShopProfileData = ({ isOwner }) => {
         </div>
         <div>
           {isOwner && (
-            <div>
+            <div className="flex">
               <Link to="/dashboard">
-                <div className={`${styles.button} !rounded-[4px] h-[42px]`}>
+                <div className={`${styles.button} !rounded-[4px] h-[42px] ml-3`}>
                   <span className="text-[#fff]">Go Dashboard</span>
+                </div>
+              </Link>
+              <Link to="/">
+                <div className={`${styles.button} !rounded-[4px] h-[42px] ml-3`}>
+                  <span className="text-[#fff]">Go HomePage</span>
                 </div>
               </Link>
             </div>
@@ -74,10 +83,10 @@ const ShopProfileData = ({ isOwner }) => {
       <br />
       {active === 1 && (
         <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
-          {/* {products &&
-            products.map((i, index) => (
+          {productData &&
+            productData.map((i, index) => (
               <ProductCard data={i} key={index} isShop={true} />
-            ))} */}
+            ))}
         </div>
       )}
 
