@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DashboardHeader from "../../components/Shop/Layout/DashboardHeader.jsx";
-import DashboardSideBar from "../../components/Shop/Layout/DashboardSideBar .jsx";
+import DashboardSideBar from "../../components/Shop/Layout/DashboardSideBar.jsx";
 import Loader from "./../../components/Layout/Loader";
 const ShopDashboardPage = () => {
   const navigate = useNavigate();

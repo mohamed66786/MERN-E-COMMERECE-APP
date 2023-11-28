@@ -15,7 +15,8 @@ import {
   ShopLoginPage,
   ShopDashboardPage,
   NotFoundPage,
-  ShopHomePage
+  ShopHomePage,
+  ShopCreateProduct
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/shop-create" element={<ShopCreatePage />} />
             <Route path="/shop-login" element={<ShopLoginPage />} />
             <Route path="/dashboard" element={<ShopDashboardPage />} />
+            <Route path="/dashboard-create-product" element={<ShopCreateProduct />} />
             <Route path="/shop/:id" element={<ShopHomePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

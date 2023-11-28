@@ -51,8 +51,9 @@ const DashboardHeader = () => {
               className="mx-5 cursor-pointer"
             />
           </Link>
-          <Link to={`/shop/${seller._id}`}>
+          <Link to={`/shop/${seller._id}`} className="flex">
           {/* <Link to={`/shop`}> */}
+          <h2 className="flex  items-center mr-2 hover:text-[blue]">Profile</h2>
             <img
               src={`https://blog.ninjavan.co/en-ph/wp-content/uploads/sites/2/2021/11/Shopee-seller.png`}
               alt=""
