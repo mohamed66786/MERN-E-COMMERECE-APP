@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { createProduct } from "../../redux/actions/product";
 import { categoriesData } from "../../static/data";
-// import { toast } from "react-toastify";
+import { createProduct } from "../../redux/actions/product";
+import { toast } from "react-toastify";
 
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
-//   const { success, error } = useSelector((state) => state.products);
-//   const navigate = useNavigate();
+  const { success, error } = useSelector((state) => state.products);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  
 
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
@@ -21,42 +22,42 @@ const CreateProduct = () => {
   const [discountPrice, setDiscountPrice] = useState();
   const [stock, setStock] = useState();
 
-//   useEffect(() => {
-//     if (error) {
-//       toast.error(error);
-//     }
-//     if (success) {
-//       toast.success("Product created successfully!");
-//       navigate("/dashboard");
-//       window.location.reload();
-//     }
-//   }, [dispatch, error, success]);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (success) {
+      toast.success("Product created successfully!");
+      navigate("/dashboard");
+      window.location.reload();
+    }
+  }, [dispatch, error, success]);
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
+  // const handleImageChange = (e) => {
+  //   const files = Array.from(e.target.files);
 
-    setImages([]);
+  //   setImages([]);
 
-    files.forEach((file) => {
-      const reader = new FileReader();
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
 
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImages((old) => [...old, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  };
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setImages((old) => [...old, reader.result]);
+  //       }
+  //     };
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newForm = new FormData();
 
-    images.forEach((image) => {
-      newForm.set("images", image);
-    });
+    // images.forEach((image) => {
+    //   newForm.set("images", image);
+    // });
     newForm.append("name", name);
     newForm.append("description", description);
     newForm.append("category", category);
@@ -65,6 +66,7 @@ const CreateProduct = () => {
     newForm.append("discountPrice", discountPrice);
     newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
+    dispatch(createProduct(newForm))
     // dispatch(
     //   createProduct({
     //     name,
@@ -198,7 +200,7 @@ const CreateProduct = () => {
             id="upload"
             className="hidden"
             multiple
-            onChange={handleImageChange}
+            // onChange={handleImageChange}
           />
           <div className="w-full flex items-center flex-wrap">
             <label htmlFor="upload">
@@ -219,7 +221,10 @@ const CreateProduct = () => {
             <input
               type="submit"
               value="Create"
-              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-2 cursor-pointer appearance-none text-center block w-full
+               px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400
+                focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                 sm:text-sm hover:bg-[#1877F2]"
             />
           </div>
         </div>

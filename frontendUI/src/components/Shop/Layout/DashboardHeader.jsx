@@ -4,10 +4,10 @@ import { MdOutlineLocalOffer } from "react-icons/md";
 import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { BiMessageSquareDetail } from "react-icons/bi";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const DashboardHeader = () => {
-  const { seller } = useSelector((state) => state.seller);
+  // const { seller } = useSelector((state) => state.seller);
   return (
     <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
       <div>
@@ -51,8 +51,8 @@ const DashboardHeader = () => {
               className="mx-5 cursor-pointer"
             />
           </Link>
-          <Link to={`/shop/${seller._id}`} className="flex">
-          {/* <Link to={`/shop`}> */}
+          {/* <Link to={`/shop/${seller._id}`} className="flex"> */}
+          <Link to={`/shop/1`}className="flex">
           <h2 className="flex  items-center mr-2 hover:text-[blue]">Profile</h2>
             <img
               src={`https://blog.ninjavan.co/en-ph/wp-content/uploads/sites/2/2021/11/Shopee-seller.png`}

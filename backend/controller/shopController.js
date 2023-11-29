@@ -59,12 +59,12 @@ const loginShop = asyncHandler(async (req, res, next) => {
   }
 });
 
-// load seller
+// get seller
 const getSeller = asyncHandler(async (req, res, next) => {
   const id = req.seller.id;
   const seller = await Shop.findById(id);
   try {
-    const seller = await Shop.findById(req.seller.id);
+    // const seller = await Shop.findById(req.seller.id);
 
     if (!seller) {
       res.status(400).json({ message: "User not found" });
