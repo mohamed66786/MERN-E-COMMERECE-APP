@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,6 @@ const CreateProduct = () => {
   const { success, error } = useSelector((state) => state.products);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
 
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
@@ -29,7 +28,9 @@ const CreateProduct = () => {
     if (success) {
       toast.success("Product created successfully!");
       navigate("/dashboard");
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
   }, [dispatch, error, success]);
 
@@ -53,20 +54,17 @@ const CreateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newForm = new FormData();
-
-    // images.forEach((image) => {
-    //   newForm.set("images", image);
-    // });
-    newForm.append("name", name);
-    newForm.append("description", description);
-    newForm.append("category", category);
-    newForm.append("tags", tags);
-    newForm.append("originalPrice", originalPrice);
-    newForm.append("discountPrice", discountPrice);
-    newForm.append("stock", stock);
-    newForm.append("shopId", seller._id);
-    dispatch(createProduct(newForm))
+    const newForm = {
+      name: name,
+      description: description,
+      category: category,
+      tags: tags,
+      originalPrice: originalPrice,
+      discountPrice: discountPrice,
+      stock: stock,
+      shopId: seller._id,
+    };
+    dispatch(createProduct(newForm));
     // dispatch(
     //   createProduct({
     //     name,
