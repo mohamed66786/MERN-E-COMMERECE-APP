@@ -3,12 +3,12 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesData } from "../../static/data";
-import { createProduct } from "../../redux/actions/product";
 import { toast } from "react-toastify";
+import { createEvent } from "../../redux/actions/event";
 
 const CreateEvent = () => {
   const { seller } = useSelector((state) => state.seller);
-  const { success, error } = useSelector((state) => state.products);
+  const { success, error } = useSelector((state) => state.events);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,36 +20,59 @@ const CreateEvent = () => {
   const [originalPrice, setOriginalPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
   const [stock, setStock] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [imageURL, setImageURL] = useState("");
+
+
+  const handleStartDateChange = (e) => {
+    const startDate = new Date(e.target.value);
+    setStartDate(startDate);
+    setEndDate(null);
+  };
+
+  const handleEndDateChange = (e) => {
+    const endDate = new Date(e.target.value);
+    setEndDate(endDate);
+  };
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const minEndDate = startDate
+    ? new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10)
+    : today;
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
     if (success) {
-      toast.success("Product created successfully!");
+      toast.success("Event created successfully!");
       navigate("/dashboard");
       setTimeout(() => {
         window.location.reload();
       }, 2000);
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success,navigate]);
 
-  // const handleImageChange = (e) => {
-  //   const files = Array.from(e.target.files);
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
 
-  //   setImages([]);
+    setImages([]);
 
-  //   files.forEach((file) => {
-  //     const reader = new FileReader();
+    files.forEach((file) => {
+      const reader = new FileReader();
 
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setImages((old) => [...old, reader.result]);
-  //       }
-  //     };
-  //     reader.readAsDataURL(file);
-  //   });
-  // };
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImages((old) => [...old, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,8 +86,11 @@ const CreateEvent = () => {
       discountPrice: discountPrice,
       stock: stock,
       shopId: seller._id,
+      start_Date:startDate.toISOString(),
+      Finish_Date:endDate.toISOString(),
+      imageURL:imageURL,
     };
-    dispatch(createProduct(newForm));
+    dispatch(createEvent(newForm));
     // dispatch(
     //   createProduct({
     //     name,
@@ -81,8 +107,10 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white 
-     shadow h-[80vh] rounded-[4px] p-4 overflow-y-scroll">
+    <div
+      className="w-[90%] 800px:w-[70%] bg-white 
+     shadow h-[80vh] rounded-[4px] p-4 overflow-y-scroll"
+    >
       <h5 className="text-[30px] font-Poppins text-center">Create Event</h5>
       {/* create Event form */}
       <form onSubmit={handleSubmit}>
@@ -153,7 +181,7 @@ const CreateEvent = () => {
           <label className="pb-2">Original Price</label>
           <input
             type="number"
-            name="price"
+            name="original_price"
             value={originalPrice}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={(e) => setOriginalPrice(e.target.value)}
@@ -191,6 +219,53 @@ const CreateEvent = () => {
         <br />
         <div>
           <label className="pb-2">
+            Event Start Date <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            name="start-date"
+            id="start-date"
+            value={startDate ? startDate.toISOString().slice(0, 10) : ""}
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            onChange={handleStartDateChange}
+            min={today}
+            placeholder="Enter the start date..."
+          />
+        </div>
+        <br />
+        <div>
+          <label className="pb-2">
+            Event End Date <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            name="end-date"
+            id="end-date"
+            value={endDate ? endDate.toISOString().slice(0, 10) : ""}
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            onChange={handleEndDateChange}
+            min={minEndDate}
+            placeholder="Enter the end date..."
+          />
+        </div>
+        <br />
+        <div>
+          <label className="pb-2">
+            The Image URL <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="image-url"
+            value={imageURL}
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            onChange={(e)=>setImageURL(e.target.value)}
+            min={minEndDate}
+            placeholder="Enter the end date..."
+          />
+        </div>
+        <br />
+        <div>
+          <label className="pb-2">
             Upload Images <span className="text-red-500">*</span>
           </label>
           <input
@@ -199,7 +274,7 @@ const CreateEvent = () => {
             id="upload"
             className="hidden"
             multiple
-            // onChange={handleImageChange}
+            onChange={handleImageChange}
           />
           <div className="w-full flex items-center flex-wrap">
             <label htmlFor="upload">

@@ -11,7 +11,7 @@ import { HiOutlineReceiptRefund } from "react-icons/hi";
 
 const DashboardSideBar = ({ active }) => {
   return (
-    <div className="w-full h-[90vh] bg-white shadow-sm 
+    <div className="w-fit 800px:w-full h-[90vh] bg-white shadow-sm 
     overflow-y-scroll sticky top-0 left-0 z-10">
       {/* single items */}
       <div className="w-full flex items-center p-4 hover:bg-gray-300">
@@ -21,7 +21,7 @@ const DashboardSideBar = ({ active }) => {
             color={`${active === 1 ? "crimson" : "#555"}`}
           />
           <h5
-            className={`hidden 800px:block pl-2 text-[18px] font-[400] ${
+            className={`hidden  800px:block pl-2 text-[18px] font-[400] ${
               active === 1 ? "text-[crimson]" : "text-[#555]"
             }`}
           >
