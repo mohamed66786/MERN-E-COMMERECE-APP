@@ -16,6 +16,7 @@ const ShopInfo = ({ isOwner }) => {
   const dispatch = useDispatch();
   const navigate=useNavigate();
   const { seller } = useSelector((state) => state.seller);
+  console.log(seller)
   // useEffect(() => {
   //   dispatch(getAllProductsShop(id));
   //   setIsLoading(true);

@@ -27,8 +27,10 @@ if (process.env.NODE_ENV !== "production") {
 const user = require("./routes/userRoutes");
 const shop = require("./routes/shopRoutes");
 const product = require("./routes/productRoutes");
+const event = require("./routes/eventRoutes.js");
 app.use("/api/v2/user", user);
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/product", product);
+app.use("/api/v2/event", event);
 
 module.exports = app;

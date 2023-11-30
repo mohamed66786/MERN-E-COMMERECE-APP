@@ -16,52 +16,76 @@ import {
   ShopDashboardPage,
   NotFoundPage,
   ShopHomePage,
-  ShopCreateProduct
+  ShopCreateProduct,
+  ShopAllProducts,
+  ShopCreateEvents
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import store from "./redux/store";
-import {  loadUser,loadSeller } from "./redux/actions/userAction.js";
+import { loadUser, loadSeller } from "./redux/actions/userAction.js";
 import { useSelector } from "react-redux";
-import Scroll from './components/layouts/Scroll';
+import Scroll from "./components/layouts/Scroll";
+import SellerProtectedRoute from "./routes/shopRoutes/SellerProtectedRoute ";
+import { getAllProductsShop } from "./redux/actions/product.js";
 const App = () => {
   // OOOOOOOOOOOOOOOOHHHHHHHHHHHHHHHHHHHHHHHH That errorr here not dispath the action efforts Me #################
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(loadSeller());
+    store.dispatch(getAllProductsShop());
+
   }, []);
 
   const { loading } = useSelector((state) => state.user);
 
-
   return (
     <>
-    <div > 
-      {loading ? null : (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/sign-up" element={<SignupPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/products"  element={<ProductsPage />} />
-            <Route path="/product/:name" element={<ProductDetailsPage />} />
-            <Route path="/best-selling" element={<BestSellingPage />} />
-            <Route path="/events" element={<EventsPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/shop-create" element={<ShopCreatePage />} />
-            <Route path="/shop-login" element={<ShopLoginPage />} />
-            <Route path="/dashboard" element={<ShopDashboardPage />} />
-            <Route path="/dashboard-create-product" element={<ShopCreateProduct />} />
-            <Route path="/shop/:id" element={<ShopHomePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-          <ToastContainer />
-        </BrowserRouter>
-      )}
+      <div>
+        {loading ? null : (
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/sign-up" element={<SignupPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/product/:name" element={<ProductDetailsPage />} />
+              <Route path="/best-selling" element={<BestSellingPage />} />
+              <Route path="/events" element={<EventsPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/shop-create" element={<ShopCreatePage />} />
+              <Route path="/shop-login" element={<ShopLoginPage />} />
+              <Route path="/dashboard" element={<ShopDashboardPage />} />
+              <Route
+                path="/dashboard-create-product"
+                element={<ShopCreateProduct />}
+              />
+              <Route
+                path="/dashboard-products"
+                element={
+                  <SellerProtectedRoute>
+                    <ShopAllProducts />
+                  </SellerProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard-create-event"
+                element={
+                  <SellerProtectedRoute>
+                    <ShopCreateEvents />
+                  </SellerProtectedRoute>
+                }
+              />
+              <Route path="/shop/:id" element={<ShopHomePage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+            <ToastContainer />
+          </BrowserRouter>
+        )}
         <Scroll />
-    </div>
-      </>
+      </div>
+    </>
   );
 };
 

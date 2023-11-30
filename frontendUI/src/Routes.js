@@ -13,6 +13,8 @@ import ShopDashboardPage from "./pages/shop/ShopDashboardPage.jsx";
 import ShopHomePage from "./pages/shop/ShopHomePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import ShopCreateProduct from "./routes/shopRoutes/ShopCreateProduct.jsx";
+import ShopAllProducts from "./pages/shop/ShopAllProducts.jsx";
+import ShopCreateEvents from "./pages/shop/ShopCreateEvents.jsx";
 export {
   LoginPage,
   SignupPage,
@@ -28,5 +30,7 @@ export {
   ShopDashboardPage,
   ShopHomePage,
   NotFoundPage,
-  ShopCreateProduct
+  ShopCreateProduct,
+  ShopAllProducts,
+  ShopCreateEvents,
 };
