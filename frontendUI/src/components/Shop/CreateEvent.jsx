@@ -50,7 +50,7 @@ const CreateEvent = () => {
     }
     if (success) {
       toast.success("Event created successfully!");
-      navigate("/dashboard");
+      navigate("/dashboard-events");
       setTimeout(() => {
         window.location.reload();
       }, 2000);

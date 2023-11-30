@@ -29,6 +29,46 @@ const createEvent=asyncHandler(async(req,res,next)=>{
     
 })
 
+// get all events products
+const getAllEvents=asyncHandler(async(req,res,next)=>{
+  try {
+    const events = await Event.find({ shopId: req.params.id });
+
+    res.status(201).json({
+      success: true,
+      events,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    throw new Error(error.message);
+  }
+})
+
+
+const deleteEvent=asyncHandler(async(req,res,next)=>{
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      res.status(404).json({ message: "Event not found with this id" });
+      throw new Error();
+    }
+    const eventId = event._id;
+    //event here is the collecton that we return and will remove from it 
+    await event.deleteOne({ eventId });
+
+    res.status(201).json({
+      success: true,
+      message: "Event Deleted successfully!",
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    throw new Error();
+  }
+})
+
 module.exports={
     createEvent,
+    getAllEvents,
+    deleteEvent,
 }
