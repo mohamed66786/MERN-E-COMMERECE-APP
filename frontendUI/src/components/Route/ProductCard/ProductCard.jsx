@@ -11,7 +11,7 @@ import {
 import styles from "../../../styles/style";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx";
 
-const ProductCard = ({ data, isEvent }) => {
+const ProductCard = ({ data }) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -23,7 +23,11 @@ const ProductCard = ({ data, isEvent }) => {
         <div className="flex justify-end"></div>
         <Link to={`/product/${productName}`}>
           <img
-            src={data.image_Url[0].url}
+            src={
+              data.image_Url
+                ? data.image_Url[0].url
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
+            }
             alt="Content Img"
             className="w-10/12  h-[170px] object-contain "
           />

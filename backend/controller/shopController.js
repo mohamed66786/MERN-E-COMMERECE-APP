@@ -98,9 +98,24 @@ const logoutSeller=asyncHandler(async(req,res,next)=>{
   }
 })
 
+
+const getShopIngo=asyncHandler(async(req,res,next)=>{
+  try {
+    const shop = await Shop.findById(req.params.id);
+    res.status(201).json({
+      success: true,
+      shop,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    throw new Error(error.message);
+  }
+})
+
 module.exports = {
   createShop,
   loginShop,
   getSeller,
   logoutSeller,
+  getShopIngo,
 };

@@ -6,28 +6,31 @@ import styles from "../../styles/style";
 import Loader from "../Layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-// import { getAllProductsShop } from "../../redux/actions/product";
+import { getAllProductsShop } from "../../redux/actions/product";
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
-  // const {products} = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.products);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const { seller } = useSelector((state) => state.seller);
-  console.log(seller)
-  // useEffect(() => {
-  //   dispatch(getAllProductsShop(id));
-  //   setIsLoading(true);
-  //   axios.get(`${server}/shop/get-shop-info/${id}`).then((res) => {
-  //    setData(res.data.shop);
-  //    setIsLoading(false);
-  //   }).catch((error) => {
-  //     console.log(error);
-  //     setIsLoading(false);
-  //   })
-  // }, [])
+  console.log(seller);
+  useEffect(() => {
+    dispatch(getAllProductsShop(id));
+    setIsLoading(true);
+    axios
+      .get(`${server}/shop/get-shop-info/${id}`)
+      .then((res) => {
+        setData(res.data.shop);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  }, [dispatch,id]);
 
   const logoutHandler = async () => {
     axios
@@ -36,20 +39,26 @@ const ShopInfo = ({ isOwner }) => {
       })
       .then(() => {
         toast.success("Seller logged out successfully");
-        navigate("/")
-        setTimeout(()=>{
-          window.location.reload()
-        },2000)
+        navigate("/");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       });
   };
 
-  // const totalReviewsLength =
-  //   products &&
-  //   products.reduce((acc, product) => acc + product.reviews.length, 0);
+  const totalReviewsLength =
+    products &&
+    products.reduce((acc, product) => acc + product.reviews.length, 0);
 
-  // const totalRatings = products && products.reduce((acc,product) => acc + product.reviews.reduce((sum,review) => sum + review.rating, 0),0);
+  const totalRatings =
+    products &&
+    products.reduce(
+      (acc, product) =>
+        acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
+      0
+    );
 
-  // const averageRating = totalRatings / totalReviewsLength || 0;
+  const averageRating = totalRatings / totalReviewsLength || 0;
 
   return (
     <>
@@ -65,32 +74,26 @@ const ShopInfo = ({ isOwner }) => {
                 className="w-[150px] h-[150px] object-cover rounded-full"
               />
             </div>
-            <h3 className="text-center py-2 text-[20px]">{seller.name}</h3>
+            <h3 className="text-center py-2 text-[20px]">{data.name}</h3>
             <p className="text-[16px] text-[#000000a6] p-[10px] flex items-center">
-              {/* {seller.description}
-               */}
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-              dignissimos suscipit saepe eligendi quasi. Excepturi iure aliquid
-              reprehenderit eos eligendi consequatur expedita, sint voluptatum
+              {data.description} 
             </p>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Address</h5>
-            <h4 className="text-[#000000a6]">{seller.address}</h4>
+            <h4 className="text-[#000000a6]">{data.address}</h4>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Phone Number</h5>
-            <h4 className="text-[#000000a6]">{seller.phoneNumber}</h4>
+            <h4 className="text-[#000000a6]">{data.phoneNumber}</h4>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Total Products</h5>
-            304
-            {/* <h4 className="text-[#000000a6]">{products && products.length}</h4> */}
+            <h4 className="text-[#000000a6]">{products && products.length}</h4>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Shop Ratings</h5>
-            4.7
-            {/* <h4 className="text-[#000000b0]">{averageRating}/5</h4> */}
+            <h4 className="text-[#000000b0]">{averageRating}/5</h4>
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Joined On</h5>

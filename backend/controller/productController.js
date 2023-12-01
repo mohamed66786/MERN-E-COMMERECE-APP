@@ -23,7 +23,7 @@ const createProduct = asyncHandler(async (req, res, next) => {
 });
 
 // get all products
-const getAllProducts = asyncHandler(async (req, res, next) => {
+const getAllProductsShop = asyncHandler(async (req, res, next) => {
   try {
     const products = await Product.find({ shopId: req.params.id });
 
@@ -58,8 +58,26 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
   }
 });
 
+
+
+const getAllProducts=asyncHandler(async(req,res,next)=>{
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    // const products = await Product.find()
+    
+    res.status(201).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    throw new Error(error.message);
+  }
+})
+
 module.exports = {
   createProduct,
-  getAllProducts,
+  getAllProductsShop,
   deleteProduct,
+  getAllProducts,
 };

@@ -13,7 +13,7 @@ const AllCoupons = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [coupouns,setCoupouns] = useState([]);
+  const [coupouns, setCoupouns] = useState([]);
   const [minAmount, setMinAmout] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
@@ -39,10 +39,16 @@ const AllCoupons = () => {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    axios.delete(`${server}/coupon/delete-coupon/${id}`,{withCredentials: true}).then((res) => {
-      toast.success("Coupon code deleted succesfully!")
-    })
-    window.location.reload();
+    axios
+      .delete(`${server}/coupon/delete-coupon/${id}`, { withCredentials: true })
+      .then((res) => {
+        toast.success("Coupon code deleted succesfully!");
+        setTimeout(()=>{
+          window.location.reload();
+        },2000)
+      }).catch((err)=>{
+        toast.error("Cannot delete coupon code!!")
+      })
   };
 
   const handleSubmit = async (e) => {
@@ -62,9 +68,11 @@ const AllCoupons = () => {
         { withCredentials: true }
       )
       .then((res) => {
-       toast.success("Coupon code created successfully!");
-       setOpen(false);
-       window.location.reload();
+        toast.success("Coupon code created successfully!");
+        setOpen(false);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -107,7 +115,7 @@ const AllCoupons = () => {
   const row = [];
 
   coupouns &&
-  coupouns.forEach((item) => {
+    coupouns.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
@@ -137,22 +145,27 @@ const AllCoupons = () => {
             disableSelectionOnClick
             autoHeight
           />
+
+          {/* after click the create coupoun */}
           {open && (
-            <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
-              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4">
+            <div
+              className="fixed top-0 left-0 w-full h-screen bg-[#00000062] 
+            z-[20000] flex items-center justify-center"
+            >
+              <div className="w-[90%] 800px:w-[50%] h-[90vh] bg-white rounded-md shadow p-4">
                 <div className="w-full flex justify-end">
                   <RxCross1
                     size={30}
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:bg-gray-400 hover:rounded-full hover:p-1"
                     onClick={() => setOpen(false)}
                   />
                 </div>
                 <h5 className="text-[30px] font-Poppins text-center">
                   Create Coupon code
                 </h5>
-                {/* create coupoun code */}
-                {/* <form onSubmit={handleSubmit} aria-required={true}> */}
-                <form action="">
+
+                {/* create coupoun code form */}
+                <form onSubmit={handleSubmit}>
                   <br />
                   <div>
                     <label className="pb-2">
@@ -220,9 +233,9 @@ const AllCoupons = () => {
                         Choose a selected product
                       </option>
                       {products &&
-                        products.map((i) => (
-                          <option value={i.name} key={i.name}>
-                            {i.name}
+                        products.map((item) => (
+                          <option value={item.name} key={item.name}>
+                            {item.name}
                           </option>
                         ))}
                     </select>
@@ -232,7 +245,12 @@ const AllCoupons = () => {
                     <input
                       type="submit"
                       value="Create"
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      className="mt-2 appearance-none block w-full 
+                      px-3 h-[35px] border border-gray-300 rounded-[3px]
+                       placeholder-gray-400 focus:outline-none
+                        focus:ring-blue-500 focus:border-blue-500 sm:text-sm
+                        hover:bg-slate-300 cursor-pointer
+                        "
                     />
                   </div>
                 </form>

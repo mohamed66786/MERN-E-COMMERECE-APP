@@ -7,11 +7,14 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const [count, setCount] = useState(1); // for initial the count of the products
   const [click, setClick] = useState(false);
   // const [select, setSelect] = useState(false);
+
+  // console.log(data)
 
   const handleMessageSubmit = () => {};
   const incrementCount = () => {
@@ -45,22 +48,34 @@ const ProductDetailsCard = ({ setOpen, data }) => {
               {/* Left side */}
               <div className="w-full 800px:w-[50%] ">
                 <img
-                  src={`${data.image_Url[0]?.url}`}
+                  src={
+                    data.image_Url
+                      ? data.image_Url[0].url
+                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
+                  }
                   className="mt-7 "
                   alt=""
                 />
                 <div className="flex mt-4">
-                  <img
-                    src={data.shop.shop_avatar.url}
-                    alt=""
-                    className="w-[50px] h-[50px] rounded-full  mr-2 "
-                  />
-                  <div>
-                    <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                    <h5 className="pb-3 text-[15px] text-blue-900">
-                      ({data.shop.ratings}) Ratings
-                    </h5>
-                  </div>
+                  <Link to={`/shop/preview/${data.shop._id}`} className="flex">
+                    <img
+                      src={
+                        data.shop.shop_avatar
+                          ? data.shop.shop_avatar.url
+                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
+                      }
+                      alt=""
+                      className="w-[50px] h-[50px] rounded-full  mr-2 "
+                    />
+                    <div>
+                      <h3 className={`${styles.shop_name}`}>
+                        {data.shop.name}
+                      </h3>
+                      <h5 className="pb-3 text-[15px] text-blue-900">
+                        ({data.shop.ratings}) Ratings
+                      </h5>
+                    </div>
+                  </Link>
                 </div>
                 <div
                   className={`${styles.button} bg-[#5656ff] mt-4 rounded-[4px] h-11 hover:bg-blue-900 `}

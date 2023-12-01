@@ -21,6 +21,7 @@ import {
   ShopCreateEvents,
   ShopAllEvents,
   ShopAllCoupouns,
+  ShopPreviewPage,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,14 +30,15 @@ import { loadUser, loadSeller } from "./redux/actions/userAction.js";
 import { useSelector } from "react-redux";
 import Scroll from "./components/layouts/Scroll";
 import SellerProtectedRoute from "./routes/shopRoutes/SellerProtectedRoute ";
-import { getAllProductsShop } from "./redux/actions/product.js";
+import { getAllProducts } from "./redux/actions/product.js";
+// import { getAllEvents } from "./redux/actions/event.js";
 const App = () => {
   // OOOOOOOOOOOOOOOOHHHHHHHHHHHHHHHHHHHHHHHH That errorr here not dispath the action efforts Me #################
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(loadSeller());
-    store.dispatch(getAllProductsShop());
-
+    store.dispatch(getAllProducts());
+    // store.dispatch(getAllEvents());
   }, []);
 
   const { loading } = useSelector((state) => state.user);
@@ -96,6 +98,7 @@ const App = () => {
                 }
               />
               <Route path="/shop/:id" element={<ShopHomePage />} />
+              <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <ToastContainer />

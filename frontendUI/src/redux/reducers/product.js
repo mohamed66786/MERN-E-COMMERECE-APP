@@ -10,7 +10,7 @@ export const productReducer = createReducer(initialState, {
   },
   productCreateSuccess: (state, action) => {
     state.isLoading = false;
-    state.product = action.payload;
+    state.products = action.payload;
     state.success = true;
   },
   productCreateFail: (state, action) => {
