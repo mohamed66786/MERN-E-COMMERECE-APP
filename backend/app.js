@@ -28,9 +28,11 @@ const user = require("./routes/userRoutes");
 const shop = require("./routes/shopRoutes");
 const product = require("./routes/productRoutes");
 const event = require("./routes/eventRoutes.js");
+const coupon = require("./routes/coupounCodeRoutes.js");
 app.use("/api/v2/user", user);
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/product", product);
 app.use("/api/v2/event", event);
+app.use("/api/v2/coupon", coupon);
 
 module.exports = app;

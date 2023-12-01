@@ -16,6 +16,7 @@ import ShopCreateProduct from "./routes/shopRoutes/ShopCreateProduct.jsx";
 import ShopAllProducts from "./pages/shop/ShopAllProducts.jsx";
 import ShopCreateEvents from "./pages/shop/ShopCreateEvents.jsx";
 import ShopAllEvents from "./pages/shop/ShopAllEvents.jsx";
+import ShopAllCoupouns from "./pages/shop/ShopAllCoupouns.jsx";
 export {
   LoginPage,
   SignupPage,
@@ -35,4 +36,5 @@ export {
   ShopAllProducts,
   ShopCreateEvents,
   ShopAllEvents,
+  ShopAllCoupouns,
 };

@@ -11,7 +11,6 @@ import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
-import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { IoLogOut } from "react-icons/io5";
 import axios from "axios";
@@ -115,8 +114,10 @@ const Header = ({ activeHeading }) => {
                       <Link
                         to={`/product/${item._id}`}
                         className="bg-gray-400 "
+                        key={index}
                       >
-                        <div className="w-full flex mb-2 p-1 items-start-py-3 hover:bg-gray-300 ">
+                        <div className="w-full flex mb-2 p-1 items-start-py-
+                         hover:bg-gray-300 ">
                           <img
                             src={`${item.image_Url[0]?.url}`}
                             alt=""

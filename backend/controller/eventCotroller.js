@@ -1,4 +1,3 @@
-const express = require("express");
 const asyncHandler = require("express-async-handler");
 const Shop = require("../model/shopModel");
 const Event = require("../model/eventModel");
