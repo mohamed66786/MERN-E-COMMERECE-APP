@@ -31,14 +31,14 @@ import { useSelector } from "react-redux";
 import Scroll from "./components/layouts/Scroll";
 import SellerProtectedRoute from "./routes/shopRoutes/SellerProtectedRoute ";
 import { getAllProducts } from "./redux/actions/product.js";
-// import { getAllEvents } from "./redux/actions/event.js";
+import { getAllEvents } from "./redux/actions/event.js";
 const App = () => {
   // OOOOOOOOOOOOOOOOHHHHHHHHHHHHHHHHHHHHHHHH That errorr here not dispath the action efforts Me #################
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(loadSeller());
     store.dispatch(getAllProducts());
-    // store.dispatch(getAllEvents());
+    store.dispatch(getAllEvents());
   }, []);
 
   const { loading } = useSelector((state) => state.user);

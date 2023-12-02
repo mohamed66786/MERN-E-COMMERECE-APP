@@ -2,16 +2,15 @@ const asyncHandler = require("express-async-handler");
 const Shop = require("../model/shopModel");
 const Event = require("../model/eventModel");
 
-
 //create anew event
-const createEvent=asyncHandler(async(req,res,next)=>{
-    const shopId = req.body.shopId;
-    const shop = await Shop.findById(shopId);
+const createEvent = asyncHandler(async (req, res, next) => {
+  const shopId = req.body.shopId;
+  const shop = await Shop.findById(shopId);
   try {
     if (!shop) {
       res.status(400).json({ message: "invalid shop id" });
       throw new Error();
-    } else { 
+    } else {
       const productData = req.body;
       productData.shop = shop;
       const event = await Event.create(productData);
@@ -22,14 +21,13 @@ const createEvent=asyncHandler(async(req,res,next)=>{
     }
     next();
   } catch (error) {
-    res.status(404).json({message: error.message});
+    res.status(404).json({ message: error.message });
     throw new Error(error.message);
   }
-    
-})
+});
 
-// get all events products
-const getAllEvents=asyncHandler(async(req,res,next)=>{
+// get all specific event products
+const getAllEvents = asyncHandler(async (req, res, next) => {
   try {
     const events = await Event.find({ shopId: req.params.id });
 
@@ -41,10 +39,10 @@ const getAllEvents=asyncHandler(async(req,res,next)=>{
     res.status(400).json({ message: error.message });
     throw new Error(error.message);
   }
-})
+});
 
-
-const deleteEvent=asyncHandler(async(req,res,next)=>{
+//delete specific event
+const deleteEvent = asyncHandler(async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -53,7 +51,7 @@ const deleteEvent=asyncHandler(async(req,res,next)=>{
       throw new Error();
     }
     const eventId = event._id;
-    //event here is the collecton that we return and will remove from it 
+    //event here is the collecton that we return and will remove from it
     await event.deleteOne({ eventId });
 
     res.status(201).json({
@@ -64,10 +62,24 @@ const deleteEvent=asyncHandler(async(req,res,next)=>{
     res.status(400).json({ message: error.message });
     throw new Error();
   }
-})
+});
 
-module.exports={
-    createEvent,
-    getAllEvents,
-    deleteEvent,
-}
+// get all events
+const getAllEventsData = asyncHandler(async (req, res, next) => {
+  try {
+    const events = Event.find();
+    res.status(200).json({
+      success: true,
+      events,
+    });
+  } catch (error) {
+    res.status(400).json({message: error.message});
+  }
+});
+
+module.exports = {
+  createEvent,
+  getAllEvents,
+  deleteEvent,
+  getAllEventsData,
+};
