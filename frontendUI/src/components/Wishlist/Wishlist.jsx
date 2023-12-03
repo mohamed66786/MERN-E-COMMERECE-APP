@@ -100,8 +100,8 @@ const CartSingle = ({ data, removeFromWishlistHandler, addTocartHandler }) => {
     <div className="border-b p-4">
       <div className="w-full flex item-center">
         <RxCross1
-          className="cursor-pointer hover:text-[red] mr-2"
-          size={20}
+          className="cursor-pointer hover:text-[red] mr-2 "
+          size={30}
           onClick={() => removeFromWishlistHandler(data)}
         />
         <img

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/style";
 import {
@@ -7,6 +7,13 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../redux/actions/wishlist";
+import { toast } from "react-toastify";
+import { addTocart } from "../../redux/actions/cart";
 // import Ratings from "./Ratings.jsx";
 
 const ProductDetails = ({ data }) => {
@@ -14,11 +21,49 @@ const ProductDetails = ({ data }) => {
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
 
+  const { wishlist } = useSelector((state) => state.wishlist);
+  const { cart } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (wishlist && wishlist.find((item) => item.id === data.id)) {
+  //     setClick(true);
+  //   } else {
+  //     setClick(false);
+  //   }
+  // }, [wishlist, data.id]);
+
   const incrementCount = () => {
     setCount(count + 1);
   };
   const decrementCount = () => {
     count >= 1 ? setCount(count - 1) : setCount(count);
+  };
+
+  const addToWishlistHandler = (data) => {
+    setClick(!click);
+    dispatch(addToWishlist(data));
+  };
+
+  const removeFromWishlistHandler = (data) => {
+    setClick(!click);
+    dispatch(removeFromWishlist(data));
+  };
+
+  const addToCartHandler = (id) => {
+    const isItemExists = cart && cart.find((i) => i.id === id);
+    if (isItemExists) {
+      toast.error("The item already in the cart");
+    } else {
+      if (data.stock < 1) {
+        toast.error("Product Stock Limited! Please select a Limited Product");
+      } else {
+        const cartData = { ...data, qty: 1 };
+        dispatch(addTocart(cartData));
+        toast.success("Item added successfully to cart");
+      }
+    }
   };
 
   return (
@@ -62,6 +107,7 @@ const ProductDetails = ({ data }) => {
                   </div>
                 </div>
               </div>
+
               {/* right part */}
               <div className="w-full 800px:w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{data.name}</h1>
@@ -74,7 +120,7 @@ const ProductDetails = ({ data }) => {
                     {data.price ? data.price + "$" : null}
                   </h3>
                   <h1 className="ml-6 font-bold text-[blue] text-[18px]">
-                    Total Price: {data.discount_price*count}$
+                    Total Price: {data.discount_price * count}$
                   </h1>
                 </div>
                 {/* #################################################################### */}
@@ -97,13 +143,13 @@ const ProductDetails = ({ data }) => {
                       +
                     </button>
                   </div>
-                    
+
                   <div>
                     {click ? (
                       <AiFillHeart
                         size={30}
                         className="cursor-pointer"
-                        onClick={() => setClick(!click)}
+                        onClick={() => removeFromWishlistHandler(data)}
                         color={click ? "red" : "#333"}
                         title="Remove from wishlist"
                       />
@@ -111,7 +157,7 @@ const ProductDetails = ({ data }) => {
                       <AiOutlineHeart
                         size={30}
                         className="cursor-pointer"
-                        onClick={() => setClick(!click)}
+                        onClick={() => addToWishlistHandler(data)}
                         title="Add to wishlist"
                       />
                     )}
@@ -120,6 +166,7 @@ const ProductDetails = ({ data }) => {
                 {/* button */}
                 <div
                   className={`${styles.button} mt-6 rounded h-11 flex items-center m-auto`}
+                  onClick={() => addToCartHandler(data.id)}
                 >
                   <span className="text-white">Add To Cart </span>
                   <AiOutlineShoppingCart
@@ -128,16 +175,20 @@ const ProductDetails = ({ data }) => {
                   />
                 </div>
                 <div className="flex item-center pt-8">
-                  <img
-                    src={data.shop.shop_avatar.url}
-                    className="w-[50px] h-[50px] rounded-full mr-2"
-                    alt=""
-                  />
+                  <Link to={`/shop/preview/${data?.id}`}>
+                    <img
+                      src={data.shop.shop_avatar.url}
+                      className="w-[50px] h-[50px] rounded-full mr-2"
+                      alt=""
+                    />
+                  </Link>
 
                   <div className="pr-8">
-                    <h3 className={`${styles.shop_name} pb-1 pt-1`}>
-                      {data.shop.name}{" "}
-                    </h3>
+                    <Link to={`/shop/preview/${data?.id}`}>
+                      <h3 className={`${styles.shop_name} pb-1 pt-1`}>
+                        {data.shop.name}{" "}
+                      </h3>
+                    </Link>
                     <h5 className="pb-3 text-[15px]">
                       ({data.shop.ratings}) Ratings
                     </h5>
