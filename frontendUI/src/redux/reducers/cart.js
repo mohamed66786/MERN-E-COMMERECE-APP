@@ -9,11 +9,11 @@ const initialState = {
 export const cartReducer = createReducer(initialState, {
   addToCart: (state, action) => {
     const item = action.payload;
-    const isItemExist = state.cart.find((i) => i._id === item._id);
+    const isItemExist = state.cart.find((i) => i.id === item.id);
     if (isItemExist) {
       return {
         ...state,
-        cart: state.cart.map((i) => (i._id === isItemExist._id ? item : i)),
+        cart: state.cart.map((i) => (i.id === isItemExist.id ? item : i)),
       };
     } else {
       return {
@@ -25,7 +25,7 @@ export const cartReducer = createReducer(initialState, {
   removeFromCart: (state, action) => {
     return {
       ...state,
-      cart: state.cart.filter((i) => i._id !== action.payload),
+      cart: state.cart.filter((i) => i.id !== action.payload),
     };
   },
 });

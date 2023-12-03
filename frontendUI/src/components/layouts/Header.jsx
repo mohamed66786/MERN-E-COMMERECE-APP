@@ -24,6 +24,7 @@ import { RxCross1 } from "react-icons/rx";
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const {cart}=useSelector(state=>state.cart);
+  const {wishlist}=useSelector(state=>state.wishlist);
 
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState(null);
@@ -220,7 +221,7 @@ const Header = ({ activeHeading }) => {
                   className="absolute right-0 top-0 rounded-full bg-[#ff3d3d]
                w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center"
                 >
-                  {/* {wishlist && wishlist.length} */}3
+                  {wishlist && wishlist.length}
                 </span>
               </div>
             </div>

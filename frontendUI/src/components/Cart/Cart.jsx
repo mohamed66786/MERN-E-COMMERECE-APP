@@ -9,23 +9,6 @@ import { addTocart, removeFromCart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
 
 const Cart = ({ setOpenCart }) => {
-  // const cartData = [
-  //   {
-  //     name: "Iphone 14 pro max 256 gb  and ssd",
-  //     decription: "this is the new phone version",
-  //     price: 999,
-  //   },
-  //   {
-  //     name: "Iphone 14 pro max 256 gb  and ssd",
-  //     decription: "this is the new phone version",
-  //     price: 999,
-  //   },
-  //   {
-  //     name: "Iphone 14 pro max 256 gb  and ssd",
-  //     decription: "this is the new phone version",
-  //     price: 999,
-  //   },
-  // ];
 
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -44,7 +27,8 @@ const Cart = ({ setOpenCart }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#00000048] h-screen z-10">
-      <div className="fixed top-0 right-0 min-h-full w-[25%] bg-white flex flex-col justify-between shadow-lg">
+      <div className="fixed top-0 right-0 h-[100vh] overflow-y-scroll
+       w-[25%] bg-white flex flex-col justify-between shadow-lg">
         {cart && cart.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
@@ -60,15 +44,15 @@ const Cart = ({ setOpenCart }) => {
           <>
             <div>
               <div className="flex w-full justify-end pt-4 pr-4">
+              <h1 className="flex w-full justify-center pt-4 pr-4 font-bold text-[red] text-[22px]">
+                The Cart
+              </h1>
                 <RxCross1
                   size={25}
                   className="cursor-pointer hover:text-[red] "
                   onClick={() => setOpenCart(false)}
                 />
               </div>
-              <h1 className="flex w-full justify-center pt-4 pr-4 font-bold text-[red] text-[22px]">
-                The Cart
-              </h1>
               <div className={`${styles.normalFlex} p-4`}>
                 <IoBagHandleOutline size={25} />
                 <h5 className="pl-2 text-[20px] font-[500]">
