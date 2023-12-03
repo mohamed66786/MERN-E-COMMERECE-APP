@@ -10,8 +10,11 @@ import {
 } from "react-icons/ai";
 import styles from "../../../styles/style";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx";
+import { useSelector } from "react-redux";
 
 const ProductCard = ({ data }) => {
+  const { cart } = useSelector((state) => state.cart);
+
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
 

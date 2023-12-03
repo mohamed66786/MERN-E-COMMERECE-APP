@@ -67,13 +67,14 @@ const deleteEvent = asyncHandler(async (req, res, next) => {
 // get all events
 const getAllEventsData = asyncHandler(async (req, res, next) => {
   try {
-    const events = Event.find();
+    const events = await Event.find();
     res.status(200).json({
       success: true,
       events,
     });
   } catch (error) {
     res.status(400).json({message: error.message});
+    throw new Error();
   }
 });
 
