@@ -23,8 +23,8 @@ import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
-  const {cart}=useSelector(state=>state.cart);
-  const {wishlist}=useSelector(state=>state.wishlist);
+  const { cart } = useSelector((state) => state.cart);
+  const { wishlist } = useSelector((state) => state.wishlist);
 
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState(null);
@@ -48,18 +48,24 @@ const Header = ({ activeHeading }) => {
   };
 
   const logoutHandler = () => {
-    axios
-      .get(`${server}/user/logout`, { withCredentials: true })
-      .then(() => {
-        toast.success(`User logged out successfully`);
-        navigate("/login");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      })
-      .catch(() => {
-        toast.error(`User logout failed`);
-      });
+    const check = window.prompt("Are you sure you want to log out?","no");
+     if(check===null){
+      toast.error("User not logged out");
+    }
+   else if (check.toLocaleLowerCase()==="yes"||check.toLocaleLowerCase()==="y") {
+      axios
+        .get(`${server}/user/logout`, { withCredentials: true })
+        .then(() => {
+          toast.success(`User logged out successfully`);
+          navigate("/login");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        })
+        .catch(() => {
+          toast.error(`User logout failed`);
+        });
+    }
   };
 
   window.addEventListener("scroll", () => {
@@ -119,8 +125,10 @@ const Header = ({ activeHeading }) => {
                         className="bg-gray-400 "
                         key={index}
                       >
-                        <div className="w-full flex mb-2 p-1 items-start-py-
-                         hover:bg-gray-300 ">
+                        <div
+                          className="w-full flex mb-2 p-1 items-start-py-
+                         hover:bg-gray-300 "
+                        >
                           <img
                             src={`${item.image_Url[0]?.url}`}
                             alt=""
@@ -204,7 +212,12 @@ const Header = ({ activeHeading }) => {
                 ) : (
                   <Link to="/login">
                     {/* <CgProfile size={30} color="rgb(255 255 255 / 83%)" /> */}
-                    <h1 className="text-white mr-10 hover:text-[blue]" title="login" >Login</h1>
+                    <h1
+                      className="text-white mr-10 hover:text-[blue]"
+                      title="login"
+                    >
+                      Login
+                    </h1>
                   </Link>
                 )}
               </div>
@@ -237,8 +250,10 @@ const Header = ({ activeHeading }) => {
                   size={30}
                   color="rgb(255 255 255 / 83%)"
                 />
-                <span className="absolute right-0 top-0 rounded-full bg-[#ff3d3d] w-4 h-4
-                 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                <span
+                  className="absolute right-0 top-0 rounded-full bg-[#ff3d3d] w-4 h-4
+                 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center"
+                >
                   {cart && cart.length}
                 </span>
               </div>
@@ -311,9 +326,11 @@ const Header = ({ activeHeading }) => {
               onClick={() => setOpenCart(true)}
             >
               <AiOutlineShoppingCart size={30} />
-              <span className="absolute right-0 top-0 rounded-full bg-[red] w-4 h-4 top 
-              right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
-                {cart&&cart.length}
+              <span
+                className="absolute right-0 top-0 rounded-full bg-[red] w-4 h-4 top 
+              right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center"
+              >
+                {cart && cart.length}
               </span>
             </div>
           </div>
@@ -321,24 +338,23 @@ const Header = ({ activeHeading }) => {
 
         {/* header sidebar */}
 
-        {
-          open&&(
-            <div
+        {open && (
+          <div
             className={`fixed w-full bg-[#0000005f] z-20 h-full top-0 left-0`}
           >
-             <div className="fixed w-[70%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll">
-              
-              
-             <div className="w-full justify-between flex pr-3">
+            <div className="fixed w-[70%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll">
+              <div className="w-full justify-between flex pr-3">
                 <div>
                   <div
                     className="relative mr-[15px]"
                     onClick={() => setOpenWishlist(true) || setOpen(false)}
                   >
                     <AiOutlineHeart size={30} className="mt-5 ml-3" />
-                    <span class="absolute right-0 top-0 rounded-full 
-                    bg-[red] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
-                    3
+                    <span
+                      class="absolute right-0 top-0 rounded-full 
+                    bg-[red] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center"
+                    >
+                      3
                     </span>
                   </div>
                 </div>
@@ -348,9 +364,7 @@ const Header = ({ activeHeading }) => {
                   onClick={() => setOpen(false)}
                 />
               </div>
-              
-              
-              
+
               <div className="my-8 w-[92%] m-auto h-[40px relative]">
                 <input
                   type="search"
@@ -358,15 +372,18 @@ const Header = ({ activeHeading }) => {
                   className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
                   value={searchValue}
                   onChange={handleSearchChange}
-                  onBlur={()=>{
+                  onBlur={() => {
                     setFocus(false);
                     setSearchValue("");
                   }}
-                  onFocus={()=>setFocus(true)}
+                  onFocus={() => setFocus(true)}
                 />
-                {searchData &&searchData.length !== 0 && searchValue && focus ? (
+                {searchData &&
+                searchData.length !== 0 &&
+                searchValue &&
+                focus ? (
                   <div className="absolute bg-[#d5d5d5] z-10 shadow w-full left-0 p-3">
-                    {searchData.map((i,index) => {
+                    {searchData.map((i, index) => {
                       const d = i.name;
 
                       const Product_name = d.replace(/\s+/g, "-");
@@ -384,7 +401,7 @@ const Header = ({ activeHeading }) => {
                       );
                     })}
                   </div>
-                ):null}
+                ) : null}
               </div>
 
               <Navbar active={activeHeading} />
@@ -427,11 +444,9 @@ const Header = ({ activeHeading }) => {
                   </>
                 )}
               </div>
-              </div>
-
+            </div>
           </div>
-          )
-        }
+        )}
       </div>
     </>
   );

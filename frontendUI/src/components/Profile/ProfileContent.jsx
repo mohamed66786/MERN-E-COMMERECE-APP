@@ -8,26 +8,32 @@ import AllRefundOrders from './profileContentComponents/AllRefundOrders';
 import TrackOrder from './profileContentComponents/TrackOrder';
 import ChangePassword from './profileContentComponents/ChangePassword';
 import Address from './profileContentComponents/Address';
+import { updateUserInformation } from '../../redux/actions/userAction';
 
 const ProfileContent = ({active}) => {
   const dispatch=useDispatch()
-  const { user, error, successMessage } = useSelector((state) => state.user);
+  const { user, error ,successMessage} = useSelector((state) => state.user);
 
 
-  const [name,setName]=useState("");
-  const [email,setEmail]=useState("");
-  const [phoneNumber,setPhoneNumber]=useState("");
+  const [name,setName]=useState(user&&user.name);
+  const [email,setEmail]=useState(user&&user.email);
+  const [phoneNumber,setPhoneNumber]=useState(user&&user.phoneNumber);
   const [password,setPassword]=useState("");
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch({ type: "clearErrors" });
+      // dispatch({ type: "clearErrors" });
     }
-    if (successMessage) {
-      toast.success(successMessage);
-      dispatch({ type: "clearMessages" });
+    else if(successMessage) {
+      toast.success("User updated successfully");
+      // dispatch({ type: "clearMessages" });
     }
-  }, [error, successMessage]);
+  }, [error,dispatch,successMessage]);
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    dispatch(updateUserInformation(name,email,phoneNumber,password)); 
+  }
 
   
   return (
@@ -59,9 +65,10 @@ const ProfileContent = ({active}) => {
             </div>
             <br />
             <br />
-            
+              <h1 className='ml-3 text-[20px] border-b-2 border-black'>Update Your Profile Informations</h1>
+              <br />
             {/* form part */}
-            <div className="w-full px-5">
+            <div className="w-full px-5" onSubmit={handleSubmit}>
               <form >
                 <div className="w-full 800px:flex block pb-3">
                   <div className=" w-[100%] 800px:w-[50%]">

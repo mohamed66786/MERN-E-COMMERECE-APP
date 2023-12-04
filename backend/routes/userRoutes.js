@@ -6,7 +6,9 @@ const {
   loginUser,
   getUsers,
   deleteAllUsers,
-  logoutUser
+  logoutUser,
+  updateUserInformation,
+  updateUserAdress,
 } = require("../controller/userController");
 // route for regitsters
 
@@ -19,5 +21,8 @@ router.get("/getUser", isAuthenticated, getUsers);
 router.get("/logout",logoutUser)
 // route for deleting all users in database
 router.delete("/deleteAll", deleteAllUsers);
-
+// update user information
+router.put("/update-user-info",updateUserInformation);
+// update user adress
+router.put("/user/update-user-addresses",updateUserAdress)
 module.exports = router;
