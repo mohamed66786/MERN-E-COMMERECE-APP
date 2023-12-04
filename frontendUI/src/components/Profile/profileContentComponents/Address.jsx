@@ -1,13 +1,14 @@
 import { toast } from "react-toastify";
-import { deleteUserAddress, updatUserAddress } from "../../../redux/actions/userAction";
-import { RxCross1 } from 'react-icons/rx';
+import {
+  deleteUserAddress,
+  updatUserAddress,
+} from "../../../redux/actions/userAction";
+import { RxCross1 } from "react-icons/rx";
 import styles from "../../../styles/style";
 import { AiOutlineDelete } from "react-icons/ai";
-import {Country, State}from "country-state-city"
-
-
-const { useState } = require("react");
-const { useDispatch, useSelector } = require("react-redux");
+import { Country, State } from "country-state-city";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Address = () => {
   const [open, setOpen] = useState(false);
@@ -17,9 +18,10 @@ const Address = () => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [addressType, setAddressType] = useState("");
-  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const {user} = useSelector((state) => state.user);
+  
   const addressTypeData = [
     {
       name: "Default",
@@ -79,7 +81,7 @@ const Address = () => {
               Add New Address
             </h1>
             <div className="w-full">
-              <form  onSubmit={handleSubmit} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <div className="w-full block p-4">
                   <div className="w-full pb-2">
                     <label className="block pb-2">Country</label>
@@ -226,7 +228,7 @@ const Address = () => {
             </div>
             <div className="pl-8 flex items-center">
               <h6 className="text-[12px] 800px:text-[unset]">
-                {item.address1} {item.address2}
+                {item.address1} & {item.address2}
               </h6>
             </div>
             <div className="pl-8 flex items-center">

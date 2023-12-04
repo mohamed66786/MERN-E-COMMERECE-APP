@@ -2,8 +2,6 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../model/userModel");
 const Shop = require("../model/shopModel");
-const ErrorHandler = require("../utils/ErrorHandler");
-const catchAsyncErrors = require("./catchAsyncErrors");
 
 //auth user
 exports.isAuthenticated = asyncHandler(async (req, res, next) => {
@@ -11,15 +9,17 @@ exports.isAuthenticated = asyncHandler(async (req, res, next) => {
 
   if (!token) {
     res.status(401).json({ message: "Please login to continue" });
-
-    return next(new ErrorHandler("Please login to continue", 401));
+    throw new Error();
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const decoded = jwt.verify(
+    token,
+    process.env.JWT_SECRET_KEY || "some secret"
+  );
 
   const user = await User.findById(decoded.id);
   if (user) {
-    // res.status(200).json({ message:"Uer is Authorized"})
+    res.status(200).json({ message: "Uer is Authorized", user });
     req.user = user;
     return next();
   } else {

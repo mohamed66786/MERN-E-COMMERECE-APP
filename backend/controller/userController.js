@@ -1,8 +1,8 @@
 const User = require("../model/userModel");
 const generateToken = require("../utils/generateToken");
 const asyncHandler = require("express-async-handler");
-const ErrorHandler = require("../utils/ErrorHandler");
-const catchAsyncErrors = require("../middlewars/catchAsyncErrors");
+// const ErrorHandler = require("../utils/ErrorHandler");
+// const catchAsyncErrors = require("../middlewars/catchAsyncErrors");
 
 // register user
 const createUser = asyncHandler(async (req, res, next) => {
@@ -54,19 +54,19 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
 //get user
 const getUsers = asyncHandler(async (req, res, next) => {
-  const id = req.user.id;
-  const user = await User.findById(id);
+  // const id = req.user.id;
+  // const user = await User.findById(id);
   try {
-    // const findUser = await User.findById(req.user.id);
+    const findUser = await User.findById(req.user.id);
 
-    if (!user) {
+    if (!findUser) {
       res.status(400).json({ message: "User not found" });
       throw new Error();
     }
 
     res.status(200).json({
       success: true,
-      user,
+      findUser,
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
@@ -148,12 +148,60 @@ const updateUserInformation = asyncHandler(async (req, res, next) => {
   }
 });
 
-
-
 // update user adress
-const updateUserAdress=asyncHandler(async(req,res,next)=>{
+const updateUserAdress = asyncHandler(async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
 
-})
+    const sameTypeAddress = user.addresses.find(
+      (address) => address.addressType === req.body.addressType
+    );
+    if (sameTypeAddress) {
+      res.status(400).json({ message: "address already exists" });
+      throw new Error();
+    }
+
+    const existsAddress = user.addresses.find(
+      (address) => address._id === req.body._id
+    );
+
+    if (existsAddress) {
+      Object.assign(existsAddress, req.body);
+    } else {
+      // add the new address to the array
+      user.addresses.push(req.body);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    throw new Error(error.message);
+  }
+});
+
+const deleteUserAddress = asyncHandler(async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const addressId = req.params.id;
+    await User.updateOne(
+      {
+        _id: userId,
+      },
+      { $pull: { addresses: { _id: addressId } } }
+    );
+    const user = await User.findById(userId);
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    throw new Error(error.message);
+  }
+});
 
 module.exports = {
   createUser,
@@ -163,4 +211,5 @@ module.exports = {
   deleteAllUsers,
   updateUserInformation,
   updateUserAdress,
+  deleteUserAddress,
 };

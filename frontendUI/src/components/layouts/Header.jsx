@@ -283,8 +283,8 @@ const Header = ({ activeHeading }) => {
             ) : null}
 
             {/* cart popup */}
-
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+            
             {/* wishlist popup */}
             {openWishlist ? (
               <Wishlist setOpenWishlist={setOpenWishlist} />

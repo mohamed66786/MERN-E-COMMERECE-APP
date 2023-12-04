@@ -111,16 +111,16 @@ const CartSingle = ({ data, removeFromWishlistHandler, addTocartHandler }) => {
               : "https://uploads-ssl.webflow.com/621f43c49dec9b0ca2794276/624abe7649d54e4013606cda_E-commerce-Photo-Editing-Services-5.jpg"
           }
           alt=""
-          className="w-[80px] h-[70px] ml-2 mr-2"
+          className="w-[90px] mt-2 h-[70px] ml-2 mr-2"
         />
         <div className="pl-[5px]">
           <h1>{data.name} .</h1>
           <span className="font-[400] text-[15px]  text-[red]">
-            {data.discount_price}$
+           Price: {data.discount_price}$
           </span>
           <BsCartPlus
             size={25}
-            className="cursor-pointer ml-[30%] text-[blue] hover:text-black "
+            className="cursor-pointer  text-[blue] hover:text-black "
             title="Add to cart"
             onClick={() => addTocartHandler(data)}
           />
