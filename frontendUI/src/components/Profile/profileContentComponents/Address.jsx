@@ -20,8 +20,8 @@ const Address = () => {
   const [addressType, setAddressType] = useState("");
   const dispatch = useDispatch();
 
-  const {user} = useSelector((state) => state.user);
-  
+  const { user } = useSelector((state) => state.user);
+
   const addressTypeData = [
     {
       name: "Default",
@@ -69,7 +69,10 @@ const Address = () => {
     <div className="w-full px-5">
       {open && (
         <div className="fixed w-full h-screen bg-[#0000004b] top-0 left-0 flex items-center justify-center ">
-          <div className="w-[35%] h-[80vh] bg-white rounded shadow relative overflow-y-scroll">
+          <div
+            className="800px:w-[40%] w-[90%] h-[86vh] bg-white rounded shadow 
+          relative overflow-y-scroll"
+          >
             <div className="w-full flex justify-end p-3">
               <RxCross1
                 size={30}

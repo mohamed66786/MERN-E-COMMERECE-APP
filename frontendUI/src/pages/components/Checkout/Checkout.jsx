@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { server } from "../../../backendServer";
 import { toast } from "react-toastify";
+import { IoIosArrowDown } from 'react-icons/io';
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
@@ -91,6 +92,7 @@ const Checkout = () => {
           setDiscountPrice(discountPrice);
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
+          toast.success("Discount Success")
         }
       }
       if (res.data.couponCode === null) {
@@ -278,18 +280,23 @@ const ShippingInfo = ({
         <div></div>
       </form>
       <h5
-        className="text-[18px] cursor-pointer inline-block"
+        className="text-[18px] cursor-pointer flex text-[blue] relative"
         onClick={() => setUserInfo(!userInfo)}
       >
+       
         Choose From saved address
+        <IoIosArrowDown
+              size={20}
+              className="absolute top-2 right-0 ml-3 cursor-pointer "
+            />
       </h5>
       {userInfo && (
         <div>
           {user &&
             user.addresses.map((item, index) => (
-              <div className="w-full flex mt-1">
+              <div className="w-full flex mt-1" key={index}>
                 <input
-                  type="checkbox"
+                  type="checkbox" // Making it optional on clicking like checkbox
                   className="mr-3"
                   value={item.addressType}
                   onClick={() =>
@@ -309,6 +316,7 @@ const ShippingInfo = ({
   );
 };
 
+// set cart Data
 const CartData = ({
   handleSubmit,
   totalPrice,
@@ -336,7 +344,7 @@ const CartData = ({
           - {discountPercentenge ? "$" + discountPercentenge.toString() : null}
         </h5>
       </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3">${totalPrice}</h5>
+      <h5 className="text-[18px] font-[600] text-end pt-3 text-[red]">Total: ${totalPrice}</h5>
       <br />
       <form onSubmit={handleSubmit}>
         <input
@@ -349,7 +357,8 @@ const CartData = ({
         />
         <input
           className={`w-full h-[40px] border border-[#f63b60] text-center
-          hover:bg-[red] hover:text-white text-[#f63b60] rounded-[10px] mt-8 cursor-pointer`}
+          hover:bg-[red] hover:text-white text-[#f63b60] rounded-[10px] 
+          mt-8 cursor-pointer `}
           required
           value="Apply code"
           type="submit"

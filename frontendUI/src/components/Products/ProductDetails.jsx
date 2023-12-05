@@ -74,11 +74,11 @@ const ProductDetails = ({ data }) => {
           <div className="w-full py-5">
             <div className="block w-full 800px:flex">
               {/* left part */}
-              <div className="w-full 800px:w-[50%]">
+              <div className="w-full 800px:w-[50%]  ">
                 <img
                   src={data.image_Url[select].url}
                   alt=""
-                  className="w-[80%] "
+                  className="w-[80%] hover:scale-150"
                 />
                 <div className="w-full flex ">
                   <div

@@ -9,7 +9,6 @@ import { addTocart, removeFromCart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
 
 const Cart = ({ setOpenCart }) => {
-
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -27,8 +26,10 @@ const Cart = ({ setOpenCart }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#00000048] h-screen z-10">
-      <div className="fixed top-0 right-0 h-[100vh] overflow-y-scroll
-       w-[25%] bg-white flex flex-col justify-between shadow-lg">
+      <div
+        className="fixed top-0 right-0 h-[100vh] overflow-y-scroll
+       w-[25%] bg-white flex flex-col justify-between shadow-lg"
+      >
         {cart && cart.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
@@ -44,9 +45,9 @@ const Cart = ({ setOpenCart }) => {
           <>
             <div>
               <div className="flex w-full justify-end pt-4 pr-4">
-              <h1 className="flex w-full justify-center pt-4 pr-4 font-bold text-[red] text-[22px]">
-                The Cart
-              </h1>
+                <h1 className="flex w-full justify-center pt-4 pr-4 font-bold text-[red] text-[22px]">
+                  The Cart
+                </h1>
                 <RxCross1
                   size={25}
                   className="cursor-pointer hover:text-[red] "
@@ -133,7 +134,11 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         </div>
         <img
           // src="https://uploads-ssl.webflow.com/621f43c49dec9b0ca2794276/624abe7649d54e4013606cda_E-commerce-Photo-Editing-Services-5.jpg"
-          src={data && data.image_Url[0].url}
+          src={
+            data && data.image_Url
+              ? data.image_Url[0].url
+              : "https://uploads-ssl.webflow.com/621f43c49dec9b0ca2794276/624abe7649d54e4013606cda_E-commerce-Photo-Editing-Services-5.jpg"
+          }
           alt=""
           className="w-[100px] h-min ml-2 mr-2 rounded-[5px]"
         />
