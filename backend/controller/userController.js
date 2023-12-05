@@ -1,7 +1,8 @@
+const { response } = require("express");
 const User = require("../model/userModel");
 const generateToken = require("../utils/generateToken");
 const asyncHandler = require("express-async-handler");
-// const ErrorHandler = require("../utils/ErrorHandler");
+const ErrorHandler = require("../utils/ErrorHandler");
 // const catchAsyncErrors = require("../middlewars/catchAsyncErrors");
 
 // register user
@@ -57,16 +58,16 @@ const getUsers = asyncHandler(async (req, res, next) => {
   // const id = req.user.id;
   // const user = await User.findById(id);
   try {
-    const findUser = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
-    if (!findUser) {
+    if (!user) {
       res.status(400).json({ message: "User not found" });
       throw new Error();
     }
 
     res.status(200).json({
       success: true,
-      findUser,
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
@@ -111,6 +112,7 @@ const deleteAllUsers = asyncHandler(async (req, res) => {
     });
 });
 
+// update user information
 const updateUserInformation = asyncHandler(async (req, res, next) => {
   try {
     const { email, password, phoneNumber, name } = req.body;
@@ -137,11 +139,10 @@ const updateUserInformation = asyncHandler(async (req, res, next) => {
 
     await user.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       user,
     });
-    next();
   } catch (error) {
     res.status(500).json({ message: error.message });
     throw new Error(error.message);
@@ -151,7 +152,7 @@ const updateUserInformation = asyncHandler(async (req, res, next) => {
 // update user adress
 const updateUserAdress = asyncHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.id);
 
     const sameTypeAddress = user.addresses.find(
       (address) => address.addressType === req.body.addressType
@@ -174,7 +175,7 @@ const updateUserAdress = asyncHandler(async (req, res, next) => {
 
     await user.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       user,
     });
@@ -184,6 +185,7 @@ const updateUserAdress = asyncHandler(async (req, res, next) => {
   }
 });
 
+// delete specific addresses
 const deleteUserAddress = asyncHandler(async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -195,11 +197,45 @@ const deleteUserAddress = asyncHandler(async (req, res, next) => {
       { $pull: { addresses: { _id: addressId } } }
     );
     const user = await User.findById(userId);
-
     res.status(200).json({ success: true, user });
+    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
     throw new Error(error.message);
+  }
+});
+
+// update user password
+
+const updateUserPassword = asyncHandler(async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if (!isPasswordMatched) {
+      res.status(400).json({ message: "Old password is incorrect!" });
+      return next(new ErrorHandler("Old password is incorrect!", 400));
+    }
+
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      res
+        .status(400)
+        .json({ message: "Password doesn't matched with each other!" });
+      return next(
+        new ErrorHandler("Password doesn't matched with each other!", 400)
+      );
+    }
+    user.password = req.body.newPassword;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password updated successfully!",
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -212,4 +248,5 @@ module.exports = {
   updateUserInformation,
   updateUserAdress,
   deleteUserAddress,
+  updateUserPassword,
 };

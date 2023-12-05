@@ -34,7 +34,7 @@ const Address = () => {
     },
   ];
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (addressType === "" || country === "" || city === "") {

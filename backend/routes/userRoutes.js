@@ -10,6 +10,7 @@ const {
   updateUserInformation,
   updateUserAdress,
   deleteUserAddress,
+  updateUserPassword,
 } = require("../controller/userController");
 // route for regitsters
 
@@ -28,6 +29,7 @@ router.put("/update-user-info", updateUserInformation);
 router.put("/update-user-addresses", isAuthenticated, updateUserAdress);
 // delete specified user addresses
 router.delete("/delete-user-address/:id", isAuthenticated, deleteUserAddress);
-
+// update user password
+router.put("/update-user-password", isAuthenticated, updateUserPassword);
 
 module.exports = router;

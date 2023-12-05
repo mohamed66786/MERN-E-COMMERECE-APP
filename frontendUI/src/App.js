@@ -22,6 +22,7 @@ import {
   ShopAllEvents,
   ShopAllCoupouns,
   ShopPreviewPage,
+  CheckoutPage,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +33,7 @@ import Scroll from "./components/layouts/Scroll";
 import SellerProtectedRoute from "./routes/shopRoutes/SellerProtectedRoute ";
 import { getAllProducts } from "./redux/actions/product.js";
 import { getAllEvents } from "./redux/actions/event.js";
+import ProtectedRoute from './routes/userRoutes/ProtectedRoute ';
 const App = () => {
   // OOOOOOOOOOOOOOOOHHHHHHHHHHHHHHHHHHHHHHHH That errorr here not dispath the action efforts Me #################
   useEffect(() => {
@@ -97,6 +99,15 @@ const App = () => {
                   </SellerProtectedRoute>
                 }
               />
+
+<Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
               <Route path="/shop/:id" element={<ShopHomePage />} />
               <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
               <Route path="*" element={<NotFoundPage />} />

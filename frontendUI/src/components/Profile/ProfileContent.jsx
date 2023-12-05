@@ -25,6 +25,9 @@ const ProfileContent = ({ active }) => {
     } else if (successMessage) {
       toast.success(successMessage);
       dispatch({ type: "clearMessages" });
+      setTimeout(() =>{
+        window.location.reload();
+      },2000)
     }
   }, [error, successMessage,dispatch]);
 
