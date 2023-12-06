@@ -1,7 +1,7 @@
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/style";
-import { Link } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { BsCartPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 const Wishlist = ({ setOpenWishlist }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { wishlist } = useSelector((stata) => stata.wishlist);
   const totalPrice =
     wishlist && wishlist.reduce((acu, curr) => acu + curr.discount_price, 0);
@@ -24,6 +25,10 @@ const Wishlist = ({ setOpenWishlist }) => {
     toast.success("Item added successfully");
     setOpenWishlist(false);
   };
+  const moveToCheckout = () => {
+    navigate("/checkout");
+  };
+
   useEffect(() => {
     document.getElementById("element").focus();
   }, []);
@@ -84,15 +89,17 @@ const Wishlist = ({ setOpenWishlist }) => {
               </div>
             </div>
             <div className="px-5 mb-3 ">
-              <Link to="/checkout">
-                <div
-                  className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px] hover:bg-[red]`}
-                >
-                  <h1 className="text-[#fff] text-[18px] font-[600]">
-                    Checkout Now (USD${totalPrice})
-                  </h1>
-                </div>
-              </Link>
+              {/* <Link to="/checkout"> */}
+              <div
+                className={`h-[45px] flex items-center justify-center 
+                  cursor-pointer w-[100%] bg-[#e44343] rounded-[5px] hover:bg-[red]`}
+                onClick={moveToCheckout}
+              >
+                <h1 className="text-[#fff] text-[18px] font-[600]">
+                  Checkout Now (USD${totalPrice})
+                </h1>
+              </div>
+              {/* </Link> */}
             </div>
           </>
         )}

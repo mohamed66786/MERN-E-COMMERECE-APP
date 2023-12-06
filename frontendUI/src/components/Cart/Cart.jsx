@@ -3,7 +3,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/style";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTocart, removeFromCart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 const Cart = ({ setOpenCart }) => {
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
+  const navigate=useNavigate()
   const totalPrice = cart.reduce(
     (acu, curr) => acu + curr.qty * curr.discount_price,
     0
@@ -24,6 +24,11 @@ const Cart = ({ setOpenCart }) => {
     dispatch(addTocart(data));
   };
 
+const moveToCheckout=()=>{
+  navigate("/checkout")
+}
+
+
   useEffect(() => {
     document.getElementById("element").focus();
   }, []);
@@ -34,7 +39,7 @@ const Cart = ({ setOpenCart }) => {
         className="fixed top-0 right-0 h-[100vh] overflow-y-scroll
        w-[25%] bg-white flex flex-col justify-between shadow-lg outline-none"
         tabIndex={1}
-        // onBlur={() => setOpenCart(false)}
+        onBlur={() => setOpenCart(false)}
         id="element"
       >
         {cart && cart.length === 0 ? (
@@ -83,15 +88,17 @@ const Cart = ({ setOpenCart }) => {
               </div>
             </div>
             <div className="px-5 mb-3 ">
-              <Link to="/checkout">
+              {/* <Link to="/checkout"> */}
                 <div
-                  className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px] hover:bg-[red]`}
+                  className={`h-[45px] flex items-center justify-center
+                  cursor-pointer w-[100%] bg-[#e44343] rounded-[5px] hover:bg-[red]`}
+                  onClick={moveToCheckout}
                 >
                   <h1 className="text-[#fff] text-[18px] font-[600]">
                     Checkout Now (USD${totalPrice})
                   </h1>
                 </div>
-              </Link>
+              {/* </Link> */}
             </div>
           </>
         )}

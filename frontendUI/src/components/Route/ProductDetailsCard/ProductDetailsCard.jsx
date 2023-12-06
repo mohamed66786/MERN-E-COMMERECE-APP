@@ -7,7 +7,7 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart";
@@ -18,6 +18,7 @@ import {
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(data);
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
 
@@ -27,7 +28,11 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
   const handleMessageSubmit = () => {};
   const incrementCount = () => {
-    setCount(count + 1);
+    if (data.stock >= count) {
+      setCount(count + 1);
+    } else {
+      toast.error("The item is out of stock");
+    }
   };
   const decrementCount = () => {
     count === 0 ? setCount(count) : setCount(count - 1);
@@ -66,6 +71,11 @@ const ProductDetailsCard = ({ setOpen, data }) => {
     setClick(!click);
     dispatch(removeFromWishlist(data));
   };
+
+  const moveToPreview = () => {
+    navigate(`/shop/preview/${data.shop.id}`);
+  };
+
   useEffect(() => {
     document.getElementById("element").focus();
   }, []);
@@ -80,8 +90,8 @@ const ProductDetailsCard = ({ setOpen, data }) => {
           <div
             className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[70vh]
              bg-white rounded-md shadow-sm relative p-4 outline-none"
-             id="element"
-            tabIndex={1}
+            id="element"
+            tabIndex={0}
             onBlur={() => setOpen(false)}
           >
             <RxCross1
@@ -101,26 +111,24 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   className="mt-7 "
                   alt=""
                 />
-                <div className="flex mt-4">
-                  <Link to={`/shop/preview/${data.shop.id}`} className="flex">
-                    <img
-                      src={
-                        data.shop.shop_avatar
-                          ? data.shop.shop_avatar.url
-                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
-                      }
-                      alt=""
-                      className="w-[50px] h-[50px] rounded-full  mr-2 "
-                    />
-                    <div>
-                      <h3 className={`${styles.shop_name}`}>
-                        {data.shop.name}
-                      </h3>
-                      <h5 className="pb-3 text-[15px] text-blue-900">
-                        ({data.shop.ratings}) Ratings
-                      </h5>
-                    </div>
-                  </Link>
+                <div className="flex mt-4" onClick={moveToPreview}>
+                  {/* <Link to={`/shop/preview/${data.shop.id}`} className="flex"> */}
+                  <img
+                    src={
+                      data.shop.shop_avatar
+                        ? data.shop.shop_avatar.url
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
+                    }
+                    alt=""
+                    className="w-[50px] h-[50px] rounded-full  mr-2 "
+                  />
+                  <div>
+                    <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
+                    <h5 className="pb-3 text-[15px] text-blue-900">
+                      ({data.shop.ratings}) Ratings
+                    </h5>
+                  </div>
+                  {/* </Link> */}
                 </div>
                 <div
                   className={`${styles.button} bg-[#5656ff] mt-4 rounded-[4px] h-11 hover:bg-blue-900 `}
@@ -155,22 +163,22 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
                 <div className="flex items-center mt-12 justify-between pr-3">
                   {/* button rooler */}
-                  <div>
-                    <button
+                  <div className="flex">
+                    <div
                       className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
                       onClick={decrementCount}
                     >
                       -
-                    </button>
+                    </div>
                     <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
                       {count}
                     </span>
-                    <button
+                    <div
                       className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
                       onClick={incrementCount}
                     >
                       +
-                    </button>
+                    </div>
                   </div>
 
                   <div>
