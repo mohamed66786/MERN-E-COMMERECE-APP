@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/style";
 import {
@@ -21,7 +21,7 @@ const ProductDetails = ({ data }) => {
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
 
-  const { wishlist } = useSelector((state) => state.wishlist);
+  // const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const ProductDetails = ({ data }) => {
   //   } else {
   //     setClick(false);
   //   }
-  // }, [wishlist, data.id]);
+  // }, []);
 
   const incrementCount = () => {
     if (data.stock > count) {
@@ -123,7 +123,7 @@ const ProductDetails = ({ data }) => {
                   <h3 className={`${styles.price} text-[red]`}>
                     {data.price ? data.price + "$" : null}
                   </h3>
-                  <h1 className="ml-6 font-bold text-[blue] text-[18px]">
+                  <h1 className="ml-6 font-bold text-[red] text-[18px]">
                     Total Price: {data.discount_price * count}$
                   </h1>
                 </div>

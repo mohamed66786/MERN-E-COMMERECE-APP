@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
 import { addTocart } from "./../../redux/actions/cart";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 const Wishlist = ({ setOpenWishlist }) => {
   const dispatch = useDispatch();
   const { wishlist } = useSelector((stata) => stata.wishlist);
@@ -20,15 +21,21 @@ const Wishlist = ({ setOpenWishlist }) => {
   const addTocartHandler = (data) => {
     const newData = { ...data, qty: 1 };
     dispatch(addTocart(newData));
-    toast.success("Item added successfully")
+    toast.success("Item added successfully");
     setOpenWishlist(false);
   };
+  useEffect(() => {
+    document.getElementById("element").focus();
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#00000048] h-screen z-10">
       <div
         className="fixed top-0 right-0 h-[100vh] w-[25%] bg-white flex flex-col
-      overflow-y-scroll  justify-between shadow-lg"
+      overflow-y-scroll  justify-between shadow-lg outline-none"
+        id="element"
+        tabIndex="0"
+        onBlur={() => setOpenWishlist(false)}
       >
         {wishlist && wishlist.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
@@ -116,7 +123,7 @@ const CartSingle = ({ data, removeFromWishlistHandler, addTocartHandler }) => {
         <div className="pl-[5px]">
           <h1>{data.name} .</h1>
           <span className="font-[400] text-[15px]  text-[red]">
-           Price: {data.discount_price}$
+            Price: {data.discount_price}$
           </span>
           <BsCartPlus
             size={25}

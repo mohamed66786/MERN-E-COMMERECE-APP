@@ -4,29 +4,29 @@ import CountDown from "./CountDown.jsx";
 import { productData } from "../../static/data.js";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { addTocart } from './../../redux/actions/cart';
+import { addTocart } from "./../../redux/actions/cart";
 
 const EventCard = ({ active }) => {
-
-  const {cart}=useSelector(state=>state.cart);
-  const dispatch=useDispatch();
-
+  const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const data = productData.find(
     (a) => a.name === "Iphone 14 pro max 256 gb ssd and 8 gb ram silver colour"
   );
-    console.log(data)
-const addToCartHandler=()=>{
-  const isExist=cart&&cart.find(item=>item.id ===data.id);
-  if(isExist){
-    toast.error("Item already exists!");
-  }
-  else{
-    const cartData={...data,qty:1};
-    dispatch(addTocart(cartData));
-    toast.success("Item added successfully");
-  }
-}
+
+
+  const productName=data.name.replaceAll(" ","-");
+
+  const addToCartHandler = () => {
+    const isExist = cart && cart.find((item) => item.id === data.id);
+    if (isExist) {
+      toast.error("Item already exists!");
+    } else {
+      const cartData = { ...data, qty: 1 };
+      dispatch(addTocart(cartData));
+      toast.success("Item added successfully");
+    }
+  };
 
   return (
     <div
@@ -68,7 +68,7 @@ const addToCartHandler=()=>{
         <CountDown />
         <br />
         <div className="flex items-center">
-        <Link to={`/product/${data._id}?isEvent=true`}>
+          <Link to={`/product/${productName}`}>
             <div className={`${styles.button} text-[#fff]`}>See Details</div>
           </Link>
           <div

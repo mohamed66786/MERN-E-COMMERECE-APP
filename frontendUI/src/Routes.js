@@ -20,6 +20,7 @@ import ShopAllCoupouns from "./pages/shop/ShopAllCoupouns.jsx";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage.jsx";
 import CheckoutPage from "./pages/shop/CheckoutPage.jsx";
 import PaymentPage from "./pages/shop/PaymentPage.jsx";
+import OrderSuccessPage from "./pages/OrderSuccessPage.jsx";
 export {
   LoginPage,
   SignupPage,
@@ -43,4 +44,5 @@ export {
   ShopPreviewPage,
   CheckoutPage,
   PaymentPage,
+  OrderSuccessPage,
 };

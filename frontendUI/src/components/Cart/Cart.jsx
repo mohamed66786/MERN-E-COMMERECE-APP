@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/style";
@@ -24,11 +24,18 @@ const Cart = ({ setOpenCart }) => {
     dispatch(addTocart(data));
   };
 
+  useEffect(() => {
+    document.getElementById("element").focus();
+  }, []);
+
   return (
     <div className="fixed top-0 left-0 w-full bg-[#00000048] h-screen z-10">
       <div
         className="fixed top-0 right-0 h-[100vh] overflow-y-scroll
-       w-[25%] bg-white flex flex-col justify-between shadow-lg"
+       w-[25%] bg-white flex flex-col justify-between shadow-lg outline-none"
+        tabIndex={1}
+        // onBlur={() => setOpenCart(false)}
+        id="element"
       >
         {cart && cart.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">

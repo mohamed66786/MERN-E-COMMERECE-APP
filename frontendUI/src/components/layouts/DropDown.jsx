@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/style";
+import { useEffect } from "react";
 
 const DropDown = ({ categoriesData, setDropDown }) => {
   const navigate = useNavigate();
@@ -9,8 +10,17 @@ const DropDown = ({ categoriesData, setDropDown }) => {
     window.location.reload();
   };
 
+  useEffect(() => {
+    document.getElementById("element").focus();
+  }, []);
+
   return (
-    <div className="pb-4 w-[270px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm " >
+    <div
+      className="pb-4 w-[270px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm outline-none "
+      id="element"
+      tabIndex={1}
+      onBlur={() => setDropDown(false)}
+    >
       {categoriesData &&
         categoriesData.map((item, index) => {
           return (

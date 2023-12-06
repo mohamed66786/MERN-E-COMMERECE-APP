@@ -11,13 +11,15 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart";
-import { addToWishlist, removeFromWishlist } from "../../../redux/actions/wishlist";
-
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../../redux/actions/wishlist";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
-  const {wishlist}=useSelector((state) => state.wishlist);
+  const { wishlist } = useSelector((state) => state.wishlist);
 
   const [count, setCount] = useState(1); // for initial the count of the products
   const [click, setClick] = useState(false);
@@ -64,15 +66,23 @@ const ProductDetailsCard = ({ setOpen, data }) => {
     setClick(!click);
     dispatch(removeFromWishlist(data));
   };
+  useEffect(() => {
+    document.getElementById("element").focus();
+  }, []);
 
   return (
     <div className="bg-white ">
       {data ? (
-        <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 
-        flex items-center justify-center">
+        <div
+          className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 
+        flex items-center justify-center"
+        >
           <div
             className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[70vh]
-             bg-white rounded-md shadow-sm relative p-4"
+             bg-white rounded-md shadow-sm relative p-4 outline-none"
+             id="element"
+            tabIndex={1}
+            onBlur={() => setOpen(false)}
           >
             <RxCross1
               size={30}

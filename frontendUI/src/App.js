@@ -24,6 +24,7 @@ import {
   ShopPreviewPage,
   CheckoutPage,
   PaymentPage,
+  OrderSuccessPage
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -118,6 +119,7 @@ const App = () => {
                 }
               />
               <Route path="/shop/:id" element={<ShopHomePage />} />
+              <Route path="/order/success" element={<OrderSuccessPage />} />
               <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
