@@ -23,6 +23,7 @@ import {
   ShopAllCoupouns,
   ShopPreviewPage,
   CheckoutPage,
+  PaymentPage,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -105,6 +106,14 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <CheckoutPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/payment"
+                element={
+                  <ProtectedRoute>
+                    <PaymentPage />
                   </ProtectedRoute>
                 }
               />

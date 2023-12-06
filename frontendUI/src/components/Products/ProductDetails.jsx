@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/style";
 import {
@@ -35,7 +35,11 @@ const ProductDetails = ({ data }) => {
   // }, [wishlist, data.id]);
 
   const incrementCount = () => {
-    setCount(count + 1);
+    if (data.stock > count) {
+      setCount(count + 1);
+    } else {
+      toast.error("The item is out of range");
+    }
   };
   const decrementCount = () => {
     count >= 1 ? setCount(count - 1) : setCount(count);

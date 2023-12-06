@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "../../../styles/style";
+import styles from "../../styles/style";
 import { Country, State } from "country-state-city";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
-import { server } from "../../../backendServer";
+import { server } from "../../backendServer";
 import { toast } from "react-toastify";
 import { IoIosArrowDown } from 'react-icons/io';
 
@@ -347,10 +347,12 @@ const CartData = ({
       <h5 className="text-[18px] font-[600] text-end pt-3 text-[red]">Total: ${totalPrice}</h5>
       <br />
       <form onSubmit={handleSubmit}>
+        <h1>Discount Code (If Exists):</h1>
+        <br />
         <input
           type="text"
           className={`${styles.input} h-[40px] pl-2`}
-          placeholder="Coupoun code"
+          placeholder="Discount code"
           value={couponCode}
           onChange={(e) => setCouponCode(e.target.value)}
           required
