@@ -20,6 +20,7 @@ import { FaDoorOpen } from "react-icons/fa6";
 import Cart from "../Cart/Cart.jsx";
 import Wishlist from "../Wishlist/Wishlist.jsx";
 import { RxCross1 } from "react-icons/rx";
+import PopUpCheck from "../Layout/PopUpCheck.jsx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -34,6 +35,8 @@ const Header = ({ activeHeading }) => {
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
+  const [check, setCheck] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const navigate = useNavigate();
   const handleSearchChange = (e) => {
@@ -48,11 +51,10 @@ const Header = ({ activeHeading }) => {
   };
 
   const logoutHandler = () => {
-    const check = window.prompt("Are you sure you want to log out?","no");
-     if(check===null){
+    // const check = window.prompt("Are you sure you want to log out?","no");
+    if (logout === false) {
       toast.error("User not logged out");
-    }
-   else if (check.toLocaleLowerCase()==="yes"||check.toLocaleLowerCase()==="y") {
+    } else if (logout === true) {
       axios
         .get(`${server}/user/logout`, { withCredentials: true })
         .then(() => {
@@ -60,7 +62,7 @@ const Header = ({ activeHeading }) => {
           navigate("/login");
           setTimeout(() => {
             window.location.reload();
-          }, 2000);
+          }, 3000);
         })
         .catch(() => {
           toast.error(`User logout failed`);
@@ -68,6 +70,13 @@ const Header = ({ activeHeading }) => {
     }
   };
 
+  if (logout) {
+    logoutHandler();
+  }
+  if (logout === "close") {
+    setCheck(false);
+    setLogout(false);
+  }
   window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
       setActive(true);
@@ -273,7 +282,7 @@ const Header = ({ activeHeading }) => {
                 className={`${styles.normalFlex} `}
                 title="Log out"
                 onClick={() => {
-                  logoutHandler();
+                  setCheck(true);
                 }}
               >
                 <div className="relative cursor-pointer mr-[15px] ml-4">
@@ -281,10 +290,11 @@ const Header = ({ activeHeading }) => {
                 </div>
               </div>
             ) : null}
+            {check ? <PopUpCheck setLogout={setLogout} setCheck={setCheck} /> : null}
 
             {/* cart popup */}
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
-            
+
             {/* wishlist popup */}
             {openWishlist ? (
               <Wishlist setOpenWishlist={setOpenWishlist} />

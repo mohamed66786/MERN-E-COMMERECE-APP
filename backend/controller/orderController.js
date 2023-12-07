@@ -42,6 +42,12 @@ const createOrder = asyncHandler(async (req, res, next) => {
   }
 });
 
+// get all orders of specific user 
+const getUserOrder = asyncHandler(async (req, res, next) => {
+
+});
+
 module.exports = {
   createOrder,
+  getUserOrder,
 };
