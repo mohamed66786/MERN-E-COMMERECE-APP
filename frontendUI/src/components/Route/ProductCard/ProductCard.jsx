@@ -47,20 +47,20 @@ const ProductCard = ({ data }) => {
     dispatch(removeFromWishlist(data));
   };
 
-  const addToCartHandler=(id)=>{
-const isItemExists = cart && cart.find((i) => i.id === id);
+  const addToCartHandler = (id) => {
+    const isItemExists = cart && cart.find((i) => i.id === id);
     if (isItemExists) {
       toast.error("The item already in the cart");
     } else {
-      if ( data.stock<1) {
+      if (data.stock < 1) {
         toast.error("Product Stock Limited! Please select a Limited Product");
       } else {
-        const cartData = { ...data, qty:1 };
+        const cartData = { ...data, qty: 1 };
         dispatch(addTocart(cartData));
         toast.success("Item added successfully to cart");
       }
     }
-  }
+  };
 
   return (
     <>
@@ -112,14 +112,19 @@ const isItemExists = cart && cart.find((i) => i.id === id);
           <div className="flex py-2 items-center justify-between">
             <div className="flex">
               <h6 className={`${styles.productDiscountPrice} text-red-800 `}>
-                {data.price === 0 ? data.price : data.discount_price}$
+                {data.price === 0
+                  ? data.price
+                  : data.discount_price
+                  ? data.discount_price
+                  : data.discountPrice}
+                $
               </h6>
               <h4 className={`${styles.price}`}>
-                {data.price ? data.price + "$" : null}
+                {data.price ? data.price + "$" : data.originalPrice + "$"}
               </h4>
             </div>
             <span className="font-[400] text-[17px] text-[#68d284]">
-              {data?.total_sell} sold
+              {data?.total_sell || 10} sold
             </span>
           </div>
         </Link>

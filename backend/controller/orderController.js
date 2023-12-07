@@ -42,12 +42,34 @@ const createOrder = asyncHandler(async (req, res, next) => {
   }
 });
 
-// get all orders of specific user 
+// get all orders of specific user
 const getUserOrder = asyncHandler(async (req, res, next) => {
+  try {
+    const orders = await Order.find({ "user._id": req.params.userId }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    throw new Error(error.message);
+  }
+});
 
+// get all seller orders
+const getShopOrder = asyncHandler(async (req, res, next) => {
+  try {
+    const orders = await Order.find({ "cart.shopId": req.params.shopId }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+    throw new Error(error.message);
+  }
 });
 
 module.exports = {
   createOrder,
   getUserOrder,
+  getShopOrder,
 };

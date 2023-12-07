@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { server } from "../../backendServer";
 import { toast } from "react-toastify";
-import { IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown } from "react-icons/io";
 
 const Checkout = () => {
   const { user } = useSelector((state) => state.user);
@@ -62,7 +62,10 @@ const Checkout = () => {
   };
 
   const subTotalPrice = cart.reduce(
-    (acc, item) => acc + item.qty * item.discount_price,
+    (acc, item) =>
+      acc + item.qty * item.discount_price
+        ? item.discount_price
+        : item.discountPrice,
     0
   );
 
@@ -92,7 +95,7 @@ const Checkout = () => {
           setDiscountPrice(discountPrice);
           setCouponCodeData(res.data.couponCode);
           setCouponCode("");
-          toast.success("Discount Success")
+          toast.success("Discount Success");
         }
       }
       if (res.data.couponCode === null) {
@@ -283,12 +286,11 @@ const ShippingInfo = ({
         className="text-[18px] cursor-pointer flex text-[blue] relative"
         onClick={() => setUserInfo(!userInfo)}
       >
-       
         Choose From saved address
         <IoIosArrowDown
-              size={20}
-              className="absolute top-2 right-0 ml-3 cursor-pointer "
-            />
+          size={20}
+          className="absolute top-2 right-0 ml-3 cursor-pointer "
+        />
       </h5>
       {userInfo && (
         <div>
@@ -344,7 +346,9 @@ const CartData = ({
           - {discountPercentenge ? "$" + discountPercentenge.toString() : null}
         </h5>
       </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3 text-[red]">Total: ${totalPrice}</h5>
+      <h5 className="text-[18px] font-[600] text-end pt-3 text-[red]">
+        Total: ${totalPrice}
+      </h5>
       <br />
       <form onSubmit={handleSubmit}>
         <h1>Discount Code (If Exists):</h1>

@@ -13,7 +13,7 @@ const Cart = ({ setOpenCart }) => {
   const dispatch = useDispatch();
   const navigate=useNavigate()
   const totalPrice = cart.reduce(
-    (acu, curr) => acu + curr.qty * curr.discount_price,
+    (acu, curr) => acu + curr.qty * curr.discount_price?curr.discount_price:curr.discountPrice,
     0
   );
   const removeFromCartHandler = (data) => {
@@ -109,7 +109,7 @@ const moveToCheckout=()=>{
 
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const [value, setValue] = useState(data.qty);
-  const totalPrice = value * data.discount_price;
+  const totalPrice = value * data.discount_price?data.discount_price:data.discountPrice;
   const increment = (data) => {
     const updateCartData = { ...data, qty: value + 1 };
     if (value < data.stock) {
@@ -159,15 +159,15 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <div className="pl-[5px]">
           <h1>{data.name} .</h1>
           <h4 className="font-[400] text-[15px] text-[#4b4b4b]">
-            Price: {+data.discount_price}$
+            Price: {+data.discount_price?data.discount_price:data.discountPrice}$
           </h4>
           <h2 className="font-bold">
             Total: <span className="text-[red]">{totalPrice}$</span>
           </h2>
         </div>
         <RxCross1
-          className="cursor-pointer hover:text-[red]"
-          size={30}
+          className="cursor-pointer hover:bg-[red] ml-3 bg-slate-200 p-2 rounded-full"
+          size={40}
           onClick={() => removeFromCartHandler(data)}
         />
       </div>

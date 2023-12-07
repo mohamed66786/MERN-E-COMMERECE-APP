@@ -24,7 +24,9 @@ import {
   ShopPreviewPage,
   CheckoutPage,
   PaymentPage,
-  OrderSuccessPage
+  OrderSuccessPage,
+  ShopAllOrders,
+  ShopOrderDetails,
 } from "./Routes.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -78,6 +80,22 @@ const App = () => {
                 }
               />
               <Route
+                path="/dashboard-orders"
+                element={
+                  <SellerProtectedRoute>
+                    <ShopAllOrders />
+                  </SellerProtectedRoute>
+                }
+              />
+              <Route
+                path="/order/:id"
+                element={
+                  <SellerProtectedRoute>
+                    <ShopOrderDetails />
+                  </SellerProtectedRoute>
+                }
+              />
+              <Route
                 path="/dashboard-create-event"
                 element={
                   <SellerProtectedRoute>
@@ -123,7 +141,18 @@ const App = () => {
               <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
-            <ToastContainer />
+            <ToastContainer
+              position="bottom-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
           </BrowserRouter>
         )}
         <Scroll />

@@ -1,32 +1,33 @@
-// import { useEffect } from "react"; 
+// import { useEffect } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 // import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {DataGrid} from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 // import {Button} from "@material-ui/core";
 // import { getAllOrdersOfUser } from "../../../redux/actions/order.js";
-
+import { getAllOrdersOfUser } from "./../../../redux/actions/order";
 
 const AllOrders = () => {
-  // const { user } = useSelector((state) => state.user);
-  // const { orders } = useSelector((state) => state.order);
-  // const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAllOrdersOfUser(user._id));
-  // }, []);
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, []);
 
-  const orders=[
-    {
-      _id:"923583jkthebq1",
-      orderItems:[
-        {name:"iphone 14 pro Max"},
-      ],
-      totalPrice:127,
-      orderStatus:"processing",
-    }
-  ]
-
+  // const orders=[
+  //   {
+  //     _id:"923583jkthebq1",
+  //     orderItems:[
+  //       {name:"iphone 14 pro Max"},
+  //     ],
+  //     totalPrice:127,
+  //     orderStatus:"processing",
+  //   }
+  // ]
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -85,7 +86,7 @@ const AllOrders = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart.length,
         total: "US$ " + item.totalPrice,
         status: item.status,
       });

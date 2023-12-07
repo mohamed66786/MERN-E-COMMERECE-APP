@@ -9,27 +9,43 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../backendServer";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import PopUpCheck from "./../Layout/PopUpCheck";
 
 const ProfileSidebar = ({ active, setActive }) => {
   const navigate = useNavigate();
+  const [check, setCheck] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const logoutHandler = () => {
-    axios
-      .get(`${server}/user/logout`, { withCredentials: true })
-      .then(() => {
-        toast.success(`User logged out successfully`);
-        navigate("/login");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      })
-      .catch(() => {
-        toast.error(`User logout failed`);
-      });
+    if (logout === false) {
+      toast.error("User not logged out");
+    } else if (logout === true) {
+      axios
+        .get(`${server}/user/logout`, { withCredentials: true })
+        .then(() => {
+          toast.success(`User logged out successfully`);
+          navigate("/login");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        })
+        .catch(() => {
+          toast.error(`User logout failed`);
+        });
+    }
   };
+  if (logout) {
+    logoutHandler();
+  }
+  if (logout === "close") {
+    setCheck(false);
+    setLogout(false);
+  }
 
   return (
     <div>
+      {check ? <PopUpCheck setLogout={setLogout} setCheck={setCheck} /> : null}
       <div className="w-full bg-white shadow-sm rounded-[10px] p-4 pt-8">
         <div
           className="flex items-center cursor-pointer w-full mb-8"
@@ -139,7 +155,8 @@ const ProfileSidebar = ({ active, setActive }) => {
           className="single_item flex items-center cursor-pointer w-full mb-8"
           onClick={() => {
             setActive(8);
-            logoutHandler();
+            setCheck(true);
+            // logoutHandler();
           }}
           title="log out"
         >

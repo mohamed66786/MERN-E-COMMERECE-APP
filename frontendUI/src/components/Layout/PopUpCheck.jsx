@@ -23,7 +23,7 @@ const PopUpCheck = ({ setLogout, setCheck }) => {
              bg-[#1877F2]  shadow-sm relative p-4 outline-none"
           id="element"
           tabIndex={0}
-          // onBlur={() => setCheck(false)}
+          onBlur={() => setCheck(false)}
         >
           <h
             className="text-white w-full flex
@@ -32,7 +32,7 @@ const PopUpCheck = ({ setLogout, setCheck }) => {
             Are You Sure?
           </h>
           <div>
-            <div className="flex justify-around  mt-[20%] ">
+            <div className="flex justify-around  mt-[12%] ">
               <div
                 className={`${styles.button} bg-[blue] text-white`}
                 onClick={handleFalse}
