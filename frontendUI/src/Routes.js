@@ -23,6 +23,7 @@ import PaymentPage from "./pages/shop/PaymentPage.jsx";
 import ShopAllOrders from "./pages/shop/ShopAllOrders.jsx";
 import ShopOrderDetails from "./pages/shop/ShopOrderDetails.jsx";
 import OrderSuccessPage from "./pages/OrderSuccessPage.jsx";
+import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
 export {
   LoginPage,
   SignupPage,
@@ -49,4 +50,5 @@ export {
   OrderSuccessPage,
   ShopAllOrders,
   ShopOrderDetails,
+  OrderDetailsPage,
 };

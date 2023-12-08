@@ -9,13 +9,13 @@ import { useParams } from 'react-router-dom';
 
 const ProductDetailsPage = () => {
   const {name}=useParams();
-  const [data,setData]=useState(null);
-  const productName=name.replace(/-/g," ");
+  const [data,setData]=useState("");
+  const productName=name.replaceAll(/-/g," ");
   // console.log(productName)
   useEffect(()=>{
-    const data=productData.find((item)=>item.name===productName);
+    const dataSelected=productData.find((item)=>item.name===productName);
     // console.log(data)
-     setData(data)
+     setData(dataSelected)
   },[productName])
 
   return (

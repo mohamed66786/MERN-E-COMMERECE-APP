@@ -26,7 +26,7 @@ const SuggestedProduct = ({ data }) => {
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
             {(products &&
               products.map((item, index) => (
-                <ProductCard data={item} key={index} />
+                <ProductCard data={item} key={index} countStars={5} />
               ))) || (
               <h1 className="text-[20px] text-[red] m-auto">
                 No Related Products

@@ -26,6 +26,7 @@ const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
+  const { isSeller } = useSelector((state) => state.seller);
 
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState(null);
@@ -152,14 +153,25 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
           {/* button */}
-          <div className={`${styles.button}`}>
-            <Link to="/shop-create">
-              <h1 className="text-[#fff] flex items-center">
-                Become Seller
-                <IoIosArrowForward className="ml-1" />
-              </h1>
+          {isSeller ? (
+            <Link to={`/dashboard`}>
+              <div className={`${styles.button}`}>
+                <h1 className="text-[#fff] flex items-center">
+                  Dashboard
+                  <IoIosArrowForward className="ml-1" />
+                </h1>
+              </div>
             </Link>
-          </div>
+          ) : (
+            <div className={`${styles.button}`}>
+              <Link to={`/shop-create`}>
+                <h1 className="text-[#fff] flex items-center">
+                  Become Seller
+                  <IoIosArrowForward className="ml-1" />
+                </h1>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       {/* second part */}
@@ -290,7 +302,9 @@ const Header = ({ activeHeading }) => {
                 </div>
               </div>
             ) : null}
-            {check ? <PopUpCheck setLogout={setLogout} setCheck={setCheck} /> : null}
+            {check ? (
+              <PopUpCheck setLogout={setLogout} setCheck={setCheck} />
+            ) : null}
 
             {/* cart popup */}
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}

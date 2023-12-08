@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Order = require("../model/orderModel");
 const Product = require("../model/productModel");
-
+const Shop = require("../model/shopModel");
 //create a new order
 const createOrder = asyncHandler(async (req, res, next) => {
   try {
@@ -63,7 +63,61 @@ const getShopOrder = asyncHandler(async (req, res, next) => {
     });
     res.status(200).json({ success: true, orders });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
+    throw new Error(error.message);
+  }
+});
+
+// update order status
+const updateOrderStatus = asyncHandler(async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      res.status(404).json({ message: "Order not found" });
+      throw new Error("Order not found");
+    }
+    if (req.body.status === "Transferred to delivery partner") {
+      order.cart.forEach(async (o) => {
+        await updateOrder(o._id, o.qty);
+      });
+    }
+    order.status = req.body.status;
+
+    if (req.body.status === "Delivered") {
+      order.deliveredAt = Date.now();
+      order.paymentInfo.status = "Succeeded";
+      const serviceCharge = order.totalPrice * 0.1;
+      await updateSellerInfo(order.totalPrice - serviceCharge);
+    }
+
+    await order.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+      success: true,
+      order,
+    });
+
+    // the two used functions
+    async function updateOrder(id, qty) {
+      const product = await Product.findById(id);
+
+      product.stock -= qty;
+      product.sold_out += qty;
+
+      await product.save({ validateBeforeSave: false });
+    }
+
+    async function updateSellerInfo(amount) {
+      const seller = await Shop.findById(
+        req.seller? req.seller._id : "6563c16a6e22db6f476bda65"
+      );
+
+      seller.availableBalance = amount;
+
+      await seller.save();
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
     throw new Error(error.message);
   }
 });
@@ -72,4 +126,5 @@ module.exports = {
   createOrder,
   getUserOrder,
   getShopOrder,
+  updateOrderStatus,
 };

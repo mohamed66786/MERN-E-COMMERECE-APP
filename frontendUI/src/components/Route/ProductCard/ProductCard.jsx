@@ -18,13 +18,14 @@ import {
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart.js";
 
-const ProductCard = ({ data, countStars }) => {
+const ProductCard = ({ data }) => {
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
-  const [countStarsHere, setCountStarsHere] = useState(countStars);
+  // const [countStarsHere, setCountStarsHere] = useState(countStars);
 
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(1);
 
   const dispatch = useDispatch();
   const d = data.name;
@@ -66,7 +67,7 @@ const ProductCard = ({ data, countStars }) => {
   return (
     <>
       <div
-        className="w-full cursor-pointer h-[400px] bg-white rounded-lg
+        className="w-full cursor-pointer h-[370px] bg-white rounded-lg
        shadow-sm p-3 relative "
       >
         <div className="flex justify-end"></div>
@@ -92,10 +93,32 @@ const ProductCard = ({ data, countStars }) => {
               ? data.name.split(" ").slice(0, 10).join(" ") + "  ...."
               : data.name}
           </h4>
+        </Link>
+        {/* start of rating ############################################## */}
 
-          {/* start */}
+        <div className="flex w-full ml-2 pt-1">
+          {[1, 2, 3, 4, 5].map((i) =>
+            rating >= i ? (
+              <AiFillStar
+                key={i}
+                className="mr-1 cursor-pointer"
+                color="rgb(246,186,0)"
+                size={25}
+                onClick={() => setRating(i)}
+              />
+            ) : (
+              <AiOutlineStar
+                key={i}
+                className="mr-1 cursor-pointer"
+                color="rgb(246,186,0)"
+                size={25}
+                onClick={() => setRating(i)}
+              />
+            )
+          )}
+        </div>
 
-          {countStarsHere === 0 ? (
+        {/* {countStarsHere === 0 ? (
             <div className="flex">
               <AiOutlineStar
                 className="mr-2 cursor-pointer text-yellow-400"
@@ -233,10 +256,10 @@ const ProductCard = ({ data, countStars }) => {
                 size={20}
               />
             </div>
-          ) : null}
-        </Link>
+          ) : null} */}
+
         {/* rating counter */}
-        <div className="flex">
+        {/* <div className="flex">
           <h1 className="text-[red] mt-2 text-[20px] mr-7">Rate: </h1>
           <div
             className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
@@ -261,7 +284,7 @@ const ProductCard = ({ data, countStars }) => {
           >
             +
           </div>
-        </div>
+        </div> */}
 
         <div className="flex py-2 items-center justify-between">
           <div className="flex">

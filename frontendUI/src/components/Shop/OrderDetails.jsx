@@ -15,15 +15,15 @@ const OrderDetails = () => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
-  const { id } = useParams();
-
+  console.log(seller)
+  const { id } = useParams(); 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller._id]);
 
   const data = orders && orders.find((item) => item._id === id);
 
-  const orderUpdateHandler = async (e) => {
+  const orderUpdateHandler = async () => {
     await axios
       .put(
         `${server}/order/update-order-status/${id}`,
@@ -59,7 +59,7 @@ const OrderDetails = () => {
       });
   };
 
-  console.log(data?.status);
+  // console.log(data?.status);
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>

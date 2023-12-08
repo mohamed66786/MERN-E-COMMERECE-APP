@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/style";
 import {
@@ -17,22 +17,22 @@ import { addTocart } from "../../redux/actions/cart";
 // import Ratings from "./Ratings.jsx";
 
 const ProductDetails = ({ data }) => {
+  const { cart } = useSelector((state) => state.cart);
+  const { wishlist } = useSelector((state) => state.wishlist);
+  
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
-
-  // const { wishlist } = useSelector((state) => state.wishlist);
-  const { cart } = useSelector((state) => state.cart);
-
+  
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (wishlist && wishlist.find((item) => item.id === data.id)) {
-  //     setClick(true);
-  //   } else {
-  //     setClick(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (wishlist && wishlist.find((item) => item.id === data.id)) {
+      setClick(true);
+    } else {
+      setClick(false);
+    }
+  }, [wishlist, data.id]);
 
   const incrementCount = () => {
     if (data.stock > count) {
