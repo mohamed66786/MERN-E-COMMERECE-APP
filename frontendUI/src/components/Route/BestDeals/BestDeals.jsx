@@ -22,7 +22,7 @@ const BestDeals = () => {
         xl:grid-cols-5 xl:gap-[30px] mb-12 border-0">
             {data&&data.map((item,index)=>{
                 return (
-                    <ProductCard data={item} key={index}/>
+                    <ProductCard data={item} key={index} countStars={1}/>
                 )
             })}
         </div>

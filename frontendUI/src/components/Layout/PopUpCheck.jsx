@@ -34,13 +34,15 @@ const PopUpCheck = ({ setLogout, setCheck }) => {
           <div>
             <div className="flex justify-around  mt-[12%] ">
               <div
-                className={`${styles.button} bg-[blue] text-white`}
+                className={`${styles.button} bg-[blue] text-white
+                hover:bg-[#2f2ff8]`}
                 onClick={handleFalse}
               >
                 No
               </div>
               <div
-                className={`${styles.button} bg-[blue] text-white`}
+                className={`${styles.button} bg-[blue] text-white
+                hover:bg-[#2f2ff8]`}
                 onClick={handleTrue}
               >
                 Yes

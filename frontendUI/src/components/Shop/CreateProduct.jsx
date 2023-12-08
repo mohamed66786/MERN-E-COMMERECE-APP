@@ -14,6 +14,7 @@ const CreateProduct = () => {
 
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
+  const [imageURL, setImageURL] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
@@ -23,7 +24,7 @@ const CreateProduct = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
     if (success) {
       toast.success("Product created successfully!");
@@ -32,6 +33,7 @@ const CreateProduct = () => {
         window.location.reload();
       }, 2000);
     }
+
   }, [dispatch, error, success]);
 
   // const handleImageChange = (e) => {
@@ -62,6 +64,7 @@ const CreateProduct = () => {
       originalPrice: originalPrice,
       discountPrice: discountPrice,
       stock: stock,
+      imageURL: imageURL,
       shopId: seller._id,
     };
     dispatch(createProduct(newForm));
@@ -188,6 +191,22 @@ const CreateProduct = () => {
           />
         </div>
         <br />
+
+        <div>
+          <label className="pb-2">
+            Image URL<span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="ImageURL"
+            value={imageURL}
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            onChange={(e) => setImageURL(e.target.value)}
+            placeholder="Enter your Image URL..."
+          />
+        </div>
+        <br />
+
         <div>
           <label className="pb-2">
             Upload Images <span className="text-red-500">*</span>

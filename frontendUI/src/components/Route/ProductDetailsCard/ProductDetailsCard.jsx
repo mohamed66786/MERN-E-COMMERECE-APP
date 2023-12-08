@@ -106,7 +106,8 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   src={
                     data.image_Url
                       ? data.image_Url[0].url
-                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
+                      :data.imageURL?data.imageURL: 
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
                   }
                   className="mt-7 "
                   alt=""

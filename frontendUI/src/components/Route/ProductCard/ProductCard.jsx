@@ -18,9 +18,10 @@ import {
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart.js";
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, countStars }) => {
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
+  const [countStarsHere, setCountStarsHere] = useState(countStars);
 
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
@@ -64,13 +65,18 @@ const ProductCard = ({ data }) => {
 
   return (
     <>
-      <div className="w-full cursor-pointer h-[370px] bg-white rounded-lg shadow-sm p-3 relative ">
+      <div
+        className="w-full cursor-pointer h-[400px] bg-white rounded-lg
+       shadow-sm p-3 relative "
+      >
         <div className="flex justify-end"></div>
         <Link to={`/product/${productName}`}>
           <img
             src={
               data.image_Url
                 ? data.image_Url[0].url
+                : data.imageURL
+                ? data.imageURL
                 : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
             }
             alt="Content Img"
@@ -83,51 +89,203 @@ const ProductCard = ({ data }) => {
         <Link to={`/product/${productName}`}>
           <h4 className="pb-3 font-[500]">
             {data.name.length > 40
-              ? data.name.split(" ").slice(0, 14).join(" ") + "  ...."
+              ? data.name.split(" ").slice(0, 10).join(" ") + "  ...."
               : data.name}
           </h4>
-          <div className="flex">
-            <AiFillStar
-              className="mr-2 cursor-pointer text-yellow-400"
-              size={20}
-            />
-            <AiFillStar
-              className="mr-2 cursor-pointer text-yellow-400"
-              size={20}
-            />
-            <AiFillStar
-              className="mr-2 cursor-pointer text-yellow-400"
-              size={20}
-            />
-            <AiFillStar
-              className="mr-2 cursor-pointer text-yellow-400"
-              size={20}
-            />
-            <AiOutlineStar
-              className="mr-2 cursor-pointer text-yellow-400"
-              size={20}
-            />
-          </div>
 
-          <div className="flex py-2 items-center justify-between">
+          {/* start */}
+
+          {countStarsHere === 0 ? (
             <div className="flex">
-              <h6 className={`${styles.productDiscountPrice} text-red-800 `}>
-                {data.price === 0
-                  ? data.price
-                  : data.discount_price
-                  ? data.discount_price
-                  : data.discountPrice}
-                $
-              </h6>
-              <h4 className={`${styles.price}`}>
-                {data.price ? data.price + "$" : data.originalPrice + "$"}
-              </h4>
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
             </div>
-            <span className="font-[400] text-[17px] text-[#68d284]">
-              {data?.total_sell || 10} sold
-            </span>
-          </div>
+          ) : countStarsHere === 1 ? (
+            <div className="flex">
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+            </div>
+          ) : countStarsHere === 2 ? (
+            <div className="flex">
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+            </div>
+          ) : countStarsHere === 3 ? (
+            <div className="flex">
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+            </div>
+          ) : countStarsHere === 4 ? (
+            <div className="flex">
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiOutlineStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+            </div>
+          ) : countStarsHere === 5 ? (
+            <div className="flex">
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+              <AiFillStar
+                className="mr-2 cursor-pointer text-yellow-400"
+                size={20}
+              />
+            </div>
+          ) : null}
         </Link>
+        {/* rating counter */}
+        <div className="flex">
+          <h1 className="text-[red] mt-2 text-[20px] mr-7">Rate: </h1>
+          <div
+            className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+            onClick={() =>
+              setCountStarsHere(
+                countStarsHere > 0 ? countStarsHere - 1 : countStarsHere
+              )
+            }
+          >
+            -
+          </div>
+          <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
+            {countStarsHere}
+          </span>
+          <div
+            className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
+            onClick={() =>
+              setCountStarsHere(
+                countStarsHere < 5 ? countStarsHere + 1 : countStarsHere
+              )
+            }
+          >
+            +
+          </div>
+        </div>
+
+        <div className="flex py-2 items-center justify-between">
+          <div className="flex">
+            <h6 className={`${styles.productDiscountPrice} text-red-800 `}>
+              {data.price === 0
+                ? data.price
+                : data.discount_price
+                ? data.discount_price
+                : data.discountPrice}
+              $
+            </h6>
+            <h4 className={`${styles.price}`}>
+              {data.price
+                ? data.price + "$"
+                : data.originalPrice
+                ? data.originalPrice + "$"
+                : null}
+            </h4>
+          </div>
+          <span className="font-[400] text-[17px] text-[#68d284]">
+            {data?.total_sell || 10} sold
+          </span>
+        </div>
+
         {/* side options */}
         <div>
           {click ? (
