@@ -109,7 +109,7 @@ const updateOrderStatus = asyncHandler(async (req, res, next) => {
 
     async function updateSellerInfo(amount) {
       const seller = await Shop.findById(
-        req.seller? req.seller._id : "6563c16a6e22db6f476bda65"
+        req.seller ? req.seller._id : "6563c16a6e22db6f476bda65"
       );
 
       seller.availableBalance = amount;
@@ -122,9 +122,30 @@ const updateOrderStatus = asyncHandler(async (req, res, next) => {
   }
 });
 
+const refundOrder = asyncHandler(async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      res.status(404).json({ message: "Order not found with this id." });
+      throw new Error(`Order not found with this id `);
+    }
+    order.status = req.body.status;
+    await order.save({ validateBeforeSave: false });
+    res.status(200).json({
+      success: true,
+      order,
+      message: "Order Refund Request successfully!",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    throw new Error(error.message);
+  }
+});
+
 module.exports = {
   createOrder,
   getUserOrder,
   getShopOrder,
   updateOrderStatus,
+  refundOrder,
 };

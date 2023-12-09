@@ -21,17 +21,18 @@ const UserOrderDetails = () => {
 
   const { id } = useParams();
 
-  if (open) {
-    setTimeout(() => {
-      document.getElementById("element").focus();
-    }, 150);
-  }
+  // if (open) {
+  //   setTimeout(() => {
+  //     document.getElementById("element").focus();
+  //   }, 150);
+  // }
   useEffect(() => {
     dispatch(getAllOrdersOfUser(user._id));
   }, [dispatch, user._id]);
 
   const data = orders && orders.find((item) => item._id === id);
 
+  // call back end to review the order
   const reviewHandler = async (e) => {
     await axios
       .put(
@@ -57,6 +58,7 @@ const UserOrderDetails = () => {
       });
   };
 
+  //call backend to handle refund
   const refundHandler = async () => {
     await axios
       .put(`${server}/order/order-refund/${id}`, {
@@ -204,7 +206,6 @@ const UserOrderDetails = () => {
                 cols="20"
                 rows="5"
                 value={comment}
-                onFocus={() => setOpen(true)}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="How was your product? write your expresion about it!"
                 className="mt-2 w-[95%] border p-2 outline-none"

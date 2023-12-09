@@ -6,6 +6,7 @@ const {
   getUserOrder,
   getShopOrder,
   updateOrderStatus,
+  refundOrder
 } = require("../controller/orderController");
 
 // create a new order
@@ -16,5 +17,6 @@ router.get("/get-all-orders/:userId", getUserOrder);
 router.get("/get-seller-all-orders/:shopId", getShopOrder);
 // update the order status
 router.put("/update-order-status/:id", updateOrderStatus);
-
+// refund the order
+router.put("/order-refund/:id", refundOrder);
 module.exports = router;

@@ -1,29 +1,31 @@
 import { Button } from "@mui/material";
-import { Link } from  "react-router-dom";
-import { MdTrackChanges } from 'react-icons/md';
+import { Link } from "react-router-dom";
+import { MdTrackChanges } from "react-icons/md";
 import { DataGrid } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllOrdersOfUser } from "../../../redux/actions/order";
 
 const TrackOrder = () => {
-  // const { user } = useSelector((state) => state.user);
-  // const { orders } = useSelector((state) => state.order);
-  // const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAllOrdersOfUser(user._id));
-  // }, []);
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, [user._id, dispatch]);
 
-
-
-  const orders=[
-    {
-      _id:"923583jkthebq1",
-      orderItems:[
-        {name:"iphone 14 pro Max"},
-      ],
-      totalPrice:127,
-      orderStatus:"processing",
-    }
-  ]
+  // this orders is for testing the component
+  // const orders=[
+  //   {
+  //     _id:"923583jkthebq1",
+  //     orderItems:[
+  //       {name:"iphone 14 pro Max"},
+  //     ],
+  //     totalPrice:127,
+  //     orderStatus:"processing",
+  //   }
+  // ]
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
 
@@ -81,7 +83,7 @@ const TrackOrder = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.orderItems ? item.orderItems.length : 1,
         total: "US$ " + item.totalPrice,
         status: item.status,
       });
@@ -99,6 +101,5 @@ const TrackOrder = () => {
     </div>
   );
 };
-
 
 export default TrackOrder;
