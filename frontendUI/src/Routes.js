@@ -23,6 +23,8 @@ import PaymentPage from "./pages/shop/PaymentPage.jsx";
 import ShopAllOrders from "./pages/shop/ShopAllOrders.jsx";
 import ShopAllRefunds from "./pages/shop/ShopAllRefunds.jsx";
 import ShopOrderDetails from "./pages/shop/ShopOrderDetails.jsx";
+import ShopSettingsPage from "./pages/shop/ShopSettingsPage.jsx";
+import ShopWithdrawMoneyPage from "./pages/shop/ShopWithdrawMoneyPage.jsx";
 import OrderSuccessPage from "./pages/OrderSuccessPage.jsx";
 import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
 import TrackOrderPage from "./pages/TrackOrderPage.jsx";
@@ -55,4 +57,6 @@ export {
   OrderDetailsPage,
   TrackOrderPage,
   ShopAllRefunds,
+  ShopSettingsPage,
+  ShopWithdrawMoneyPage,
 };

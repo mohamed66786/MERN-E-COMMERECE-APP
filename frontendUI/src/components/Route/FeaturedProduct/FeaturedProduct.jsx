@@ -1,7 +1,7 @@
 // import { useSelector } from "react-redux";
 import styles from "../../../styles/style";
 import ProductCard from "../ProductCard/ProductCard.jsx";
-import { productData } from "../../../static/data.js";
+// import { productData } from "../../../static/data.js";
 import { useSelector } from 'react-redux';
 
 const FeaturedProduct = () => {
@@ -19,7 +19,7 @@ const FeaturedProduct = () => {
             <>
               {allProducts &&
                 allProducts.map((item, index) => (
-                  <ProductCard data={item} key={index} countStars={3} />
+                  <ProductCard data={item} key={index} />
                 ))}
             </>
           ):(

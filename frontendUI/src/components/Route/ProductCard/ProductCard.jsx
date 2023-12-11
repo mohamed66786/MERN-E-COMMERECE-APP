@@ -27,17 +27,23 @@ const ProductCard = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(1);
 
+  console.log(cart);
   const dispatch = useDispatch();
   const d = data.name;
   const productName = d.replace(/\s+/g, "-");
 
   useEffect(() => {
-    if (wishlist && wishlist.find((item) => item.id === data.id)) {
+    if (
+      wishlist &&
+      wishlist.find((item) =>
+        item.id ? item.id === data.id : item._id === data._id
+      )
+    ) {
       setClick(true);
     } else {
       setClick(false);
     }
-  }, [wishlist, data.id]);
+  }, [wishlist, data.id, data._id]);
 
   const addToWishlistHandler = (data) => {
     setClick(!click);
@@ -49,8 +55,12 @@ const ProductCard = ({ data }) => {
     dispatch(removeFromWishlist(data));
   };
 
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i.id === id);
+  const addToCartHandler = (data) => {
+    const isItemExists =
+      cart &&
+      cart.find((item) =>
+        item.id ? item.id === data.id : item._id === data._id
+      );
     if (isItemExists) {
       toast.error("The item already in the cart");
     } else {
@@ -338,7 +348,7 @@ const ProductCard = ({ data }) => {
           <AiOutlineShoppingCart
             size={25}
             className="cursor-pointer absolute right-2 top-24 "
-            onClick={() => addToCartHandler(data.id)}
+            onClick={() => addToCartHandler(data)}
             color="#444"
             title="Add to cart"
           />

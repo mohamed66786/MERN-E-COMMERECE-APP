@@ -7,7 +7,7 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addTocart } from "../../../redux/actions/cart";
@@ -106,8 +106,9 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   src={
                     data.image_Url
                       ? data.image_Url[0].url
-                      :data.imageURL?data.imageURL: 
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
+                      : data.imageURL
+                      ? data.imageURL
+                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTzdXQKtpASTHJXd8ncnw5WHJ0XCPuZ9ZSmA&usqp=CAU"
                   }
                   className="mt-7 "
                   alt=""
@@ -152,13 +153,24 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
                 <div className="flex pt-3">
                   <h3 className={`${styles.productDiscountPrice} text-red-700`}>
-                    {data.discount_price}$
+                    {data.discount_price
+                      ? data.discount_price
+                      : data.discountPrice}
+                    $
                   </h3>
                   <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + "$" : null}
+                    {data.price
+                      ? data.price + "$"
+                      : data.originalPrice + "$"
+                      ? data.originalPrice + "$"
+                      : null}
                   </h3>
                   <h2 className="ml-4 text-[blue] text-[18px] font-bold">
-                    Total Price: {data.discount_price * count}$
+                    Total Price:{" "}
+                    {(data.discount_price
+                      ? data.discount_price
+                      : data.discountPrice) * count}
+                    $
                   </h2>
                 </div>
 

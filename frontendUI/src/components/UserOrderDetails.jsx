@@ -132,7 +132,6 @@ const UserOrderDetails = () => {
             className="800px:w-[50%] w-[90%] h-min bg-[#fff] shadow rounded-md p-3
             outline-none "
             tabIndex={0}
-            onBlur={() => setOpen(false)}
             id="element"
           >
             <div className="w-full flex justify-end p-3">
@@ -206,6 +205,12 @@ const UserOrderDetails = () => {
                 cols="20"
                 rows="5"
                 value={comment}
+                onClick={() => {
+                  setOpen(true);
+                }}
+                onBlur={() => {
+                  setOpen(true);
+                }}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="How was your product? write your expresion about it!"
                 className="mt-2 w-[95%] border p-2 outline-none"

@@ -122,6 +122,7 @@ const updateOrderStatus = asyncHandler(async (req, res, next) => {
   }
 });
 
+// give refund from the user
 const refundOrder = asyncHandler(async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -142,10 +143,51 @@ const refundOrder = asyncHandler(async (req, res, next) => {
   }
 });
 
+// accept the refund request from seller
+const refundOrderSuccess = asyncHandler(async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      res.status(400).json({ message: "Order not found with this id" });
+      throw new Error("Order not found with this id");
+    }
+
+    order.status = req.body.status;
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Order Refund successfull!",
+    });
+
+    if (req.body.status === "Refund Success") {
+      order.cart.forEach(async (o) => {
+        await updateOrder(o._id, o.qty);
+      });
+    }
+
+    // update function
+    async function updateOrder(id, qty) {
+      const product = await Product.findById(id);
+
+      product.stock += qty;
+      product.sold_out -= qty;
+
+      await product.save({ validateBeforeSave: false });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    throw new Error(error.message);
+  }
+});
+
 module.exports = {
   createOrder,
   getUserOrder,
   getShopOrder,
   updateOrderStatus,
   refundOrder,
+  refundOrderSuccess,
 };

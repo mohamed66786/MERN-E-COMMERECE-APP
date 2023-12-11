@@ -1,7 +1,7 @@
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/style";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsCartPlus } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../../redux/actions/wishlist";
@@ -13,7 +13,12 @@ const Wishlist = ({ setOpenWishlist }) => {
   const navigate = useNavigate();
   const { wishlist } = useSelector((stata) => stata.wishlist);
   const totalPrice =
-    wishlist && wishlist.reduce((acu, curr) => acu + curr.discount_price, 0);
+    wishlist &&
+    wishlist.reduce(
+      (acu, curr) =>
+        acu + curr.discount_price ? curr.discount_price : curr.discountPrice,
+      0
+    );
 
   const removeFromWishlistHandler = (data) => {
     dispatch(removeFromWishlist(data));
@@ -122,6 +127,8 @@ const CartSingle = ({ data, removeFromWishlistHandler, addTocartHandler }) => {
           src={
             data.image_Url
               ? data.image_Url[0].url
+              : data.imageURL
+              ? data.imageURL
               : "https://uploads-ssl.webflow.com/621f43c49dec9b0ca2794276/624abe7649d54e4013606cda_E-commerce-Photo-Editing-Services-5.jpg"
           }
           alt=""
@@ -130,7 +137,8 @@ const CartSingle = ({ data, removeFromWishlistHandler, addTocartHandler }) => {
         <div className="pl-[5px]">
           <h1>{data.name} .</h1>
           <span className="font-[400] text-[15px]  text-[red]">
-            Price: {data.discount_price}$
+            Price:{" "}
+            {data.discount_price ? data.discount_price : data.discountPrice}$
           </span>
           <BsCartPlus
             size={25}

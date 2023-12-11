@@ -6,7 +6,8 @@ const {
   getUserOrder,
   getShopOrder,
   updateOrderStatus,
-  refundOrder
+  refundOrder,
+  refundOrderSuccess,
 } = require("../controller/orderController");
 
 // create a new order
@@ -17,6 +18,8 @@ router.get("/get-all-orders/:userId", getUserOrder);
 router.get("/get-seller-all-orders/:shopId", getShopOrder);
 // update the order status
 router.put("/update-order-status/:id", updateOrderStatus);
-// refund the order
+// refund the order from the user
 router.put("/order-refund/:id", refundOrder);
+// accept the refund  order from seller 
+router.put("order-refund-success/:id", refundOrderSuccess);
 module.exports = router;

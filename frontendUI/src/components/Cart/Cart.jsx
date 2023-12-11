@@ -11,9 +11,12 @@ import { toast } from "react-toastify";
 const Cart = ({ setOpenCart }) => {
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const totalPrice = cart.reduce(
-    (acu, curr) => acu + curr.qty * curr.discount_price?curr.discount_price:curr.discountPrice,
+    (acu, curr) =>
+      acu + curr.qty * curr.discount_price
+        ? curr.discount_price
+        : curr.discountPrice,
     0
   );
   const removeFromCartHandler = (data) => {
@@ -24,10 +27,9 @@ const Cart = ({ setOpenCart }) => {
     dispatch(addTocart(data));
   };
 
-const moveToCheckout=()=>{
-  navigate("/checkout")
-}
-
+  const moveToCheckout = () => {
+    navigate("/checkout");
+  };
 
   useEffect(() => {
     document.getElementById("element").focus();
@@ -89,15 +91,15 @@ const moveToCheckout=()=>{
             </div>
             <div className="px-5 mb-3 ">
               {/* <Link to="/checkout"> */}
-                <div
-                  className={`h-[45px] flex items-center justify-center
+              <div
+                className={`h-[45px] flex items-center justify-center
                   cursor-pointer w-[100%] bg-[#e44343] rounded-[5px] hover:bg-[red]`}
-                  onClick={moveToCheckout}
-                >
-                  <h1 className="text-[#fff] text-[18px] font-[600]">
-                    Checkout Now (USD${totalPrice})
-                  </h1>
-                </div>
+                onClick={moveToCheckout}
+              >
+                <h1 className="text-[#fff] text-[18px] font-[600]">
+                  Checkout Now (USD${totalPrice})
+                </h1>
+              </div>
               {/* </Link> */}
             </div>
           </>
@@ -109,7 +111,8 @@ const moveToCheckout=()=>{
 
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   const [value, setValue] = useState(data.qty);
-  const totalPrice = value * data.discount_price?data.discount_price:data.discountPrice;
+  const totalPrice =
+    value * (data.discount_price ? data.discount_price : data.discountPrice);
   const increment = (data) => {
     const updateCartData = { ...data, qty: value + 1 };
     if (value < data.stock) {
@@ -151,6 +154,8 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
           src={
             data && data.image_Url
               ? data.image_Url[0].url
+              : data.imageURL
+              ? data.imageURL
               : "https://uploads-ssl.webflow.com/621f43c49dec9b0ca2794276/624abe7649d54e4013606cda_E-commerce-Photo-Editing-Services-5.jpg"
           }
           alt=""
@@ -159,14 +164,15 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <div className="pl-[5px]">
           <h1>{data.name} .</h1>
           <h4 className="font-[400] text-[15px] text-[#4b4b4b]">
-            Price: {+data.discount_price?data.discount_price:data.discountPrice}$
+            Price:{" "}
+            {+data.discount_price ? data.discount_price : data.discountPrice}$
           </h4>
           <h2 className="font-bold">
             Total: <span className="text-[red]">{totalPrice}$</span>
           </h2>
         </div>
         <RxCross1
-          className="cursor-pointer hover:bg-[red] ml-3 bg-slate-200 p-2 rounded-full"
+          className="cursor-pointer hover:bg-[red] ml-3  bg-slate-200 p-2 rounded-lg"
           size={40}
           onClick={() => removeFromCartHandler(data)}
         />

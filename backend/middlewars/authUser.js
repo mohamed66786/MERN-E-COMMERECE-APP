@@ -19,7 +19,7 @@ exports.isAuthenticated = asyncHandler(async (req, res, next) => {
 
   req.user = await User.findById(decoded.id);
 
-  next();
+  return next();
 });
 
 // auth seller
@@ -36,7 +36,6 @@ exports.isSeller = asyncHandler(async (req, res, next) => {
     sellerToken,
     process.env.JWT_SECRET_KEY || "some secret"
   );
-
   req.seller = await Shop.findById(decoded.id);
-  next();
+  return next();
 });

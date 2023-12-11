@@ -14,6 +14,7 @@ const DashboardHeader = () => {
         <Link to="/">
           <img
             src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+            title="Home Page"
             alt=""
           />
         </Link>
@@ -23,7 +24,7 @@ const DashboardHeader = () => {
           <Link to="/dashboard/cupouns" className="800px:block hidden">
             <AiOutlineGift
               color="#555"
-              size={30}
+              size={30} title="cupouns"
               className="mx-5 cursor-pointer"
             />
           </Link>
@@ -31,6 +32,7 @@ const DashboardHeader = () => {
             <MdOutlineLocalOffer
               color="#555"
               size={30}
+              title="events"
               className="mx-5 cursor-pointer"
             />
           </Link>
@@ -38,16 +40,18 @@ const DashboardHeader = () => {
             <FiShoppingBag
               color="#555"
               size={30}
+              title="products"
               className="mx-5 cursor-pointer"
             />
           </Link>
           <Link to="/dashboard-orders" className="800px:block hidden">
-            <FiPackage color="#555" size={30} className="mx-5 cursor-pointer" />
+            <FiPackage color="#555" title="orders" size={30} className="mx-5 cursor-pointer" />
           </Link>
           <Link to="/dashboard-messages" className="800px:block hidden">
             <BiMessageSquareDetail
               color="#555"
               size={30}
+               title="messages"
               className="mx-5 cursor-pointer"
             />
           </Link>

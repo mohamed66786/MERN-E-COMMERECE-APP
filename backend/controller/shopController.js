@@ -71,7 +71,7 @@ const getSeller = asyncHandler(async (req, res, next) => {
       throw new Error();
     }
 
-     res.status(200).json({
+    res.status(200).json({
       success: true,
       seller,
     });
@@ -82,7 +82,7 @@ const getSeller = asyncHandler(async (req, res, next) => {
 });
 
 // logout the seller
-const logoutSeller=asyncHandler(async(req,res,next)=>{
+const logoutSeller = asyncHandler(async (req, res, next) => {
   try {
     res.cookie("sellerToken", "", {
       httpOnly: true,
@@ -96,10 +96,9 @@ const logoutSeller=asyncHandler(async(req,res,next)=>{
     res.status(500).json({ message: "can't log out the user" });
     return next();
   }
-})
+});
 
-
-const getShopIngo=asyncHandler(async(req,res,next)=>{
+const getShopIngo = asyncHandler(async (req, res, next) => {
   try {
     const shop = await Shop.findById(req.params.id);
     res.status(201).json({
@@ -110,7 +109,35 @@ const getShopIngo=asyncHandler(async(req,res,next)=>{
     res.status(500).json({ message: error.message });
     throw new Error(error.message);
   }
-})
+});
+const updateSellerInfo = asyncHandler(async (req, res, next) => {
+  try {
+    const { name, description, address, phoneNumber, zipCode } = req.body;
+
+    const shop = await Shop.findOne(req.seller._id);
+
+    if (!shop) {
+      res.status(400).json({ message: "User Not Found" });
+      throw new Error("User Not Found");
+    }
+
+    shop.name = name;
+    shop.description = description;
+    shop.address = address;
+    shop.phoneNumber = phoneNumber;
+    shop.zipCode = zipCode;
+
+    await shop.save();
+
+    res.status(201).json({
+      success: true,
+      shop,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    throw new Error(error.message);
+  }
+});
 
 module.exports = {
   createShop,
@@ -118,4 +145,5 @@ module.exports = {
   getSeller,
   logoutSeller,
   getShopIngo,
+  updateSellerInfo,
 };
