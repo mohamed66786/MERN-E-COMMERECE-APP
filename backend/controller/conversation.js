@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-
+const Conversation = require("../model/conversation");
 const createNewConversation = asyncHandler(async (req, res, next) => {
   try {
     const { groupTitle, userId, sellerId } = req.body;

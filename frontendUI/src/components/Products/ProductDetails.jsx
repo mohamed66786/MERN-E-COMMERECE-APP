@@ -85,7 +85,13 @@ const ProductDetails = ({ data }) => {
           sellerId,
         })
         .then((res) => {
-          navigate(`/inbox?${res.data.conversation._id}`);
+          navigate(
+            `/inbox?${
+              res.data.conversation._id
+                ? res.data.conversation._id
+                : res.data.conversation.id
+            }`
+          );
         })
         .catch((error) => {
           toast.error(error.response.data.message);
