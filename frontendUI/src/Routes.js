@@ -24,6 +24,7 @@ import ShopAllOrders from "./pages/shop/ShopAllOrders.jsx";
 import ShopAllRefunds from "./pages/shop/ShopAllRefunds.jsx";
 import ShopOrderDetails from "./pages/shop/ShopOrderDetails.jsx";
 import ShopSettingsPage from "./pages/shop/ShopSettingsPage.jsx";
+import ShopInboxPage from "./pages/shop/ShopInboxPage.jsx";
 import ShopWithdrawMoneyPage from "./pages/shop/ShopWithdrawMoneyPage.jsx";
 import OrderSuccessPage from "./pages/OrderSuccessPage.jsx";
 import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
@@ -59,4 +60,5 @@ export {
   ShopAllRefunds,
   ShopSettingsPage,
   ShopWithdrawMoneyPage,
+  ShopInboxPage,
 };

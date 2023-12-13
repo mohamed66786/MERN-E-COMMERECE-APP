@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/style";
 import {
   AiFillHeart,
@@ -15,17 +15,19 @@ import {
 import { toast } from "react-toastify";
 import { addTocart } from "../../redux/actions/cart";
 // import Ratings from "./Ratings.jsx";
+import axios from "axios";
+import { server } from "./../../backendServer";
 
 const ProductDetails = ({ data }) => {
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
-  
+
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
-  
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (wishlist && wishlist.find((item) => item.id === data.id)) {
       setClick(true);
@@ -67,6 +69,29 @@ const ProductDetails = ({ data }) => {
         dispatch(addTocart(cartData));
         toast.success("Item added successfully to cart");
       }
+    }
+  };
+
+  const handleMessageSubmit = async () => {
+    if (isAuthenticated) {
+      const groupTitle =
+        (data._id ? data._id : data.id) + (user._id ? user._id : user.id);
+      const userId = user._id ? user._id : user.id;
+      const sellerId = data.shop._id ? data.shop._id : data.shop.id;
+      await axios
+        .post(`${server}/conversation/create-new-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
+        .then((res) => {
+          navigate(`/inbox?${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to create a conversation");
     }
   };
 
@@ -199,7 +224,7 @@ const ProductDetails = ({ data }) => {
                   </div>
                   <div
                     className={`${styles.button} bg-[#6443d1] mt-4 rounded `}
-                    // onClick={handleMessageSubmit}
+                    onClick={handleMessageSubmit}
                   >
                     <span className="text-white flex items-center ">
                       Send Message <AiOutlineMessage className="ml-1" />
