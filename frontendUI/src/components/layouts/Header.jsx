@@ -7,7 +7,12 @@ import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import {
+  IoIosArrowForward,
+  IoIosArrowDown,
+  IoIosSettings,
+  IoMdLogOut,
+} from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
@@ -21,6 +26,7 @@ import Cart from "../Cart/Cart.jsx";
 import Wishlist from "../Wishlist/Wishlist.jsx";
 import { RxCross1 } from "react-icons/rx";
 import PopUpCheck from "../Layout/PopUpCheck.jsx";
+import { CgProfile } from "react-icons/cg";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -38,6 +44,7 @@ const Header = ({ activeHeading }) => {
   const [open, setOpen] = useState(false);
   const [check, setCheck] = useState(false);
   const [logout, setLogout] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
 
   const navigate = useNavigate();
   const handleSearchChange = (e) => {
@@ -219,7 +226,14 @@ const Header = ({ activeHeading }) => {
 
           <div className="flex">
             {/* profile */}
-            <div className={`${styles.normalFlex}`} title="profile">
+            <div
+              className={`${styles.normalFlex}`}
+              title="profile"
+              onMouseEnter={() => setOpenSetting(true)}
+              onMouseLeave={() => {
+                setOpenSetting(false);
+              }}
+            >
               <div className="relative cursor-pointer mr-[15px]">
                 {isAuthenticated ? (
                   <Link to="/profile">
@@ -243,6 +257,38 @@ const Header = ({ activeHeading }) => {
                 )}
               </div>
             </div>
+            {openSetting && isAuthenticated && (
+              <div
+                className="absolute  mt-9 z-50 w-[130px] h-[160px] rounded-md bg-white text-black"
+                onMouseEnter={() => setOpenSetting(true)}
+                onMouseLeave={() => setOpenSetting(false)}
+              >
+                <Link className="flex p-3 hover:bg-slate-200" to="/profile">
+                  <CgProfile size={30} className="text-[blue]" />
+                  <span className="text-[20px] ml-1 text-[#5252fe]">
+                    Profile
+                  </span>
+                </Link>
+                <Link className="flex p-3 hover:bg-slate-200">
+                  <IoIosSettings size={30} className="text-[blue]" />
+                  <span className="text-[20px] ml-1 text-[#5252fe]">
+                    Setting
+                  </span>
+                </Link>
+                <Link
+                  className="flex p-3 hover:bg-slate-200"
+                  onClick={() => {
+                    setLogout(true);
+                    logoutHandler();
+                  }}
+                >
+                  <IoMdLogOut size={30} className="text-[blue]" />
+                  <span className="text-[20px] ml-1 text-[#5252fe]">
+                    Logout
+                  </span>
+                </Link>
+              </div>
+            )}
 
             {/* wishlist */}
             <div className={`${styles.normalFlex}`} title="wishList">
