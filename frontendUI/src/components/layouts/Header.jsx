@@ -258,11 +258,22 @@ const Header = ({ activeHeading }) => {
               </div>
             </div>
             {openSetting && isAuthenticated && (
-              <div
-                className="absolute  mt-9 z-50 w-[130px] h-[160px] rounded-md bg-white text-black"
-                onMouseEnter={() => setOpenSetting(true)}
-                onMouseLeave={() => setOpenSetting(false)}
+              <div  className="absolute mt-9  z-50 w-[135px] h-[180px] rounded-md "
+              onMouseEnter={() => setOpenSetting(true)}
+              onMouseLeave={() => setOpenSetting(false)}
               >
+              <div style={{
+                top:"0",
+                width:"0",
+                height:"0",
+                border: "22px solid transparent",
+                borderTop:"0",
+                borderBottom:"20px solid white",
+                zIndex:"50",
+              }}>
+
+              </div >
+              <div className=" bg-white text-black">
                 <Link className="flex p-3 hover:bg-slate-200" to="/profile">
                   <CgProfile size={30} className="text-[blue]" />
                   <span className="text-[20px] ml-1 text-[#5252fe]">
@@ -288,6 +299,7 @@ const Header = ({ activeHeading }) => {
                   </span>
                 </Link>
               </div>
+                </div>
             )}
 
             {/* wishlist */}
