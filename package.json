@@ -9,13 +9,14 @@
     "dev": "nodemon server.js",
     "client": "npm start --prefix frontendUI",
     "all": "concurrently \"npm start\" \"npm run client\"",
-    "build":"npm i"
+    "build": "npm i"
   },
   "author": "mohamed tarek",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.0",
+    "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",

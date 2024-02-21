@@ -228,7 +228,7 @@ export const categoriesData = [
     id: 6,
     title: "Gifts",
     subTitle: "",
-    image_Url: "https://qlaw.co.uk/wp-content/uploads/2022/07/lpa-gifts.jpg",
+    image_Url: "https://images.pexels.com/photos/264787/pexels-photo-264787.jpeg?cs=srgb&dl=pexels-pixabay-264787.jpg&fm=jpg",
   },
   {
     id: 7,
