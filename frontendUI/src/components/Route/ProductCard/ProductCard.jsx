@@ -78,7 +78,7 @@ const ProductCard = ({ data }) => {
     <>
       <div
         className="w-full cursor-pointer h-[370px] bg-white rounded-lg
-       shadow-sm p-3 relative "
+       shadow-sm p-3 relative hover:shadow-2xl  "
       >
         <div className="flex justify-end"></div>
         <Link to={`/product/${productName}`}>
