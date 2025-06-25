@@ -1,6 +1,12 @@
 # MERN-E-COMMERECE-APP
 ![Project Screenshot](./Screenshot.png)
-![Project Video](./E-Commerce-App.mp4)
+## 📹 Demo Video
+
+<video width="600" controls>
+  <source src="E-Commerce - App.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 
 <h1 align="center">Hi 👋, I'm <a href="https://mohamedtarek.vercel.app/" target="_blank">
 Mohamed Tarek</a></h1>
