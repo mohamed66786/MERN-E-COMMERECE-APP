@@ -3,7 +3,7 @@
 ## 📹 Demo Video
 
 <video width="600" controls>
-  <source src="E-Commerce - App.mp4" type="video/mp4">
+  <source src="E-Commerce.mp4.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
